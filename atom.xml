@@ -6,7 +6,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-30T09:33:25.463Z</updated>
+  <updated>2017-09-30T09:38:48.546Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>test</title>
+    <link href="http://yoursite.com/2017/09/30/test/"/>
+    <id>http://yoursite.com/2017/09/30/test/</id>
+    <published>2017-09-30T09:38:22.000Z</published>
+    <updated>2017-09-30T09:38:48.546Z</updated>
+    
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><audio autoplay="autoplay" loop="loop" preload="auto" src="http://118.89.200.239/Music/Sandra%20Lyng%20-%20Ends%20Collide.mp3"></audio>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;script src=&quot;/assets/js/APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;audio autoplay=&quot;autoplay&quot; loop=&quot;loop&quot; preload=&quot;auto&quot; src=&quot;http://118.89.200.239/Music/San
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Windows MySQL 的安装</title>
