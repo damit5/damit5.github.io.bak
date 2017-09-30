@@ -2,6 +2,21 @@
 <script src="js/html5shiv.min.js"></script>
 <script src="js/respond.min.js"></script>
 <![endif]--></head><body><header class="row-flex-row limit-width vh-center"><a href="/" class="logo"><img src="/favicon.png"></a><nav><ul class="nav-list"><li class="nav-list-item"><a href="/" class="nav-link">主页</a></li><li class="nav-list-item"><a href="/archives/" class="nav-link active">   博客</a></li><li class="nav-list-item"><a href="http://damit5.kiwi/AboutMe/" target="_blank" class="nav-link">关于我</a></li><li class="nav-list-item"><a href="http://damit5.kiwi/Link/" target="_blank" class="nav-link">友情链接</a></li><li class="nav-list-item"><a href="https://github.com/damit5" target="_blank" class="nav-link">github</a></li><li class="nav-list-item"><a href="mailto:damit5@protonmail.com" target="_blank" class="nav-link">email</a></li><li class="nav-list-item"><a href="/atom.xml" class="nav-link">rss</a></li></ul></nav></header><div class="container limit-width"><section class="row-flex-row"><div class="post"><article class="post-block"><h2 class="post-title"><a href="/2017/09/30/Python-argparse-模块的简易使用/" class="post-title-link">Python argparse 模块的简易使用</a></h2><div class="post-meta"><ul class="post-tag-list"><li class="post-tag-item"><a href="/tags/Python/" class="post-tag-link">Python</a></li></ul><div class="post-time">2017年9月30日 星期六</div></div><div class="post-content"><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>
+<div id="aplayer3" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			new APlayer({
+				element: document.getElementById("aplayer3"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "六月的雨",
+					author: "胡歌",
+					url: "http://damit5.kiwi/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",
+					pic: "http://damit5.kiwi/Music/233.jpg",
+				}
+			});
+		</script>
 <h2 id="0×00-示例"><a href="#0×00-示例" class="headerlink" title="0×00 示例"></a>0×00 示例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">#-*-coding:UTF-8-*-</div><div class="line">import argparse</div><div class="line"></div><div class="line">parse = argparse.ArgumentParser(description=&apos;this is the start show message&apos;,</div><div class="line">                                epilog=&apos;this is the stop show message&apos;)</div><div class="line"></div><div class="line">#不注释掉的话就必须传入一个参数，导致 --author 选项不带参数使用会报错</div><div class="line">&apos;&apos;&apos;parse.add_argument(dest=&apos;test&apos;,nargs=&apos;+&apos;,metavar=&apos;test&apos;,</div><div class="line">                   help=&apos;this is test&apos;)&apos;&apos;&apos;</div><div class="line"></div><div class="line">parse.add_argument(&apos;-p&apos;,&apos;--port&apos;,dest=&apos;port&apos;,metavar=&apos;tgt_port&apos;,</div><div class="line">                   help=r&quot;enter the target&apos;s port&quot;)</div><div class="line"></div><div class="line">parse.add_argument(&apos;-H&apos;,&apos;--host&apos;,dest=&apos;host&apos;,</div><div class="line">                   help=r&quot;enter the target&apos;s host&quot;)</div><div class="line"></div><div class="line">parse.add_argument(&apos;--author&apos;,dest=&apos;author&apos;,action=&apos;store_true&apos;,</div><div class="line">                   help=&apos;show author&apos;)</div><div class="line"></div><div class="line">args = parse.parse_args()</div><div class="line">print &apos;port: &apos; + str(args.port)</div><div class="line">print &apos;host: &apos; + str(args.host)</div><div class="line">if args.author:</div><div class="line">    print &apos;author is damit5&apos;</div></pre></td></tr></table></figure>
 <ul>
 <li>将上述内容保存为<code>temp.py</code></li>
