@@ -463,11 +463,11 @@ h1, h2, h3, h4, h5, h6 {
   border: 0;
 }
 code {
-  color: #e80c1c;
+  color: #f06807;
   padding: 0 0.125rem;
   margin: 0 0.125rem;
   border-radius: 0.0625rem;
-  background-color: #f0e8df;
+  background-color: #e0e0e0;
 }
 @media only screen and (max-width: 414px) {
   .highlight pre {
@@ -482,12 +482,12 @@ body {
   font-size: 100%;
 }
 a {
-  color: #e80c1c;
+  color: #f06807;
 }
 a:hover {
   text-decoration: none;
   color: #e0e0e0;
-  background-color: #e80c1c;
+  background-color: #f06807;
   transition: all 0.25s;
   cursor: pointer;
 }
@@ -518,7 +518,7 @@ h6 {
   -o-background-size: cover;
 }
 .site-header .page-title {
-  color: #e80c1c;
+  color: #f06807;
   text-align: center;
   text-shadow: 1px 1px 2px #171314;
 }
@@ -610,7 +610,7 @@ h6 {
 .post-item-wrapper .date-and-category {
   font-size: 0.8125rem;
   text-align: center;
-  border: 1px solid #e80c1c;
+  border: 1px solid #f06807;
   border-radius: 0.1875rem;
 }
 .post-item-wrapper .date-and-category .date,
@@ -618,15 +618,15 @@ h6 {
   padding: 0.125rem 0;
 }
 .post-item-wrapper .date-and-category .date {
-  color: #e80c1c;
+  color: #f06807;
 }
 .post-item-wrapper .date-and-category .categories {
   color: #e0e0e0;
-  background-color: #e80c1c;
+  background-color: #f06807;
 }
 .post-item-wrapper .date-and-category .categories > a {
   color: #e0e0e0;
-  background-color: #e80c1c;
+  background-color: #f06807;
 }
 .post-item-wrapper .tags {
   overflow: hidden;
@@ -637,11 +637,11 @@ h6 {
   font-size: 0.8125rem;
   padding: 0 0.3125rem;
   text-align: center;
-  border: 1px solid #e80c1c;
+  border: 1px solid #f06807;
   border-radius: 0.1875rem;
 }
 .post-item-wrapper .tags .untagged {
-  color: #e80c1c;
+  color: #f06807;
 }
 @media only screen and (max-width: 768px) {
   .post-item-wrapper .date-and-category,
@@ -744,15 +744,15 @@ footer {
   display: inline-block;
 }
 .pagination > li > a {
-  color: #e80c1c;
+  color: #f06807;
   background-color: #e0e0e0;
-  border: 1px solid #e80c1c;
+  border: 1px solid #f06807;
   border-radius: 0.1875rem;
 }
 .pagination > li > a:hover {
   color: #e0e0e0;
-  background-color: #e80c1c;
-  border: 1px solid #e80c1c;
+  background-color: #f06807;
+  border: 1px solid #f06807;
 }
 .pagination > li > a span {
   display: inline-block;
