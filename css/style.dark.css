@@ -467,7 +467,7 @@ code {
   padding: 0 0.125rem;
   margin: 0 0.125rem;
   border-radius: 0.0625rem;
-  background-color: #171314;
+  background-color: #e0e0e0;
 }
 @media only screen and (max-width: 414px) {
   .highlight pre {
@@ -689,7 +689,7 @@ h6 {
 }
 .post-info .info {
   padding: 0 0.5rem;
-  border-right: 1px dotted $dark-white;
+  border-right: 1px dotted #e0e0e0;
 }
 .post-info .info:last-child {
   border-right: none;
