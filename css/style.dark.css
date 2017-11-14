@@ -463,11 +463,11 @@ h1, h2, h3, h4, h5, h6 {
   border: 0;
 }
 code {
-  color: #f06807;
+  color: #1999ec;
   padding: 0 0.125rem;
   margin: 0 0.125rem;
   border-radius: 0.0625rem;
-  background-color: #e0e0e0;
+  background-color: #7a292f;
 }
 @media only screen and (max-width: 414px) {
   .highlight pre {
@@ -477,17 +477,17 @@ code {
 html,
 body {
   color: #e0e0e0;
-  background-color: #e0e0e0;
+  background-color: #171314;
   font-size: 100%; /* add PX (or original value) as backup */
   font-size: 100%;
 }
 a {
-  color: #f06807;
+  color: #1999ec;
 }
 a:hover {
   text-decoration: none;
-  color: #e0e0e0;
-  background-color: #f06807;
+  color: #171314;
+  background-color: #1999ec;
   transition: all 0.25s;
   cursor: pointer;
 }
@@ -504,7 +504,7 @@ h6 {
 }
 .site-header {
   padding: 2.5rem 0;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #171314;
   margin-bottom: 1.875rem;
 }
 .site-header.header-background {
@@ -518,7 +518,7 @@ h6 {
   -o-background-size: cover;
 }
 .site-header .page-title {
-  color: #f06807;
+  color: #1999ec;
   text-align: center;
   text-shadow: 1px 1px 2px #171314;
 }
@@ -571,7 +571,7 @@ h6 {
 }
 .post-item-wrapper {
   padding: 2.1875rem 0;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #171314;
   text-align: center;
   overflow: hidden;
 }
@@ -610,7 +610,7 @@ h6 {
 .post-item-wrapper .date-and-category {
   font-size: 0.8125rem;
   text-align: center;
-  border: 1px solid #f06807;
+  border: 1px solid #1999ec;
   border-radius: 0.1875rem;
 }
 .post-item-wrapper .date-and-category .date,
@@ -618,15 +618,15 @@ h6 {
   padding: 0.125rem 0;
 }
 .post-item-wrapper .date-and-category .date {
-  color: #f06807;
+  color: #1999ec;
 }
 .post-item-wrapper .date-and-category .categories {
-  color: #e0e0e0;
-  background-color: #f06807;
+  color: #171314;
+  background-color: #1999ec;
 }
 .post-item-wrapper .date-and-category .categories > a {
-  color: #e0e0e0;
-  background-color: #f06807;
+  color: #171314;
+  background-color: #1999ec;
 }
 .post-item-wrapper .tags {
   overflow: hidden;
@@ -637,11 +637,11 @@ h6 {
   font-size: 0.8125rem;
   padding: 0 0.3125rem;
   text-align: center;
-  border: 1px solid #f06807;
+  border: 1px solid #1999ec;
   border-radius: 0.1875rem;
 }
 .post-item-wrapper .tags .untagged {
-  color: #f06807;
+  color: #1999ec;
 }
 @media only screen and (max-width: 768px) {
   .post-item-wrapper .date-and-category,
@@ -689,7 +689,7 @@ h6 {
 }
 .post-info .info {
   padding: 0 0.5rem;
-  border-right: 1px dotted #e0e0e0;
+  border-right: 1px dotted $color-red;
 }
 .post-info .info:last-child {
   border-right: none;
@@ -731,7 +731,7 @@ h6 {
 }
 footer {
   padding: 2.1875rem 0;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #171314;
   font-size: 0.75rem;
   text-align: center;
 }
@@ -744,15 +744,15 @@ footer {
   display: inline-block;
 }
 .pagination > li > a {
-  color: #f06807;
-  background-color: #e0e0e0;
-  border: 1px solid #f06807;
+  color: #1999ec;
+  background-color: #171314;
+  border: 1px solid #1999ec;
   border-radius: 0.1875rem;
 }
 .pagination > li > a:hover {
-  color: #e0e0e0;
-  background-color: #f06807;
-  border: 1px solid #f06807;
+  color: #171314;
+  background-color: #1999ec;
+  border: 1px solid #1999ec;
 }
 .pagination > li > a span {
   display: inline-block;
