@@ -470,7 +470,7 @@ a {
   color: #1999ec;
 }
 a:hover {
-  text-decoration: none;
+  text-decoration: #1999ec;
   color: #555;
   background-color: #1999ec;
   transition: all 0.25s;
