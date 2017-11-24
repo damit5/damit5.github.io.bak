@@ -116,7 +116,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2017-09-30</span>
-            <span class="time">18:18:46</span>
+            <span class="time">19:13:42</span>
           </span>
           
         </div>
@@ -168,10 +168,10 @@ document.getElementsByTagName("head")[0].appendChild(script);
 <h4 id="利用XPath-Helper-查找元件位置并传入数据"><a href="#利用XPath-Helper-查找元件位置并传入数据" class="headerlink" title="利用XPath Helper 查找元件位置并传入数据"></a>利用XPath Helper 查找元件位置并传入数据</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">driver.find_element_by_xpath(登陆元件位置).send_keys(&apos;账号&apos;)</div><div class="line">driver.find_element_by_xpath(密码元件位置).send_keys(&apos;密码&apos;)</div><div class="line">driver.find_element_by_xpath(登陆按钮).click()</div></pre></td></tr></table></figure>
 <h2 id="0x04-附上懒人脚本"><a href="#0x04-附上懒人脚本" class="headerlink" title="0x04 附上懒人脚本"></a>0x04 附上懒人脚本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">from selenium import webdriver</div><div class="line"></div><div class="line">driver = webdriver.Chrome(executable_path=&quot;./chromedriver.exe&quot;)</div><div class="line">driver.get(&apos;https://login.sina.com.cn/signup/signin.php?entry=sso&apos;)</div><div class="line">name = raw_input(&apos;Please input your account number : &apos;)</div><div class="line">password = raw_input(&apos;Please input your password : &apos;)</div><div class="line">driver.find_element_by_xpath(r&quot;/html/body/div[@id=&apos;wrap&apos;]/div[@class=&apos;iforgot_bd&apos;]/div[@class=&apos;iforgot_cont&apos;]/div[@class=&apos;i_mod&apos;]/form[@id=&apos;vForm&apos;]/div[@class=&apos;main_cen&apos;]/div[@class=&apos;form_mod&apos;]/ul[@class=&apos;form_list&apos;]/li[@class=&apos;item&apos;][1]/input[@id=&apos;username&apos;]&quot;).send_keys(name)</div><div class="line">driver.find_element_by_xpath(r&quot;/html/body/div[@id=&apos;wrap&apos;]/div[@class=&apos;iforgot_bd&apos;]/div[@class=&apos;iforgot_cont&apos;]/div[@class=&apos;i_mod&apos;]/form[@id=&apos;vForm&apos;]/div[@class=&apos;main_cen&apos;]/div[@class=&apos;form_mod&apos;]/ul[@class=&apos;form_list&apos;]/li[@class=&apos;item&apos;][2]/input[@id=&apos;password&apos;]&quot;).send_keys(password)</div><div class="line">driver.find_element_by_xpath(r&quot;/html/body/div[@id=&apos;wrap&apos;]/div[@class=&apos;iforgot_bd&apos;]/div[@class=&apos;iforgot_cont&apos;]/div[@class=&apos;i_mod&apos;]/form[@id=&apos;vForm&apos;]/div[@class=&apos;main_cen&apos;]/div[@class=&apos;form_mod&apos;]/ul[@class=&apos;form_list&apos;]/li[@class=&apos;item&apos;][6]/div[@class=&apos;btn_mod&apos;]/input[@class=&apos;W_btn_a btn_34px&apos;]&quot;).click()</div></pre></td></tr></table></figure>
 <h2 id="0x05-附加：将cookie传入requests"><a href="#0x05-附加：将cookie传入requests" class="headerlink" title="0x05 附加：将cookie传入requests"></a>0x05 附加：将cookie传入requests</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">req = requests.Session()</div><div class="line">cookies = wd.get_cookies()</div><div class="line">for cookie in cookies:</div><div class="line">    req.cookies.set(cookie[&apos;name&apos;],cookie[&apos;value&apos;])</div><div class="line"></div><div class="line">后面就可以直接用req访问页面了</div></pre></td></tr></table></figure>
-<div id="aplayer11" class="aplayer" style="margin-bottom: 20px;"></div>
+<div id="aplayer13" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer11"),
+				element: document.getElementById("aplayer13"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
