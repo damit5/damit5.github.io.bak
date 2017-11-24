@@ -12,7 +12,7 @@
   <meta property="og:description" content="纸上得来终觉浅，绝知此事要躬行。" />
   <meta property="og:site_name" content="Damit5&#39;s Blog"/>
   <meta property="og:type" content="article" />
-  <meta property="og:image" content="http://damit5.ml"/>
+  <meta property="og:image" content="//damit5.com"/>
   
     <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
   
@@ -116,7 +116,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2017-09-30</span>
-            <span class="time">12:33:24</span>
+            <span class="time">18:09:04</span>
           </span>
           
         </div>
@@ -142,8 +142,8 @@
 				music: {
 					title: "六月的雨",
 					author: "胡歌",
-					url: "http://damit5.kiwi/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",
-					pic: "http://damit5.kiwi/Music/233.jpg",
+					url: "//damit5.github.io/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",
+					pic: "//damit5.github.io/Music/233.jpg",
 				}
 			});
 		</script>
@@ -166,9 +166,9 @@ document.getElementsByTagName("head")[0].appendChild(script);
 <h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><blockquote>
 <p>因为我在Windows上搭建老是GG，所以干脆直接搭建在Ubuntu上，所以下列教程也适用于Ubuntu</p>
 </blockquote>
-<h3 id="注册GitHub账号"><a href="#注册GitHub账号" class="headerlink" title="注册GitHub账号"></a>注册GitHub账号</h3><h4 id="官网"><a href="#官网" class="headerlink" title="官网"></a><a href="https://github.com/" target="_blank" rel="external">官网</a></h4><h3 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h3><h5 id="1-登陆GitHub"><a href="#1-登陆GitHub" class="headerlink" title="1.登陆GitHub"></a>1.登陆GitHub</h5><h5 id="2-点击创建仓库"><a href="#2-点击创建仓库" class="headerlink" title="2.点击创建仓库"></a>2.点击创建仓库</h5><p><img src="http://r.photo.store.qq.com/psb?/V12DlJ9S2zSi6P/WwMsregcp9apgZFL1D0CwO..wGb4hkp8X8AaQ5DcVbw!/r/dDwBAAAAAAAA" alt="1"></p>
+<h3 id="注册GitHub账号"><a href="#注册GitHub账号" class="headerlink" title="注册GitHub账号"></a>注册GitHub账号</h3><h4 id="官网"><a href="#官网" class="headerlink" title="官网"></a><a href="https://github.com/" target="_blank" rel="external">官网</a></h4><h3 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h3><h5 id="1-登陆GitHub"><a href="#1-登陆GitHub" class="headerlink" title="1.登陆GitHub"></a>1.登陆GitHub</h5><h5 id="2-点击创建仓库"><a href="#2-点击创建仓库" class="headerlink" title="2.点击创建仓库"></a>2.点击创建仓库</h5><p><img src="//r.photo.store.qq.com/psb?/V12DlJ9S2zSi6P/WwMsregcp9apgZFL1D0CwO..wGb4hkp8X8AaQ5DcVbw!/r/dDwBAAAAAAAA" alt="1"></p>
 <h5 id="3-填写仓库信息"><a href="#3-填写仓库信息" class="headerlink" title="3.填写仓库信息"></a>3.填写仓库信息</h5><p>仓库名称必须是<strong>用户名.github.io</strong>（官方是这样写的，我也不知道为什么），比如我的用户名是damit5，那么我就填<strong>damit5.github.io</strong></p>
-<p><img src="http://r.photo.store.qq.com/psb?/V12DlJ9S2zSi6P/JlhnxVcDc4JkWhWKxmuAfU5iKkBmU1umhoJiBJ87Ooo!/r/dD0BAAAAAAAA" alt="2"></p>
+<p><img src="//r.photo.store.qq.com/psb?/V12DlJ9S2zSi6P/JlhnxVcDc4JkWhWKxmuAfU5iKkBmU1umhoJiBJ87Ooo!/r/dD0BAAAAAAAA" alt="2"></p>
 <h3 id="配置SSH"><a href="#配置SSH" class="headerlink" title="配置SSH"></a>配置SSH</h3><h4 id="1-设置user-name-和-email"><a href="#1-设置user-name-和-email" class="headerlink" title="1.设置user name 和 email :"></a>1.设置user name 和 email :</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git config --global user.name &quot;你的GitHub用户名&quot;</div><div class="line">git config --global user.email &quot;你的GitHub注册邮箱&quot;</div></pre></td></tr></table></figure>
 <h4 id="2-生成ssh密钥"><a href="#2-生成ssh密钥" class="headerlink" title="2.生成ssh密钥"></a>2.生成ssh密钥</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C &quot;你的GitHub注册邮箱&quot;</div></pre></td></tr></table></figure>
 <blockquote>
@@ -209,7 +209,7 @@ document.getElementsByTagName("head")[0].appendChild(script);
 <blockquote>
 <p>上面2条命令也可以结合为<code>hexo s -g</code></p>
 </blockquote>
-<p>出现以下内容则说明hexo环境安装成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">INFO  Start processing</div><div class="line">INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.</div></pre></td></tr></table></figure></p>
+<p>出现以下内容则说明hexo环境安装成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">INFO  Start processing</div><div class="line">INFO  Hexo is running at //localhost:4000/. Press Ctrl+C to stop.</div></pre></td></tr></table></figure></p>
 <h2 id="部署Hexo"><a href="#部署Hexo" class="headerlink" title="部署Hexo"></a>部署Hexo</h2><h4 id="1-编辑配置文件，关闭远程仓库"><a href="#1-编辑配置文件，关闭远程仓库" class="headerlink" title="1.编辑配置文件，关闭远程仓库"></a>1.编辑配置文件，关闭远程仓库</h4><p>编辑<code>_config.yml</code>,找到最后的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">## Docs: https://hexo.io/docs/deployment.html</div><div class="line">deploy:</div><div class="line">  type:</div></pre></td></tr></table></figure></p>
 <p>添加GitHub仓库信息</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Deployment</div><div class="line">## Docs: https://hexo.io/docs/deployment.html</div><div class="line">deploy:</div><div class="line">  type:  git</div><div class="line">  repo:  git@github.com:damit5/damit5.github.io.git</div><div class="line">  branch:  master</div></pre></td></tr></table></figure>
@@ -224,9 +224,9 @@ document.getElementsByTagName("head")[0].appendChild(script);
 <h2 id="域名配置"><a href="#域名配置" class="headerlink" title="域名配置"></a>域名配置</h2><p>现在已经可以通过 <a href="https://yourname.github.io" target="_blank" rel="external">https://yourname.github.io</a> 来访问自己的博客站点啦。这时可能有人会说了，大家都通过github.io来访问，好没个性，能不能配置用自己的域名来访问自己的站点。答案当然可以。</p>
 <p>首先，你得有个自己的域名，如果还没，那就去买个。</p>
 <h4 id="1-进域名控制台"><a href="#1-进域名控制台" class="headerlink" title="1.进域名控制台"></a>1.进域名控制台</h4><p>在解析里面添加一条<strong>CNAME</strong>记录，指向yourname.github.io即可。</p>
-<p><img src="http://r.photo.store.qq.com/psb?/V12DlJ9S2zSi6P/RxFprVpwLiDZ*4kAXXIhVwk7WNHfQlI3fRgcmtxJ6N0!/r/dD0BAAAAAAAA" alt="3"></p>
-<h4 id="2-打开项目，选择-setting"><a href="#2-打开项目，选择-setting" class="headerlink" title="2.打开项目，选择 setting"></a>2.打开项目，选择 setting</h4><p><img src="http://r.photo.store.qq.com/psb?/V12DlJ9S2zSi6P/JX0zcsxH*PLMvGpISjWLBOEOEbL6NhU6ufCEwsIFw*U!/r/dPcAAAAAAAAA" alt="4"></p>
-<h4 id="3-找到GitHub-Pages-（每次deploy过后都需要修改一次）"><a href="#3-找到GitHub-Pages-（每次deploy过后都需要修改一次）" class="headerlink" title="3.找到GitHub Pages （每次deploy过后都需要修改一次）"></a>3.找到GitHub Pages （每次deploy过后都需要修改一次）</h4><p><img src="http://r.photo.store.qq.com/psb?/V12DlJ9S2zSi6P/iIOHe4CE4zSqPnERwhbTvYpeUB5qdl6*ee9N0xkrbxA!/r/dLMAAAAAAAAA" alt="5"></p>
+<p><img src="//r.photo.store.qq.com/psb?/V12DlJ9S2zSi6P/RxFprVpwLiDZ*4kAXXIhVwk7WNHfQlI3fRgcmtxJ6N0!/r/dD0BAAAAAAAA" alt="3"></p>
+<h4 id="2-打开项目，选择-setting"><a href="#2-打开项目，选择-setting" class="headerlink" title="2.打开项目，选择 setting"></a>2.打开项目，选择 setting</h4><p><img src="//r.photo.store.qq.com/psb?/V12DlJ9S2zSi6P/JX0zcsxH*PLMvGpISjWLBOEOEbL6NhU6ufCEwsIFw*U!/r/dPcAAAAAAAAA" alt="4"></p>
+<h4 id="3-找到GitHub-Pages-（每次deploy过后都需要修改一次）"><a href="#3-找到GitHub-Pages-（每次deploy过后都需要修改一次）" class="headerlink" title="3.找到GitHub Pages （每次deploy过后都需要修改一次）"></a>3.找到GitHub Pages （每次deploy过后都需要修改一次）</h4><p><img src="//r.photo.store.qq.com/psb?/V12DlJ9S2zSi6P/iIOHe4CE4zSqPnERwhbTvYpeUB5qdl6*ee9N0xkrbxA!/r/dLMAAAAAAAAA" alt="5"></p>
 <p>这样就可以通过自己的域名来访问了</p>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">hexo new&quot;postName&quot;      #新建文章</div><div class="line">hexo new page&quot;pageName&quot; #新建页面</div><div class="line">hexo generate           #生成静态页面至public目录</div><div class="line">hexo clean              #清除生成内容</div><div class="line">hexo server             #开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）</div><div class="line">hexo deploy             #将.deploy目录部署到指定空间</div><div class="line">hexo help               # 查看帮助</div><div class="line">hexo version            #查看Hexo的版本</div></pre></td></tr></table></figure>
 <h3 id="hexo-命令缩写"><a href="#hexo-命令缩写" class="headerlink" title="hexo 命令缩写"></a>hexo 命令缩写</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">hexo g：hexo generate</div><div class="line">hexo c：hexo clean</div><div class="line">hexo s：hexo server</div><div class="line">hexo d：hexo deploy</div></pre></td></tr></table></figure>
