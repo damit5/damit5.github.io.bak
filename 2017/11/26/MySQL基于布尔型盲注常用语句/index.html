@@ -116,7 +116,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2017-11-26</span>
-            <span class="time">10:31:24</span>
+            <span class="time">10:39:36</span>
           </span>
           
         </div>
@@ -132,10 +132,10 @@
         
         <!-- Post Main Content -->
         <div class="post-content">
-          <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer2" class="aplayer" style="margin-bottom: 20px;"></div>
+          <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer0" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer2"),
+				element: document.getElementById("aplayer0"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -147,7 +147,7 @@
 				}
 			});
 		</script>
-<h3 id="什是盲注？"><a href="#什是盲注？" class="headerlink" title="什是盲注？"></a>什是盲注？</h3><p>基于布尔型SQL盲注即在SQL注入过程中，应用程序仅仅返回True（页面）和False（页面）。<br>这时，我们无法根据应用程序的返回页面得到我们需要的数据库信息。但是可以通过构造逻辑判断（比较大小）来得到我们需要的信息。</p>
+<h3 id="什么是盲注？"><a href="#什么是盲注？" class="headerlink" title="什么是盲注？"></a>什么是盲注？</h3><p>基于布尔型SQL盲注即在SQL注入过程中，应用程序仅仅返回True（页面）和False（页面）。<br>这时，我们无法根据应用程序的返回页面得到我们需要的数据库信息。但是可以通过构造逻辑判断（比较大小）来得到我们需要的信息。</p>
 <a id="more"></a>
 <h3 id="常用语句汇总"><a href="#常用语句汇总" class="headerlink" title="常用语句汇总"></a>常用语句汇总</h3><hr>
 <h4 id="查询所有数据库"><a href="#查询所有数据库" class="headerlink" title="查询所有数据库"></a>查询所有数据库</h4><h5 id="1-判断表存不存在"><a href="#1-判断表存不存在" class="headerlink" title="1.判断表存不存在"></a>1.判断表存不存在</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and  exists(select * from information_schema.tables)</div></pre></td></tr></table></figure>
