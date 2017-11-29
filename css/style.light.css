@@ -452,7 +452,7 @@ code {
   padding: 0 0.125rem;
   margin: 0 0.125rem;
   border-radius: 0.0625rem;
-  background-color: #85878a;
+  background-color: $color-green;
 }
 @media only screen and (max-width: 414px) {
   .highlight pre {
