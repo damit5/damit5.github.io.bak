@@ -1,1 +1,1 @@
-## This dir is use to save the image file !!
+## This dir is used to save the image file !!

