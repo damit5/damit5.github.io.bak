@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Damit 5">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Windows Shift 后门"/>
+  <meta property="og:description" content="纸上得来终觉浅，绝知此事要躬行。" />
+  <meta property="og:site_name" content="Damit5&#39;s Blog"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://damit5.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Damit5's Blog</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.dark.css">
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/background.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Windows Shift 后门</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/damit5/">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:damit5@protonmail.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://damit5.github.io/AboutMe">
+                  
+                  AboutMe
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://damit5.github.io/Link">
+                  
+                  Friend Link
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Damit 5</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2017-09-30</span>
+            <span class="time">17:18:19</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/权限维持/">#权限维持</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <script src="/assets/js/APlayer.min.js"> </script><p>我们都知道，windows系统按<strong>5</strong>下<strong>shift</strong>后，windows就执行了<strong>system32</strong>下的<strong>sethc.exe</strong>，也就是启用了粘滞键。虽然快捷方便，但却存在安全隐患。</p>
+<a id="more"></a>
+<h2 id="偷天换日"><a href="#偷天换日" class="headerlink" title="偷天换日 :::"></a>偷天换日 :::</h2><p>1.将我们的<strong>cmd.exe</strong>或者<strong>木马后门</strong>名字改成<strong>sethc.exe</strong>，然后替换<strong>C:windows\system32\sethc.exe</strong>程序</p>
+<p><img src="//r.photo.store.qq.com/psb?/V12DlJ9S3bdAg8/K4jdluh80WJSciTqmNp1AQ62vbhGbP2FWHT6C6683Zk!/r/dDwBAAAAAAAA" alt="1"></p>
+<blockquote>
+<p>如果弹出 <strong>“你需要TrustedInstaller提供的权限才能修改此文件”</strong></p>
+<p>修改的文件右击 –&gt; 属性 –&gt; 安全 –&gt; 高级 –&gt; 更改所有者 –&gt; 当前用户 –&gt; 确定 –&gt; 重复之前步骤知道高级 –&gt; 编辑权限为完全控制</p>
+</blockquote>
+<p>2.按<strong>5</strong>下<strong>shift</strong>键可以调出cmd命令窗口，也可以添加用户</p>
+<p><img src="//r.photo.store.qq.com/psb?/V12DlJ9S3bdAg8/2lNXxk7hpSq4XWiVg4L.SfPH7s0OlPdaPJoyy8MDGrc!/r/dOYAAAAAAAAA" alt="2"></p>
+<h2 id="类似程序"><a href="#类似程序" class="headerlink" title="类似程序 :::"></a>类似程序 :::</h2><h4 id="放大镜-Magnify-exe"><a href="#放大镜-Magnify-exe" class="headerlink" title="放大镜 ::: Magnify.exe"></a>放大镜 ::: Magnify.exe</h4><blockquote>
+<p><strong>win</strong> 和 <strong>+</strong> 同时按</p>
+</blockquote>
+<h4 id="讲述人-Narrator-exe"><a href="#讲述人-Narrator-exe" class="headerlink" title="讲述人 ::: Narrator.exe"></a>讲述人 ::: Narrator.exe</h4><blockquote>
+<p><strong>win</strong> 和 <strong>enter</strong> 同时按</p>
+</blockquote>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后 :::"></a>写在最后 :::</h2><blockquote>
+<p>使用<code>shift</code>后门建议使用<code>win2003</code>去远程连接其他服务器，这样会有登录页面，也才能使用<code>shift</code>后门，其他版本的Windows可能会要你直接在本地输入账户和密码，也就不能使用shift后门</p>
+</blockquote>
+<div id="aplayer14" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			new APlayer({
+				element: document.getElementById("aplayer14"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "六月的雨",
+					author: "胡歌",
+					url: "//damit5.github.io/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",
+					pic: "//damit5.github.io/Music/233.jpg",
+				}
+			});
+		</script>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
