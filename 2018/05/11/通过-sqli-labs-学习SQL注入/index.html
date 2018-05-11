@@ -48,7 +48,7 @@
 <meta property="og:image" content="https://damit5.com/2018/05/11/通过-sqli-labs-学习SQL注入/img/sqli_labs_27.png">
 <meta property="og:image" content="https://damit5.com/2018/05/11/通过-sqli-labs-学习SQL注入/img/sqli_labs_28.png">
 <meta property="og:image" content="https://damit5.com/2018/05/11/通过-sqli-labs-学习SQL注入/img/sqli_labs_29.png">
-<meta property="og:updated_time" content="2018-05-11T14:35:35.730Z">
+<meta property="og:updated_time" content="2018-05-11T14:45:58.930Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="通过 sqli-labs 学习SQL注入">
 <meta name="twitter:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer0&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://dam">
@@ -470,53 +470,52 @@
 <p><code>order by 3</code> 报错</p>
 <p><img src="img/sqli_labs_16.png" alt="sqlilibs_11_2"></p>
 <p><code>order by 2</code> 返回正常</p>
-<p><img src="img/sqli_labs_17.png" alt="sqlilibs_11_2"></p>
+<p><img src="img/sqli_labs_17.png" alt="sqlilibs_11_3"></p>
 <p>说明有两列</p>
 <p>后面就再演示一下查数据库名吧</p>
-<p><img src="img/sqli_labs_18.png" alt="sqlilibs_11_2"></p>
+<p><img src="img/sqli_labs_18.png" alt="sqlilibs_11_4"></p>
 <p>成功查出数据库名为 <code>security</code></p>
 <p>后面步骤和前面类似就不再赘述了</p>
-<h2 id="Less-12（UNION注入和POST注入）"><a href="#Less-12（UNION注入和POST注入）" class="headerlink" title="Less-12（UNION注入和POST注入）"></a>Less-12（UNION注入和POST注入）</h2><p><img src="img/sqli_labs_19.png" alt="sqlilibs_11_2"></p>
+<h2 id="Less-12（UNION注入和POST注入）"><a href="#Less-12（UNION注入和POST注入）" class="headerlink" title="Less-12（UNION注入和POST注入）"></a>Less-12（UNION注入和POST注入）</h2><p><img src="img/sqli_labs_19.png" alt="sqlilibs_12_1"></p>
 <p>和上一个题一样，只不过这里闭合用到的是 <code>&quot;)</code></p>
-<h2 id="Less-13（POST注入、盲注、报错注入）"><a href="#Less-13（POST注入、盲注、报错注入）" class="headerlink" title="Less-13（POST注入、盲注、报错注入）"></a>Less-13（POST注入、盲注、报错注入）</h2><p><img src="img/sqli_labs_20.png" alt="sqlilibs_11_2"></p>
+<h2 id="Less-13（POST注入、盲注、报错注入）"><a href="#Less-13（POST注入、盲注、报错注入）" class="headerlink" title="Less-13（POST注入、盲注、报错注入）"></a>Less-13（POST注入、盲注、报错注入）</h2><p><img src="img/sqli_labs_20.png" alt="sqlilibs_13_1"></p>
 <p>如果在参数末尾直接输入<code>&#39;</code>，会报错，而报错信息中表名，闭合应该用 <code>&#39;)</code></p>
 <p>所以我们继续尝试，但这个题，无论怎么输入，都没有显位，只有报错信息，所以可以考虑用盲注或者报错注入</p>
 <p>虽然题目中所用的是盲注，但是能利用报错注入我们就避免使用盲注，因为盲注确实很浪费时间</p>
 <p>得到数据库名</p>
-<p><img src="img/sqli_labs_21.png" alt="sqlilibs_11_2"></p>
+<p><img src="img/sqli_labs_21.png" alt="sqlilibs_13_2"></p>
 <p>后面方法与之前类似</p>
 <h2 id="Less-14（POST注入、盲注、报错注入）"><a href="#Less-14（POST注入、盲注、报错注入）" class="headerlink" title="Less-14（POST注入、盲注、报错注入）"></a>Less-14（POST注入、盲注、报错注入）</h2><p>和上个题类型一样，，只不过这里闭合用到的是<code>&quot;</code></p>
-<p><img src="img/sqli_labs_22.png" alt="sqlilibs_11_2"></p>
+<p><img src="img/sqli_labs_22.png" alt="sqlilibs_14_1"></p>
 <h2 id="Less-15（POST注入和基于时间的盲注）"><a href="#Less-15（POST注入和基于时间的盲注）" class="headerlink" title="Less-15（POST注入和基于时间的盲注）"></a>Less-15（POST注入和基于时间的盲注）</h2><p>这个题，无论如何都不会有任何报错信息，也没有返回信息，所以这里我们就只能用到基于时间的盲注</p>
-<p><img src="img/sqli_labs_23.png" alt="sqlilibs_11_2"></p>
+<p><img src="img/sqli_labs_23.png" alt="sqlilibs_15_1"></p>
 <p>图中会延时10秒</p>
 <h2 id="Less-16（POST注入和基于时间的盲注）"><a href="#Less-16（POST注入和基于时间的盲注）" class="headerlink" title="Less-16（POST注入和基于时间的盲注）"></a>Less-16（POST注入和基于时间的盲注）</h2><p>和上一个题一样，只不过这里闭合所用到的是 <code>&quot;)</code></p>
-<p><img src="img/sqli_labs_24.png" alt="sqlilibs_11_2"></p>
+<p><img src="img/sqli_labs_24.png" alt="sqlilibs_16_1"></p>
 <h2 id="Less-17（POST注入、盲注、报错注入）"><a href="#Less-17（POST注入、盲注、报错注入）" class="headerlink" title="Less-17（POST注入、盲注、报错注入）"></a>Less-17（POST注入、盲注、报错注入）</h2><p>和之前一样，先闭合前面一句的输入</p>
 <p>这里没有在用户名处注入，是因为用户名输入的内容会经过一个<code>check_input</code>函数过滤</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">function check_input($value)</div><div class="line">	&#123;</div><div class="line">	if(!empty($value))</div><div class="line">		&#123;</div><div class="line">		// truncation (see comments)</div><div class="line">		$value = substr($value,0,15);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		// Stripslashes if magic quotes enabled</div><div class="line">		if (get_magic_quotes_gpc())</div><div class="line">			&#123;</div><div class="line">			$value = stripslashes($value);</div><div class="line">			&#125;</div><div class="line"></div><div class="line">		// Quote if not a number</div><div class="line">		if (!ctype_digit($value))</div><div class="line">			&#123;</div><div class="line">			$value = &quot;&apos;&quot; . mysql_real_escape_string($value) . &quot;&apos;&quot;;</div><div class="line">			&#125;</div><div class="line">		</div><div class="line">	else</div><div class="line">		&#123;</div><div class="line">		$value = intval($value);</div><div class="line">		&#125;</div><div class="line">	return $value;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
 <p>所以我们选择了 <code>passwd</code> 这个参数来进行注入</p>
-<p><img src="img/sqli_labs_25.png" alt="sqlilibs_11_2"></p>
+<p><img src="img/sqli_labs_25.png" alt="sqlilibs_17_1"></p>
 <p>这里 <code>order by</code> 用不了，无法得到列数，所以这里不能采用 <code>UNION</code> 注入</p>
 <p>于是乎采用报错注入或者盲注</p>
 <p>因为自己比较懒，所以这里还是用报错注入来吧</p>
-<p><img src="img/sqli_labs_26.png" alt="sqlilibs_11_2"></p>
+<p><img src="img/sqli_labs_26.png" alt="sqlilibs_17_2"></p>
 <p>成功得到数据库名称</p>
 <h2 id="Less-18-（UA-注入）"><a href="#Less-18-（UA-注入）" class="headerlink" title="Less-18 （UA 注入）"></a>Less-18 （UA 注入）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$insert=&quot;INSERT INTO `security`.`uagents` (`uagent`, `ip_address`, `username`) VALUES (&apos;$uagent&apos;, &apos;$IP&apos;, $uname)&quot;;</div></pre></td></tr></table></figure>
 <p>根据源码，这里会将 <code>uagents</code> 写入数据库，也就是我们的<code>User-Agent</code></p>
 <p>这里仍然抓包</p>
 <p>我们先用<code>&#39;</code>闭合 <code>uagent</code>前面的<code>&#39;</code>，然后插入我们报错注入的语句，因为这个语句不能直接给后面注释掉，要让后面的正常运行，所以我们还要闭合<code>uagents</code>后面的<code>&#39;</code>，所以，就构成了我们的 payload</p>
 <p><code>&#39;and updatexml(1,concat(0x7e,(select database()),0x7e),1) and &#39;1&#39; = &#39;1</code></p>
-<p><img src="img/sqli_labs_27.png" alt="sqlilibs_11_2"></p>
+<p><img src="img/sqli_labs_27.png" alt="sqlilibs_18_1"></p>
 <p>后续其他数据类似</p>
 <h2 id="Less-19-（Referer-注入）"><a href="#Less-19-（Referer-注入）" class="headerlink" title="Less-19 （Referer 注入）"></a>Less-19 （Referer 注入）</h2><p>和上一个题类似，只不过这里注入是 <strong>referer</strong> 的注入，只需要将 <code>referer</code> 的内容改成我们上一题的 <code>payload</code> 即可</p>
 <h2 id="Less-20-（cookie-注入）"><a href="#Less-20-（cookie-注入）" class="headerlink" title="Less-20 （cookie 注入）"></a>Less-20 （cookie 注入）</h2><p>和以前一样，登陆过程中抓包</p>
-<p><img src="img/sqli_labs_28.png" alt="sqlilibs_11_2"></p>
+<p><img src="img/sqli_labs_28.png" alt="sqlilibs_20_1"></p>
 <p>发现登陆成功后有一个<code>cookie</code>的值</p>
 <p>再次刷新页面，拿到<code>cookie</code>，在通过构造<code>cookie</code>成功注入</p>
 <p>这里仍然用的是报错注入</p>
-<p><img src="img/sqli_labs_29.png" alt="sqlilibs_11_2"></p>
-<p><a href=""></a></p>
+<p><img src="img/sqli_labs_29.png" alt="sqlilibs_20_2"></p>
 
       
     </div>
