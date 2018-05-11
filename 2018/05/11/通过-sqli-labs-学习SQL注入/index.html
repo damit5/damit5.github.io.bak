@@ -11,13 +11,13 @@
   
   
   
-  <meta name="description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer17&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://d">
+  <meta name="description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer0&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://dam">
 <meta name="keywords" content="渗透测试,SQLI">
 <meta property="og:type" content="article">
 <meta property="og:title" content="通过 sqli-labs 学习SQL注入">
 <meta property="og:url" content="https://damit5.com/2018/05/11/通过-sqli-labs-学习SQL注入/index.html">
 <meta property="og:site_name" content="Damit5&#39;s Blog">
-<meta property="og:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer17&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://d">
+<meta property="og:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer0&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://dam">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://damit5.com/2018/05/11/通过-sqli-labs-学习SQL注入/img/sqli_labs_1.png">
 <meta property="og:image" content="https://damit5.com/2018/05/11/通过-sqli-labs-学习SQL注入/img/sqli_labs_2.png">
@@ -48,10 +48,10 @@
 <meta property="og:image" content="https://damit5.com/2018/05/11/通过-sqli-labs-学习SQL注入/img/sqli_labs_27.png">
 <meta property="og:image" content="https://damit5.com/2018/05/11/通过-sqli-labs-学习SQL注入/img/sqli_labs_28.png">
 <meta property="og:image" content="https://damit5.com/2018/05/11/通过-sqli-labs-学习SQL注入/img/sqli_labs_29.png">
-<meta property="og:updated_time" content="2018-05-11T14:27:46.951Z">
+<meta property="og:updated_time" content="2018-05-11T14:35:35.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="通过 sqli-labs 学习SQL注入">
-<meta name="twitter:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer17&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://d">
+<meta name="twitter:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer0&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://dam">
 <meta name="twitter:image" content="https://damit5.com/2018/05/11/通过-sqli-labs-学习SQL注入/img/sqli_labs_1.png">
   
     <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
@@ -189,10 +189,10 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer17" class="aplayer" style="margin-bottom: 20px;"></div>
+        <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer0" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer17"),
+				element: document.getElementById("aplayer0"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -205,6 +205,7 @@
 			});
 		</script>
 <h1 id="写在最前"><a href="#写在最前" class="headerlink" title="写在最前"></a>写在最前</h1><p><strong>SQLI定义</strong>：SQL注入即是指web应用程序对用户输入数据的合法性没有判断，攻击者可以在web应用程序中事先定义好的查询语句的结尾上添加额外的SQL语句，以此来实现欺骗数据库服务器执行非授权的任意查询，从而进一步得到相应的数据信息。</p>
+<a id="more"></a>
 <h2 id="可能用到的函数解释"><a href="#可能用到的函数解释" class="headerlink" title="可能用到的函数解释"></a>可能用到的函数解释</h2><h3 id="ORDER-BY"><a href="#ORDER-BY" class="headerlink" title="ORDER BY"></a>ORDER BY</h3><ul>
 <li>ORDER BY 语句用于对结果集进行排序。</li>
 <li>ORDER BY 语句默认按照升序对记录进行排序。</li>
@@ -515,6 +516,7 @@
 <p>再次刷新页面，拿到<code>cookie</code>，在通过构造<code>cookie</code>成功注入</p>
 <p>这里仍然用的是报错注入</p>
 <p><img src="img/sqli_labs_29.png" alt="sqlilibs_11_2"></p>
+<p><a href=""></a></p>
 
       
     </div>
