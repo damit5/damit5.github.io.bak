@@ -260,6 +260,78 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-SSRF-漏洞学习"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/05/26/SSRF-漏洞学习/">SSRF 漏洞学习</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/05/26/SSRF-漏洞学习/" class="article-date">
+	  <time datetime="2018-05-26T08:31:58.000Z" itemprop="datePublished">2018-05-26</time>
+	</a>
+
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <div id="aplayer10" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			new APlayer({
+				element: document.getElementById("aplayer10"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "六月的雨",
+					author: "胡歌",
+					url: "https://damit5.github.io/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",
+					pic: "https://damit5.github.io/Music/233.jpg",
+				}
+			});
+		</script>
+<h2 id="0x01-SSRF-概述"><a href="#0x01-SSRF-概述" class="headerlink" title="0x01 SSRF 概述"></a>0x01 SSRF 概述</h2><p>SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。（正是因为它是由服务端发起的，所以它能够请求到与它相连而与外网隔离的内部系统）</p>
+<p>SSRF 形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。比如从指定URL地址获取网页文本内容，加载指定地址的图片，下载等等。利用的是服务端的请求伪造。ssrf是利用存在缺陷的web应用作为代理攻击远程和本地的服务器</p>
+        <!--  
+		
+			new APlayer({
+				element: document.getElementById("aplayer10"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "六月的雨",
+					author: "胡歌",
+					url: "https:......  -->
+        <p class="article-more-link">
+          <a href="/2018/05/26/SSRF-漏洞学习/#more">Read More</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透测试/">渗透测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-Redis未授权访问漏洞利用"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -285,10 +357,10 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer0" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer7" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer0"),
+				element: document.getElementById("aplayer7"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -314,7 +386,7 @@
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer0"),
+				element: document.getElementById("aplayer7"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -437,10 +509,10 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer11" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer15" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer11"),
+				element: document.getElementById("aplayer15"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -456,7 +528,7 @@
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer11"),
+				element: document.getElementById("aplayer15"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -508,10 +580,10 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer9" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer20" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer9"),
+				element: document.getElementById("aplayer20"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -528,14 +600,14 @@
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer9"),
+				element: document.getElementById("aplayer20"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
 				music: {
 					title: "六月的雨",
 					author: "胡歌",
-					url: "https:/......  -->
+					url: "https:......  -->
         <p class="article-more-link">
           <a href="/2018/03/23/Sqli-Scan/#more">Read More</a>
         </p>
@@ -580,10 +652,10 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer19" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer17" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer19"),
+				element: document.getElementById("aplayer17"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -599,7 +671,7 @@
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer19"),
+				element: document.getElementById("aplayer17"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -651,10 +723,10 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer10" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer19" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer10"),
+				element: document.getElementById("aplayer19"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -670,7 +742,7 @@
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer10"),
+				element: document.getElementById("aplayer19"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -722,10 +794,10 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer2" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer4" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer2"),
+				element: document.getElementById("aplayer4"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -741,7 +813,7 @@
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer2"),
+				element: document.getElementById("aplayer4"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -793,10 +865,10 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer3" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer9" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer3"),
+				element: document.getElementById("aplayer9"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -813,7 +885,7 @@
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer3"),
+				element: document.getElementById("aplayer9"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -889,63 +961,11 @@
 <!-- Table of Contents -->
 
   
-    <article id="post-Windows-MySQL-的安装"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/09/30/Windows-MySQL-的安装/">Windows MySQL 的安装</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/09/30/Windows-MySQL-的安装/" class="article-date">
-	  <time datetime="2017-09-30T06:06:45.000Z" itemprop="datePublished">2017-09-30</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>第一次在Windows安装MySQL真的是安装得各种无语，遇到各种坑，这次写下来，希望以后不会再犯了！！！</p>
-        <!--  第一次在Windows安装MySQL真的是安装得各种无语，遇到各种坑，这次写下来，希望以后不会再犯了！！！
-
-12345启动: net start MySQL停止: net stop MySQL卸载: sc delete MySQL
-1.下载打开mysql官网下载页面：//dev.mysql.com/downloads/mysql/
-选择相应的版本和平台
-下载压缩包，解压
-2.配置打开刚刚......  -->
-        <p class="article-more-link">
-          <a href="/2017/09/30/Windows-MySQL-的安装/#more">Read More</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/其他/">其他</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
 
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </section>

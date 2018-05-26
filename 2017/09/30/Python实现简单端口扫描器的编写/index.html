@@ -185,10 +185,10 @@
 <h5 id="获取传入参数的IP地址和想要扫描的端口"><a href="#获取传入参数的IP地址和想要扫描的端口" class="headerlink" title="获取传入参数的IP地址和想要扫描的端口"></a>获取传入参数的IP地址和想要扫描的端口</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">url = sys.argv[1]</div><div class="line">ip = socket.gethostbyname(url)</div><div class="line">portlist = [22,80,81,445,3306,3389,8080]</div></pre></td></tr></table></figure>
 <h5 id="将端口和IP使用scan-方法进行测试"><a href="#将端口和IP使用scan-方法进行测试" class="headerlink" title="将端口和IP使用scan()方法进行测试"></a>将端口和IP使用scan()方法进行测试</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for port in portlist:</div><div class="line">    result = scan(ip,port)</div><div class="line">    if result:</div><div class="line">        printGreen (&apos;[+] Port %d is open&apos; %port)</div><div class="line">    else:</div><div class="line">        printRed (&apos;[-] Port %d is closed&apos; %port)</div></pre></td></tr></table></figure>
 <h2 id="0×02-测试结果"><a href="#0×02-测试结果" class="headerlink" title="0×02 测试结果"></a>0×02 测试结果</h2><p><img src="//r.photo.store.qq.com/psb?/V12DlJ9S2zSi6P/P2.49hByZWzkP3ezOtTOULCciFPS*NuNVfqoxWT4zIA!/r/dHYBAAAAAAAA" alt="damit5"><br><img src="//r.photo.store.qq.com/psb?/V12DlJ9S2zSi6P/w1rAOST0SYL7VJLKyqwzS7FJZCe9v.iaHwTahTw9Zb0!/r/dIUBAAAAAAAA" alt="local"></p>
-<div id="aplayer7" class="aplayer" style="margin-bottom: 20px;"></div>
+<div id="aplayer5" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer7"),
+				element: document.getElementById("aplayer5"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
