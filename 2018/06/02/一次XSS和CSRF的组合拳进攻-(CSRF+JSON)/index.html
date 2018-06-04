@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://damit5.com/2018/06/02/一次XSS和CSRF的组合拳进攻-(CSRF+JSON)/img/7.png">
 <meta property="og:image" content="https://damit5.com/2018/06/02/一次XSS和CSRF的组合拳进攻-(CSRF+JSON)/img/8.png">
 <meta property="og:image" content="https://damit5.com/2018/06/02/一次XSS和CSRF的组合拳进攻-(CSRF+JSON)/img/9.png">
-<meta property="og:updated_time" content="2018-06-02T10:13:41.687Z">
+<meta property="og:updated_time" content="2018-06-04T02:19:11.487Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一次XSS和CSRF的组合拳进攻 (CSRF+JSON)">
 <meta name="twitter:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer0&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;https://dam">
@@ -212,7 +212,7 @@
 <p><strong>修改信息</strong> –&gt; <strong>保存时抓包</strong> –&gt; <strong>生成CSRF POC</strong> –&gt; <strong>打开POC</strong> –&gt; <strong>检验是否利用成功</strong></p>
 <p>但是这里遇到一个问题</p>
 <p><img src="img/4.png" alt=""></p>
-<p>以前post提交的数据都是形如 <code>a=123&amp;b=456</code> 这种，而这里提交的确是 <code>json</code> 格式的</p>
+<p>以前post提交的数据都是形如 <code>a=123&amp;b=456</code> 这种，而这里提交的却是 <code>json</code> 格式的</p>
 <p>于是这里就要利用到一些骚姿势</p>
 <p>偷一张大佬们的图（这里因为需要验证content-type，目前搜到的就只有这种方法）</p>
 <p><img src="img/5.png" alt=""></p>
