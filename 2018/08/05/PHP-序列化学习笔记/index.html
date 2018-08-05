@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>php 序列化学习笔记 | Damit5&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="damit5" />
+  
+  
+  
+  
+  <meta name="description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer4&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;/Music/%E5%">
+<meta name="keywords" content="PHP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP 序列化学习笔记">
+<meta property="og:url" content="https://damit5.com/2018/08/05/PHP-序列化学习笔记/index.html">
+<meta property="og:site_name" content="Damit5&#39;s Blog">
+<meta property="og:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer4&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;/Music/%E5%">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-08-05T08:08:29.648Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP 序列化学习笔记">
+<meta name="twitter:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer4&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;六月的雨&quot;, 					author: &quot;胡歌&quot;, 					url: &quot;/Music/%E5%">
+  
+    <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/favicon.png">
+  <link rel="apple-touch-icon" href="/css/images/favicon.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/favicon.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/About">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/Link">link</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="index.search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="https://damit5.com"></form>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-PHP-序列化学习笔记" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      PHP 序列化学习笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/08/05/PHP-序列化学习笔记/" class="article-date">
+	  <time datetime="2018-08-05T08:05:54.000Z" itemprop="datePublished">2018-08-05</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer4" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			new APlayer({
+				element: document.getElementById("aplayer4"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "六月的雨",
+					author: "胡歌",
+					url: "/Music/%E5%85%AD%E6%9C%88%E7%9A%84%E9%9B%A8-%E8%83%A1%E6%AD%8C.mp3",
+					pic: "/Music/233.jpg",
+				}
+			});
+		</script>
+<h2 id="什么是序列化"><a href="#什么是序列化" class="headerlink" title="什么是序列化"></a>什么是序列化</h2><blockquote>
+<p>所有 php 里面的值都可以使用函数 <code>serialize()</code> 来返回一个包含字节流的字符串来表示。<code>unserialize()</code> 函数能够重新把字符串变回 php 原来的值。 <strong>序列化一个对象将会保存对象的所有变量，但是不会保存对象的方法，只会保存类的名字</strong>。</p>
+</blockquote>
+<p>也就是说，序列化<code>serialize()</code>会把一个<strong>对象</strong>转换成<strong>字符串</strong>，反序列化<code>unserialize()</code>会把<strong>字符串</strong>还原为一个<strong>对象</strong>。</p>
+<a id="more"></a>
+<h2 id="基础补充"><a href="#基础补充" class="headerlink" title="基础补充"></a>基础补充</h2><h3 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h3><p>和其他语言类似，举个栗子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class demo</div><div class="line">&#123;</div><div class="line">  /*</div><div class="line">  * 对象被当成一个字符串的时候，__toString()会被调用</div><div class="line">  */</div><div class="line">  function __toString()</div><div class="line">  &#123;</div><div class="line">    return &quot;__toString &lt;br/&gt;&quot;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  /*</div><div class="line">  * 当一个对象创建时被调用</div><div class="line">  */</div><div class="line">  function __construct()</div><div class="line">  &#123;</div><div class="line">    echo &apos;__construct &lt;br/&gt;&apos;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  function test()</div><div class="line">  &#123;</div><div class="line">    echo &quot;function test &lt;br/&gt;&quot;;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$tmp = new demo;</div><div class="line">$tmp-&gt;test();</div><div class="line">echo $tmp;</div><div class="line"> ?&gt;</div><div class="line"></div><div class="line">---</div><div class="line"></div><div class="line">/*</div><div class="line">__construct</div><div class="line">function test</div><div class="line">__toString </div><div class="line">*/</div></pre></td></tr></table></figure>
+<p>上面的代码是正常情况下的调用。但是 php 中存在一些特殊的类成员在某些特定情况下会<strong>自动调用</strong>，称之为 <strong>magic 函数</strong>，magic 函数命名是以符号 <code>__</code> 开头的。</p>
+<h3 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h3><p>几个常用魔术方法及触发条件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">__wakeup() //使用 unserialize 时触发</div><div class="line"></div><div class="line">__sleep() //使用 serialize 时触发</div><div class="line"></div><div class="line">__destruct() //对象被销毁时触发</div><div class="line"></div><div class="line">__call() //在对象上下文中调用不可访问的方法时触发</div><div class="line"></div><div class="line">__callStatic() //在静态上下文中调用不可访问的方法时触发</div><div class="line"></div><div class="line">__get() //用于从不可访问的属性读取数据</div><div class="line"></div><div class="line">__set() //用于将数据写入不可访问的属性</div><div class="line"></div><div class="line">__isset() //在不可访问的属性上调用 isset() 或 empty() 触发</div><div class="line"></div><div class="line">__unset() //在不可访问的属性上使用 unset() 时触发</div><div class="line"></div><div class="line">__toString() //把类当作字符串使用时触发,返回值需要为字符串</div><div class="line"></div><div class="line">__invoke() //当脚本尝试将对象调用为函数时触发</div></pre></td></tr></table></figure>
+<h2 id="序列化的格式"><a href="#序列化的格式" class="headerlink" title="序列化的格式"></a>序列化的格式</h2><p><code>boolean</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">b:;</div><div class="line"></div><div class="line">b:1; // True</div><div class="line"></div><div class="line">b:0; // False</div></pre></td></tr></table></figure>
+<p><code>integer</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">i:;</div><div class="line"></div><div class="line">i:1; // 1</div><div class="line"></div><div class="line">i:-3; // -3</div></pre></td></tr></table></figure></p>
+<p><code>double</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">d:;</div><div class="line"></div><div class="line">d:1.2345600000000001; // 1.23456（php弱类型所造成的四舍五入现象）</div></pre></td></tr></table></figure></p>
+<p><code>NULL</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">N; //NULL</div></pre></td></tr></table></figure></p>
+<p><code>string</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">s::&quot;&quot;;</div><div class="line"></div><div class="line">s&quot;INSOMNIA&quot;; // &quot;INSOMNIA&quot;</div></pre></td></tr></table></figure></p>
+<p><code>array</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a::&#123;key, value pairs&#125;;</div><div class="line"></div><div class="line">a&#123;s&quot;key1&quot;;s&quot;value1&quot;;s&quot;value2&quot;;&#125; // array(&quot;key1&quot; =&gt; &quot;value1&quot;, &quot;key2&quot; =&gt; &quot;value2&quot;)</div></pre></td></tr></table></figure></p>
+<p>即</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">a - array  </div><div class="line"></div><div class="line">b - boolean  </div><div class="line"></div><div class="line">d - double  </div><div class="line"></div><div class="line">i - integer</div><div class="line"></div><div class="line">o - common object</div><div class="line"></div><div class="line">r - reference</div><div class="line"></div><div class="line">s - string</div><div class="line"></div><div class="line">C - custom object</div><div class="line"></div><div class="line">O - class</div><div class="line"></div><div class="line">N - null</div><div class="line"></div><div class="line">R - pointer reference</div><div class="line"></div><div class="line">U - unicode string</div></pre></td></tr></table></figure>
+<h2 id="PHP序列化"><a href="#PHP序列化" class="headerlink" title="PHP序列化"></a>PHP序列化</h2><blockquote>
+<p>php 允许保存一个对象方便以后重用，这个过程被称为序列化。为什么要有序列化这种机制呢?在传递变量的过程中，有可能遇到变量值要跨脚本文件传递的过程。试想，如果为一个脚本中想要调用之前一个脚本的变量，但是前一个脚本已经执行完毕，所有的变量和内容释放掉了，我们要如何操作呢?难道要前一个脚本不断的循环，等待后面脚本调用?这肯定是不现实的。因为这样的操作，在小项目还好，在大项目里是极其浪费资源的。但是如果你将一个对象序列化，那么它就会变成一个字符串，等你需要的时候再通过反序列化转换回变了变量，在进行调用就好了，在这样就剩了资源的使用。</p>
+</blockquote>
+<p>举个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class demo</div><div class="line">&#123;</div><div class="line">  public $var;</div><div class="line">  function test()</div><div class="line">  &#123;</div><div class="line">    echo $this-&gt;var . &quot;&lt;br/&gt;&quot;;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$tmp = new demo;</div><div class="line">$tmp-&gt;var = &apos;test&apos;;</div><div class="line">echo serialize($tmp);</div><div class="line"> ?&gt;</div></pre></td></tr></table></figure>
+<p><strong>结果</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">O:4:&quot;demo&quot;:1:&#123;s:3:&quot;var&quot;;s:4:&quot;test&quot;;&#125;</div><div class="line"># 类型:长度:&quot;名字&quot;:类中变量的个数:&#123;类型:长度:&quot;名字&quot;;类型:长度:&quot;值&quot;;......&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="反序列化"><a href="#反序列化" class="headerlink" title="反序列化"></a>反序列化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">class demo</div><div class="line">&#123;</div><div class="line">  public $var;</div><div class="line">  function test()</div><div class="line">  &#123;</div><div class="line">    echo $this-&gt;var . &quot;&lt;br/&gt;&quot;;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">$unser = &quot;O:4:\&quot;demo\&quot;:1:&#123;s:3:\&quot;var\&quot;;s:4:\&quot;test\&quot;;&#125;&quot;;</div><div class="line">$tmp = unserialize($unser);</div><div class="line">$tmp-&gt;test();</div><div class="line"> ?&gt;</div></pre></td></tr></table></figure>
+<p>反序列化返回的为序列化之前成功对变量赋值的对象，再用该对象可以直接调用类中的方法。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>大佬给的解释</p>
+<blockquote>
+<p>序列化实质就是记录一个对象的类名，变量名，变量值这三个内容，反序列化会根据类名来实例化一个对象，并将对应的变量赋值。其中都不涉及类的函数。</p>
+</blockquote>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="https://mp.weixin.qq.com/s?__biz=MzI5MDQ2NjExOQ==&amp;mid=2247487282&amp;idx=1&amp;sn=413af47f5984336800a43710f9288ab5&amp;chksm=ec1e3f1adb69b60c81636c0956dbe2ecf29d28e3c03445fe6f91101c1b991e1f2961079fd8d5&amp;mpshare=1&amp;scene=23&amp;srcid=0513UWSSiVoiAfPmESUxgTmq#rd" target="_blank" rel="external">php 反序列漏洞初识</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/25/phpMyAdmin-4-8-1-LFI-to-RCE（CVE-2018-12613）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">phpMyAdmin 4.8.1 LFI to RCE（CVE-2018-12613）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是序列化"><span class="nav-number">1.</span> <span class="nav-text">什么是序列化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础补充"><span class="nav-number">2.</span> <span class="nav-text">基础补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类和对象"><span class="nav-number">2.1.</span> <span class="nav-text">类和对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#魔术方法"><span class="nav-number">2.2.</span> <span class="nav-text">魔术方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化的格式"><span class="nav-number">3.</span> <span class="nav-text">序列化的格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PHP序列化"><span class="nav-number">4.</span> <span class="nav-text">PHP序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#反序列化"><span class="nav-number">4.1.</span> <span class="nav-text">反序列化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文章"><span class="nav-number">5.1.</span> <span class="nav-text">参考文章</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Damit5&#39;s Blog All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/About" class="mobile-nav-link">About</a>
+  
+    <a href="/Link" class="mobile-nav-link">Link</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Damit5&#39;s Blog
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Damit 5 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
