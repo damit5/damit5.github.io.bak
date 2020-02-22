@@ -11,23 +11,23 @@
   
   
   
-  <meta name="description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer17&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;Mine&quot;, 					author: &quot;Taylor Swift&quot;, 					url:">
+  <meta name="description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer0&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;Mine&quot;, 					author: &quot;Taylor Swift&quot;, 					url: &quot;/">
 <meta name="keywords" content="权限维持">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cat的一个缺陷">
 <meta property="og:url" content="https://damit5.com/2020/02/22/cat的一个缺陷/index.html">
 <meta property="og:site_name" content="Damit5&#39;s Blog">
-<meta property="og:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer17&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;Mine&quot;, 					author: &quot;Taylor Swift&quot;, 					url:">
+<meta property="og:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer0&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;Mine&quot;, 					author: &quot;Taylor Swift&quot;, 					url: &quot;/">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://raw.githubusercontent.com/damit5/GraphBed/master/image/158235341480092368563.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/damit5/GraphBed/master/image/158235341491310953793.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/damit5/GraphBed/master/image/158235341493324235174.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/damit5/GraphBed/master/image/158235341493324231456.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/damit5/GraphBed/master/image/158235341494796858087.png">
-<meta property="og:updated_time" content="2020-02-22T06:50:12.976Z">
+<meta property="og:updated_time" content="2020-02-22T06:56:23.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cat的一个缺陷">
-<meta name="twitter:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer17&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;Mine&quot;, 					author: &quot;Taylor Swift&quot;, 					url:">
+<meta name="twitter:description" content="new APlayer({ 				element: document.getElementById(&quot;aplayer0&quot;), 				narrow: false, 				autoplay: true, 				showlrc: 0, 				music: { 					title: &quot;Mine&quot;, 					author: &quot;Taylor Swift&quot;, 					url: &quot;/">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/damit5/GraphBed/master/image/158235341480092368563.png">
   
     <link rel="alternate" href="/atom.xml" title="Damit5&#39;s Blog" type="application/atom+xml">
@@ -165,10 +165,10 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer17" class="aplayer" style="margin-bottom: 20px;"></div>
+        <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer0" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer17"),
+				element: document.getElementById("aplayer0"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -181,10 +181,11 @@
 			});
 		</script>
 <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ul>
-<li><p>cat有一个缺陷，如果内容中存在 <code>\r</code> 回车符，那么在<code>cat</code>直接查看的时候会首先输出<code>\r</code>后的内容，如果<code>\r</code>后的内容长度小于 <code>\r</code> 前的内容长度，那么就会输出 <code>\r</code> 后的内容在加上 <code>\r</code> 前的长度差的后几位。</p>
-</li>
-<li><p>利用这个可以隐藏在一些脚本里面，比如 <code>crontab</code>， 直接 <code>cat file</code> 的查看方式会让运维不能发现问题。但是可以通过 <code>vim</code> <code>less</code> 查看到。</p>
-</li>
+<li>cat有一个缺陷，如果内容中存在 <code>\r</code> 回车符，那么在<code>cat</code>直接查看的时候会首先输出<code>\r</code>后的内容，如果<code>\r</code>后的内容长度小于 <code>\r</code> 前的内容长度，那么就会输出 <code>\r</code> 后的内容在加上 <code>\r</code> 前的长度差的后几位。</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li>利用这个可以隐藏在一些脚本里面，比如 <code>crontab</code>， 直接 <code>cat file</code> 的查看方式会让运维不能发现问题。但是可以通过 <code>vim</code> <code>less</code> 查看到。</li>
 </ul>
 <h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><p>看了上面的说明，可能还是不是很清楚，举个例子说明一下就很明白了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 示例代码</span></div><div class="line"><span class="keyword">with</span> open(<span class="string">"result.sh"</span>, <span class="string">"w"</span>) <span class="keyword">as</span> f:</div><div class="line">    hiding_content = <span class="string">"1234567"</span></div><div class="line">    output = hiding_content + <span class="string">"\r11111"</span>	</div><div class="line">    f.write(output)</div></pre></td></tr></table></figure>
