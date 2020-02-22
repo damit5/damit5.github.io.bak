@@ -188,10 +188,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql -u root  #因为此时没有密码</div></pre></td></tr></table></figure>
 <hr>
 <p>windows 下设置root密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">方法1： 用SET PASSWORD命令</div><div class="line">首先登录MySQL。</div><div class="line">格式：mysql&gt; set password for 用户名@localhost = password(&apos;新密码&apos;);</div><div class="line">例子：mysql&gt; set password for root@localhost = password(&apos;123&apos;);</div><div class="line"></div><div class="line">方法2：用mysqladmin</div><div class="line">格式：mysqladmin -u用户名 -p旧密码 password 新密码</div><div class="line">例子：mysqladmin -uroot -p123456 password 123</div><div class="line"></div><div class="line">方法3：用UPDATE直接编辑user表</div><div class="line">首先登录MySQL。</div><div class="line">mysql&gt; use mysql;</div><div class="line">mysql&gt; update user set password=password(&apos;123&apos;) where user=&apos;root&apos; and host=&apos;localhost&apos;;</div><div class="line">mysql&gt; flush privileges;</div><div class="line"></div><div class="line">方法4：在忘记root密码的时候，可以这样</div><div class="line">以windows为例：</div><div class="line">1. 关闭正在运行的MySQL服务。</div><div class="line">2. 打开DOS窗口，转到mysql\bin目录。</div><div class="line">3. 输入mysqld --skip-grant-tables 回车。--skip-grant-tables 的意思是启动MySQL服务的时候跳过权限表认证。</div><div class="line">4. 再开一个DOS窗口（因为刚才那个DOS窗口已经不能动了），转到mysql\bin目录。</div><div class="line">5. 输入mysql回车，如果成功，将出现MySQL提示符 &gt;。</div><div class="line">6. 连接权限数据库： use mysql; 。</div><div class="line">6. 改密码：update user set password=password(&quot;123&quot;) where user=&quot;root&quot;;（别忘了最后加分号） 。</div><div class="line">7. 刷新权限（必须步骤）：flush privileges;　。</div><div class="line">8. 退出 quit。</div><div class="line">9. 注销系统，再进入，使用用户名root和刚才设置的新密码123登录。</div></pre></td></tr></table></figure></p>
-<div id="aplayer17" class="aplayer" style="margin-bottom: 20px;"></div>
+<div id="aplayer16" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer17"),
+				element: document.getElementById("aplayer16"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -283,7 +283,7 @@
   <div class="container">
       	<div class="row">
 	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Damit5&#39;s Blog All Rights Reserved.</p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2020 Damit5&#39;s Blog All Rights Reserved.</p>
 	      
 	      
     		<p class="busuanzi_uv">
@@ -437,7 +437,7 @@
             Damit5&#39;s Blog
           </div>
           <div class="panel-body">
-            Copyright © 2019 Damit 5 All Rights Reserved.
+            Copyright © 2020 Damit 5 All Rights Reserved.
           </div>
         </div>
       </div>

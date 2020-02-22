@@ -239,6 +239,84 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-cat的一个缺陷"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2020/02/22/cat的一个缺陷/">cat的一个缺陷</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2020/02/22/cat的一个缺陷/" class="article-date">
+	  <time datetime="2020-02-22T06:49:29.000Z" itemprop="datePublished">2020-02-22</time>
+	</a>
+
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <script src="/assets/js/APlayer.min.js"> </script><div id="aplayer17" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			new APlayer({
+				element: document.getElementById("aplayer17"),
+				narrow: false,
+				autoplay: true,
+				showlrc: 0,
+				music: {
+					title: "Mine",
+					author: "Taylor Swift",
+					url: "/Music/233.mp3",
+					pic: "/Music/233.jpg",
+				}
+			});
+		</script>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><ul>
+<li><p>cat有一个缺陷，如果内容中存在 <code>\r</code> 回车符，那么在<code>cat</code>直接查看的时候会首先输出<code>\r</code>后的内容，如果<code>\r</code>后的内容长度小于 <code>\r</code> 前的内容长度，那么就会输出 <code>\r</code> 后的内容在加上 <code>\r</code> 前的长度差的后几位。</p>
+</li>
+<li><p>利用这个可以隐藏在一些脚本里面，比如 <code>crontab</code>， 直接 <code>cat file</code> 的查看方式会让运维不能发现问题。但是可以通过 <code>vim</code> <code>less</code> 查看到。</p>
+</li>
+</ul>
+<h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><p>看了上面的说明，可能还是不是很清楚，举个例子说明一下就很明白了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 示例代码</span></div><div class="line"><span class="keyword">with</span> open(<span class="string">"result.sh"</span>, <span class="string">"w"</span>) <span class="keyword">as</span> f:</div><div class="line">    hiding_content = <span class="string">"1234567"</span></div><div class="line">    output = hiding_content + <span class="string">"\r11111"</span>	</div><div class="line">    f.write(output)</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/damit5/GraphBed/master/image/158235341480092368563.png" alt=""></p>
+<p>会先输出 <code>\r</code> 后的 <code>11111</code> ，由于 <code>len(&quot;&quot;1234567&quot;&quot;) - len(&quot;11111)&quot; = 2</code> ，所有最后会输出 <code>1234567</code> 的最后两位</p>
+<p><img src="https://raw.githubusercontent.com/damit5/GraphBed/master/image/158235341491310953793.png" alt="这样？"></p>
+<h2 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h2><p>因为 <code>cat</code> 输出空文件和输出空格，肉眼看起来是一样的，所以可以利用空格来隐藏我们要执行的命令</p>
+<p><img src="https://raw.githubusercontent.com/damit5/GraphBed/master/image/158235341493324235174.png" alt="空格和空文件"></p>
+<h4 id="1-直接隐藏"><a href="#1-直接隐藏" class="headerlink" title="1. 直接隐藏"></a>1. 直接隐藏</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> open(<span class="string">"result.sh"</span>, <span class="string">"w"</span>) <span class="keyword">as</span> f:</div><div class="line">    hiding_content = <span class="string">"echo I am hidden content"</span></div><div class="line">    output = hiding_content + <span class="string">"\r"</span> + <span class="string">" "</span> * len(hiding_content)</div><div class="line">    f.write(output)</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/damit5/GraphBed/master/image/158235341493324231456.png" alt="直接隐藏"></p>
+<h4 id="2-隐藏在正常的脚本里面"><a href="#2-隐藏在正常的脚本里面" class="headerlink" title="2. 隐藏在正常的脚本里面"></a>2. 隐藏在正常的脚本里面</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">original_content = <span class="string">"echo I am normal content"</span></div><div class="line"><span class="keyword">with</span> open(<span class="string">"result.sh"</span>, <span class="string">"w"</span>) <span class="keyword">as</span> f:</div><div class="line">    hiding_content = <span class="string">"echo I am hidden content;"</span></div><div class="line">    output = hiding_content + <span class="string">"\r"</span> + original_content + <span class="string">" "</span> * len(hiding_content)</div><div class="line">    f.write(output)</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/damit5/GraphBed/master/image/158235341494796858087.png" alt="隐藏到其他文件"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>只要是可能会用cat看的地方，都可以做一下手脚，结合权限维持还不错。</p>
+<blockquote>
+<p>有些说得不太准确的地方，望大佬们指正。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/权限维持/">权限维持</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-Redis-基于主从复制的-RCE"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -264,10 +342,10 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer0" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer27" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer0"),
+				element: document.getElementById("aplayer27"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -283,14 +361,14 @@
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer0"),
+				element: document.getElementById("aplayer27"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
 				music: {
 					title: "Mine",
 					author: "Taylor Swift",
-					url......  -->
+					ur......  -->
         <p class="article-more-link">
           <a href="/2019/09/27/Redis-基于主从复制的-RCE/#more">Read More</a>
         </p>
@@ -335,10 +413,10 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer7" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer0" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer7"),
+				element: document.getElementById("aplayer0"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -354,7 +432,7 @@
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer7"),
+				element: document.getElementById("aplayer0"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -406,10 +484,10 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer0" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer28" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer0"),
+				element: document.getElementById("aplayer28"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -425,14 +503,14 @@
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer0"),
+				element: document.getElementById("aplayer28"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
 				music: {
 					title: "Mine",
 					author: "Taylor Swift",
-					url......  -->
+					ur......  -->
         <p class="article-more-link">
           <a href="/2019/08/05/LDAP注入入门学习/#more">Read More</a>
         </p>
@@ -536,10 +614,10 @@ Tips
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer6" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer5" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer6"),
+				element: document.getElementById("aplayer5"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -558,7 +636,7 @@ Tips
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer6"),
+				element: document.getElementById("aplayer5"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -610,10 +688,10 @@ Tips
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer22" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer21" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer22"),
+				element: document.getElementById("aplayer21"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -629,7 +707,7 @@ Tips
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer22"),
+				element: document.getElementById("aplayer21"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -681,10 +759,10 @@ Tips
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer24" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer20" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer24"),
+				element: document.getElementById("aplayer20"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -700,7 +778,7 @@ Tips
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer24"),
+				element: document.getElementById("aplayer20"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -752,10 +830,10 @@ Tips
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer16" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer13" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer16"),
+				element: document.getElementById("aplayer13"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -772,7 +850,7 @@ Tips
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer16"),
+				element: document.getElementById("aplayer13"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -824,10 +902,10 @@ Tips
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="aplayer15" class="aplayer" style="margin-bottom: 20px;"></div>
+        <div id="aplayer26" class="aplayer" style="margin-bottom: 20px;"></div>
 		<script>
 			new APlayer({
-				element: document.getElementById("aplayer15"),
+				element: document.getElementById("aplayer26"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -853,7 +931,7 @@ Tips
         <!--  
 		
 			new APlayer({
-				element: document.getElementById("aplayer15"),
+				element: document.getElementById("aplayer26"),
 				narrow: false,
 				autoplay: true,
 				showlrc: 0,
@@ -871,77 +949,6 @@ Tips
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透测试/">渗透测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-通过-sqli-labs-学习SQL注入"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/05/11/通过-sqli-labs-学习SQL注入/">通过 sqli-labs 学习SQL注入</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/05/11/通过-sqli-labs-学习SQL注入/" class="article-date">
-	  <time datetime="2018-05-11T14:24:36.000Z" itemprop="datePublished">2018-05-11</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <div id="aplayer26" class="aplayer" style="margin-bottom: 20px;"></div>
-		<script>
-			new APlayer({
-				element: document.getElementById("aplayer26"),
-				narrow: false,
-				autoplay: true,
-				showlrc: 0,
-				music: {
-					title: "Mine",
-					author: "Taylor Swift",
-					url: "/Music/233.mp3",
-					pic: "/Music/233.jpg",
-				}
-			});
-		</script>
-<h1 id="写在最前"><a href="#写在最前" class="headerlink" title="写在最前"></a>写在最前</h1><p><strong>SQLI定义</strong>：SQL注入即是指web应用程序对用户输入数据的合法性没有判断，攻击者可以在web应用程序中事先定义好的查询语句的结尾上添加额外的SQL语句，以此来实现欺骗数据库服务器执行非授权的任意查询，从而进一步得到相应的数据信息。</p>
-        <!--  
-		
-			new APlayer({
-				element: document.getElementById("aplayer26"),
-				narrow: false,
-				autoplay: true,
-				showlrc: 0,
-				music: {
-					title: "Mine",
-					author: "Taylor Swift",
-					ur......  -->
-        <p class="article-more-link">
-          <a href="/2018/05/11/通过-sqli-labs-学习SQL注入/#more">Read More</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQLI/">SQLI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/渗透测试/">渗透测试</a></li></ul>
 
     </footer>
   </div>
@@ -970,7 +977,7 @@ Tips
   <div class="container">
       	<div class="row">
 	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Damit5&#39;s Blog All Rights Reserved.</p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2020 Damit5&#39;s Blog All Rights Reserved.</p>
 	      
 	      
     		<p class="busuanzi_uv">
@@ -1124,7 +1131,7 @@ Tips
             Damit5&#39;s Blog
           </div>
           <div class="panel-body">
-            Copyright © 2019 Damit 5 All Rights Reserved.
+            Copyright © 2020 Damit 5 All Rights Reserved.
           </div>
         </div>
       </div>
